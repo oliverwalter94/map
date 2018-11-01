@@ -1,4 +1,6 @@
-/Biome$BiomeType.class
+/sources/
+/Technical/
+/org/
 /Biome.class
 /Board$CD.class
 /Board.class
@@ -17,11 +19,4 @@
 /MapReader.class
 /MapRender.class
 /MapWriter.class
-/Menu$MenuItem.class
-/Menu$Tab.class
-/Menu.class
-/PlantWeight.class
-/Screen_Array.class
-/Technical/
-/org/
-/sources/
+/MapGen/
