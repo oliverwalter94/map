@@ -1,5 +1,6 @@
 
 import java.awt.*;
+import MapGen.*;
 import javax.swing.*;
 
 import java.awt.event.*;
@@ -28,9 +29,12 @@ public class Board extends JPanel implements ActionListener{
 	public Images images;
 	public ArrayList<Biome> biomes;
 	public ArrayList<Field> fields;
+	public DataHandler data;
 	
 	public Board(){
 
+		data = new DataHandler();
+		
 		images = new Images();
 		images.loadAllImages();
 		
