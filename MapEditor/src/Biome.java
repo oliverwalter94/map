@@ -1,10 +1,6 @@
 import java.util.ArrayList;
 
 public class Biome {
-
-	enum BiomeType {
-		DRY, HUMID, DAMP, FRESHWATER, SALTWATER
-	}
 	
 	String name;
 	ArrayList<FieldWeight> fieldweights;
