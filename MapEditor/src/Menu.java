@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+import MapGen.DataHandler;
+
 public class Menu {
 	Color background;
 	Color backgroundSelected;
@@ -19,7 +21,7 @@ public class Menu {
 	int activeTabs;
 	int selectedTabIndex;
 	
-	ArrayList<MenuItem> toolbarItems;
+	public ArrayList<MenuItem> toolbarItems;
 	
 	//Render Variables
 	boolean calcRender;
@@ -28,11 +30,11 @@ public class Menu {
 	int tabSize;
 	int tabsPerRow;
 	
-	Images images;
+	DataHandler data;
 	
 	
-	public Menu(Images img) {
-		images = img;
+	public Menu(DataHandler data) {
+		this.data = data;
 		
 		foreground = Color.lightGray;
 		background = new Color(21,21,21, 160);
@@ -53,6 +55,17 @@ public class Menu {
 		tabsPerRow = 5;
 		
 		fillToolbar();
+		
+	}
+	
+	private void fillToolbar() {
+		toolbarItems.add(new MenuItem("Edit Mode", data.getImageByName("Edit Mode"), false));
+		toolbarItems.add(new MenuItem("Move Mode", data.getImageByName("Move Mode"), false));
+		toolbarItems.add(new MenuItem("New Map", data.getImageByName("New Map"), false));
+		toolbarItems.add(new MenuItem("Save Map", data.getImageByName("Save Map"), false));
+		toolbarItems.add(new MenuItem("Load Map", data.getImageByName("Load Map"), false));
+		toolbarItems.add(new MenuItem("Reload Textures", data.getImageByName("Reload Textures"), false));
+		toolbarItems.add(new MenuItem("Minimap", data.getImageByName("Minimap"), false));
 	}
 	
 	public void tabClicked(Point pos, boolean lmb) {
@@ -120,15 +133,7 @@ public class Menu {
 		
 	}
 	
-	private void fillToolbar() {
-		toolbarItems.add(new MenuItem("Edit Mode", images.Other.get(4).img, false));
-		toolbarItems.add(new MenuItem("Move Mode", images.Other.get(5).img, false));
-		toolbarItems.add(new MenuItem("New Map", images.Other.get(0).img, false));
-		toolbarItems.add(new MenuItem("Save Map", images.Other.get(1).img, false));
-		toolbarItems.add(new MenuItem("Load Map", images.Other.get(2).img, false));
-		toolbarItems.add(new MenuItem("Reload Textures", images.Other.get(3).img, false));
-		toolbarItems.add(new MenuItem("Minimap", images.Other.get(6).img, false));
-	}
+	
 	
 	public void addTab(String name, Image img, int tabHeight) {
 		Tabs[activeTabs] = new Tab(name, img, tabHeight);

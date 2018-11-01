@@ -26,26 +26,17 @@ public class Board extends JPanel implements ActionListener{
 	static int mx1,mx2,my1,my2;
 	
 	public static Menu menu;
-	public Images images;
-	public ArrayList<Biome> biomes;
-	public ArrayList<Field> fields;
 	public DataHandler data;
 	
 	public Board(){
 
 		data = new DataHandler();
 		
-		images = new Images();
-		images.loadAllImages();
 		
 		
-		menu = new Menu(images);
-		fields = new ArrayList<Field>();
-		biomes = new ArrayList<Biome>();
-		loadFields();
-		loadBiomes();
+		menu = new Menu(data);
 		
-		mapGen = new MapGenerator(biomes, fields);
+		mapGen = new MapGenerator(data);
 		
 		addMouseListener(new CD());
 		setFocusable(true);
@@ -54,72 +45,16 @@ public class Board extends JPanel implements ActionListener{
 		fillMenu();
 	}
 	
-	private void loadFields() {
-		fields.add(new Field("Sea Water",images.findFieldImageByName("Sea Water")));
-		fields.add(new Field("Fresh Water",images.findFieldImageByName("Fresh Water")));
-		fields.add(new Field("Floating Water",images.findFieldImageByName("Floating Water")));
-		fields.add(new Field("Grass",images.findFieldImageByName("Grass")));
-		fields.add(new Field("Sand",images.findFieldImageByName("Sand")));
-		fields.add(new Field("Gravel",images.findFieldImageByName("Gravel")));
-		fields.add(new Field("Farmland",images.findFieldImageByName("Farmland")));
-	}
 	
-	private void loadBiomes() {
-		ArrayList<FieldWeight> fieldWeights = new ArrayList<FieldWeight>();
-		ArrayList<PlantWeight> plantWeights = new ArrayList<PlantWeight>();
-		// OCEAN 0
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(0),1)) ;
-		System.out.println(fieldWeights.get(0));
-		biomes.add(new Biome("Ocean",fieldWeights, plantWeights));
-		// LAKE 1
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(1),1)) ;
-		System.out.println(fieldWeights.get(0));
-		biomes.add(new Biome("Lake",fieldWeights, plantWeights));
-		// RIVER 2
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(2),1)) ;
-		biomes.add(new Biome("River",fieldWeights, plantWeights));
-		// GRASSLAND 3
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(3),1)) ;
-		biomes.add(new Biome("Grassland",fieldWeights, plantWeights));
-		// DESERT 4
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(4),1)) ;
-		biomes.add(new Biome("Desert",fieldWeights, plantWeights));
-		// BEACH 5
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(4),1)) ;
-		biomes.add(new Biome("Beach",fieldWeights, plantWeights));
-		// FOREST 6
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(3),1)) ;
-		biomes.add(new Biome("Grassland",fieldWeights, plantWeights));
-		// PATH 7
-		fieldWeights = new ArrayList<FieldWeight>();
-		plantWeights = new ArrayList<PlantWeight>();
-		fieldWeights.add(new FieldWeight(fields.get(5),1)) ;
-		biomes.add(new Biome("Grassland",fieldWeights, plantWeights));
-		for (Biome bi:biomes) {
-    		System.out.println(bi.fieldweights.get(0));
-    	}
-	}
+	
+	
 	
 	public void fillMenu() {
 		
 
-		menu.addTab("Fields", images.Other.get(7).img, 50);
-		menu.addTab("Plants", images.Other.get(8).img, 50);
-		menu.addTab("Buildings", images.Other.get(9).img, 50);
+		menu.addTab("Fields", data.getImageByName("Fields"), 50);
+		menu.addTab("Plants", data.getImageByName("Plants"), 50);
+		menu.addTab("Buildings", data.getImageByName("Buildings"), 50);
 		
 	}
 	
@@ -132,7 +67,7 @@ public class Board extends JPanel implements ActionListener{
 	public void paint(Graphics g){
 		super.paint(g);
 		g2d = (Graphics2D) g;
-		MapRender.drawMap(g2d, this.getSize(),images, MapOpen);
+		MapRender.drawMap(g2d, this.getSize(),data.images, MapOpen);
 	}
 	
 	
@@ -222,7 +157,7 @@ public class Board extends JPanel implements ActionListener{
 						b++;
 					}while(b<ydif);
 					Map.mapChange = true;
-					MapRender.drawMap(g2d, getSize(), images,true);
+					MapRender.drawMap(g2d, getSize(), data.images,true);
 					Map.saved = false;
 				}
 				
@@ -273,7 +208,7 @@ public class Board extends JPanel implements ActionListener{
 						b++;
 					}while(b<ydif);
 					Map.mapChange = true;
-					MapRender.drawMap(g2d, getSize(),images, true);
+					MapRender.drawMap(g2d, getSize(),data.images, true);
 					Map.saved = false;
 				}
 			}
@@ -291,7 +226,7 @@ public class Board extends JPanel implements ActionListener{
 					if (MapRender.screeny >= Map.map_ysize - MapRender.screenYSize)MapRender.screeny = Map.map_ysize - MapRender.screenYSize;
 					
 					Map.mapChange = true;
-					MapRender.drawMap(g2d, getSize(),images, true);
+					MapRender.drawMap(g2d, getSize(),data.images, true);
 					Map.saved = false;
 					System.out.println(MapRender.screenx +" : " + MapRender.screeny);
 			}

@@ -2,6 +2,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
+import MapGen.DataHandler;
+
 
 	
 public class MapGenerator {
@@ -13,12 +15,10 @@ public class MapGenerator {
 	    boolean walkOnWater = true;
 	    static int riverAmount = 5;
 	    
-		public ArrayList<Biome> biomes;
-		public ArrayList<Field> fields;
+	    DataHandler data;
 		
-		public MapGenerator(ArrayList<Biome> b, ArrayList<Field> f) {
-			biomes = b;
-			fields = f;
+		public MapGenerator(DataHandler Data) {
+			data = Data;
 		}
 		
 	    public void generateNewMap(){
@@ -141,20 +141,8 @@ public class MapGenerator {
 //	6 gravel
 //	7 farmland
 	    
-	    static int sumOfFieldChances(ArrayList<FieldWeight> fields) {
-	    	int result = 0;
-	    	for (FieldWeight f:fields) {
-	    		result += f.weight;
-	    	}
-	    	return result;
-	    }
-	    static int sumOfPlantChances(ArrayList<PlantWeight> plants) {
-	    	int result = 0;
-	    	for (PlantWeight p:plants) {
-	    		result += p.weight;
-	    	}
-	    	return result;
-	    }
+	    
+	    
 	    
 	    void generateBlocksNew(int x_c, int y_c) {
 	    	
@@ -164,8 +152,8 @@ public class MapGenerator {
 	            do {
 	    	    	int b = Board.MAP[x][y].biome;
 	    	    		//System.out.println(biomes.get(b).fieldweights.get(0).field);
-	            	if(biomes.get(b).fieldweights.size() == 1)
-	            		Board.MAP[x][y].id = fields.indexOf(biomes.get(b).fieldweights.get(0).field);
+	            	if(data.biomes.get(b).fieldweights.size() == 1)
+	            		Board.MAP[x][y].id = data.getTileByName(name);fields.indexOf(biomes.get(b).fieldweights.get(0).field);
 	            	else {
 	            		
 	            	}

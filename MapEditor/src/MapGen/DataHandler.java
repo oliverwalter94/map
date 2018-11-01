@@ -6,17 +6,21 @@ import java.util.ArrayList;
 public class DataHandler {
 	
 	public ArrayList<ImageObj> images;
-	public ArrayList<Tile> tiles;
+	public ArrayList<Tile> fields;
+	public ArrayList<Tile> plants;
+	public ArrayList<Tile> buildings;
 	public ArrayList<Biome> biomes;
 	
 	public DataHandler() {
 		images = new ArrayList<ImageObj>();
-		tiles = new ArrayList<Tile>();
+		fields = new ArrayList<Tile>();
+		plants = new ArrayList<Tile>();
+		buildings = new ArrayList<Tile>();
 		biomes = new ArrayList<Biome>();
 	}
 	
 	public int getImageIdByTile(Tile t) {
-		return images.lastIndexOf(t.img);
+		return images.indexOf(t.img);
 	}
 	
 	public Image getImageByName(String name) {
@@ -28,10 +32,36 @@ public class DataHandler {
 		return null;
 	}
 	
-	public int getTileByName (String name) {
-		int result = -1;
-			
-		return result;
+	public int getTileIdByName (String name, Tile.TileType type) {
+		for (Tile t:fields) {
+			if(t.name == name)
+				return fields.indexOf(t);
+		}
+		for (Tile t:plants) {
+			if(t.name == name)
+				return plants.indexOf(t);
+		}
+		return -1;
+	}
+	
+	public void addTile() {
+		
+	}
+	
+	public void addImage() {
+		
+	}
+	
+	public void readImages() {
+		
+	}
+	
+	public void readBiomes() {
+		
+	}
+	
+	public void readTiles() {
+		
 	}
 
 }

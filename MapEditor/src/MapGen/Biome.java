@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Biome {
 	String name;
 	
-	ArrayList<FieldWeight> fieldweights;
-	ArrayList<PlantWeight> plantweights;
+	public ArrayList<TileWeight> fieldweights;
+	public ArrayList<TileWeight> plantweights;
 	
-	public Biome(String Name, ArrayList<FieldWeight> Fields, ArrayList<PlantWeight> Plants) {
+	public Biome(String Name, ArrayList<TileWeight> Fields, ArrayList<TileWeight> Plants) {
 		name = Name;
 		fieldweights = Fields;
 		plantweights = Plants;
