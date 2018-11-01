@@ -49,7 +49,6 @@ public class Images {
 		return result;
 	}
 	
-	//TODO add name-finder for other Tile types
 	
 	public void loadImage(String name, String replaceName, ImageCategory imgcat) {
 		f = new File(TEX + replaceName);

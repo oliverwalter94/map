@@ -240,7 +240,7 @@ public class MapRender {
             	int c = field[xc][yc].id;
             	int d = field[xc][yc].subId;
             	g2d.drawImage(img.Fields.get(c).img,a,b,null);
-                if(d!=0)g2d.drawImage(Images.ExtraImages[rs/32 -1][d], a,b,null);
+                //if(d!=0)g2d.drawImage(Images.ExtraImages[rs/32 -1][d], a,b,null);
                 counter++;
                 xc++;
             } while (xc < screenXSize);

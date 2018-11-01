@@ -1,5 +1,5 @@
 package MapGen;
 
-public class Image {
+public class Tile {
 
 }
