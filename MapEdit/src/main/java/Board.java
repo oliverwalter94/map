@@ -1,4 +1,4 @@
-import MapGen.*;
+import MapGen.DataHandler;
 
 import javax.swing.*;
 import java.awt.*;

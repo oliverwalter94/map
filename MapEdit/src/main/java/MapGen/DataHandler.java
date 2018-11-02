@@ -1,6 +1,6 @@
 package MapGen;
 
-import java.awt.Image;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class DataHandler {

@@ -1,6 +1,6 @@
 package MapGen;
 
-import java.awt.Image;
+import java.awt.*;
 
 public class ImageObj {
 	public String name;
