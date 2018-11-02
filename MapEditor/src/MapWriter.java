@@ -37,7 +37,7 @@ public class MapWriter {
     	int x=0,y=0,ix=0,iy=0;
     	do {
 	    	do {
-	    		a.setRGB(ix, iy, Board.MAP[x][y].id*encrypt);
+	    		a.setRGB(ix, iy, Board.MAP[x][y].field*encrypt);
 		    	y++;
 		    	iy++;
 	    	}while (y < Map.map_ysize);
@@ -91,7 +91,7 @@ public class MapWriter {
     	int iy = 0;
     	do {
 	    	do {
-		    	switch(Board.MAP[x][y].id){
+		    	switch(Board.MAP[x][y].field){
 		    	case 1:{
 		    		b.setRGB(ix, iy, Color.blue.getRGB());
 		    		break;

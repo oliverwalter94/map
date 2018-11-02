@@ -151,9 +151,8 @@ public class MapGenerator {
         	do{
 	            do {
 	    	    	int b = Board.MAP[x][y].biome;
-	    	    		//System.out.println(biomes.get(b).fieldweights.get(0).field);
 	            	if(data.biomes.get(b).fieldweights.size() == 1)
-	            		Board.MAP[x][y].id = data.getTileByName(name);fields.indexOf(biomes.get(b).fieldweights.get(0).field);
+	            		Board.MAP[x][y].field = data.fields.indexOf(data.biomes.get(b).fieldweights.get(0));
 	            	else {
 	            		
 	            	}
@@ -230,6 +229,9 @@ public class MapGenerator {
 	  
 		
 	    void generateCoast() {
+			int beach = data.getBiomeIdByName("Beach");
+			int ocean = data.getBiomeIdByName("Ocean");
+
 //	        int xc = 0;
 //	        int yc = 0;
 //	        int i = 0;
@@ -281,56 +283,56 @@ public class MapGenerator {
 //	       } while (yc < map_ysize);
 	    }
 
-	    boolean check_right(int x, int y, int id, int distance,boolean biome){
+	    boolean check_right(int x, int y, int field_id, int distance,boolean biome){
 	        if (x + distance <= map_xsize){
-	            if (biome == false){
-	                if (Board.MAP[x + distance][y].id == id) return true;
+	            if (!biome){
+	                if (Board.MAP[x + distance][y].field == field_id) return true;
 	                else return false;
 	            }
 	            else{
-	                if (Board.MAP[x + distance][y].biome == id) return true;
+	                if (Board.MAP[x + distance][y].biome == field_id) return true;
 	                else return false;
 	            }
 	        }
 	        else return false;
 	    }
 
-	    static boolean check_left(int x, int y, int id, int distance, boolean biome){
+	    static boolean check_left(int x, int y, int field_id, int distance, boolean biome){
 	        if (x - distance >= 0){
-	            if (biome == false) {
-	                if (Board.MAP[x - distance][y].id == id) return true;
+	            if (!biome) {
+	                if (Board.MAP[x - distance][y].field == field_id) return true;
 	                else return false;
 	            }
 	            else{
-	                if (Board.MAP[x - distance][y].biome == id) return true;
+	                if (Board.MAP[x - distance][y].biome == field_id) return true;
 	                else return false;
 	            }
 	        }
 	        else return false;
 	    }
 
-	    static boolean check_up(int x, int y, int id, int distance, boolean biome){
+	    static boolean check_up(int x, int y, int field_id, int distance, boolean biome){
 	        if (y - distance >= 0){
-	            if (biome == false){
-	                if (Board.MAP[x][y - distance].id == id) return true;
+	            if (!biome){
+	                if (Board.MAP[x][y - distance].field == field_id) return true;
 	                else return false;
 	            }
 	            else{
-	                if (Board.MAP[x][y - distance].biome == id)  return true;
+	                if (Board.MAP[x][y - distance].biome == field_id)  return true;
 	                else return false;
 	            }
 	        }
 	        else return false;
 	    }
 
-	    static boolean check_down(int x, int y, int id, int distance, boolean biome){
+	    static boolean check_down(int x, int y, int field_id, int distance, boolean biome){
 	        if (y  + distance <= map_xsize){
-	            if (biome == false){
-	                if (Board.MAP[x][ y + distance].id == id) return true;
-	                else  return false;
+	            if (!biome){
+	                if (Board.MAP[x][ y + distance].field == field_id) return true;
+	                else return false;
 	            }
 	            else {
-	                if (Board.MAP[x][y + distance].biome == id)  return true;
+	                if (Board.MAP[x][y + distance].biome == field_id)  return true;
 	                else return false;
 	            }
 	        }

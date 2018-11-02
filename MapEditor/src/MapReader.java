@@ -29,7 +29,7 @@ public class MapReader{
 			} while (y < h);
 			Board.MapOpen = true;
 			Map.mapChange = true;
-			//MapRender.drawMap(Board.g2d, new Dimension(500,500),Board.images);
+			//GameRender.drawMap(Board.g2d, new Dimension(500,500),Board.images);
 		}
 		catch(Exception e){
 		System.out.println("Your Map could not be loaded. Either your map does not match the right map format or it was not a Map.");

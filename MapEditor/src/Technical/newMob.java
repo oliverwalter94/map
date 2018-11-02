@@ -190,7 +190,7 @@ public class newMob extends JDialog {
 		}
 		{
 			JLabel lblImageFile = new JLabel("");
-			lblImageFile.setIcon(new ImageIcon(newMob.class.getResource("/sources/newImg/zombie.png")));
+			lblImageFile.setIcon(new ImageIcon(newMob.class.getResource("/sources/NPCs/newImg/zombie.png")));
 			lblImageFile.setBounds(353, 196, 32, 32);
 			contentPanel.add(lblImageFile);
 		}

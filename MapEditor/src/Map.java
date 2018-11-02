@@ -1,5 +1,5 @@
 public class Map {
-	public int id;
+	public int field;
     public int biome;
     public int subId;
     public int adInf;
@@ -10,11 +10,11 @@ public class Map {
     static int mapDrawState = 0;
     static boolean saved = false;
     
-    public Map(int ID, int b, int SubId, int AdInf){
-        id = ID;
-        biome = b;
-        subId = SubId;
-        adInf = AdInf;
+    public Map(int field, int biome, int subId, int adInf){
+        this.field = field;
+        this.biome = biome;
+        this.subId = subId;
+        this.adInf = adInf;
     }
     
     

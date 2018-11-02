@@ -4,8 +4,6 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
-
 import MapGen.DataHandler;
 
 public class Menu {
@@ -37,8 +35,8 @@ public class Menu {
 		this.data = data;
 		
 		foreground = Color.lightGray;
-		background = new Color(21,21,21, 160);
-		backgroundSelected = new Color(81,81,81, 200);
+		background = new Color(21,21,21, 166);
+		backgroundSelected = new Color(89, 89, 89, 190);
 		line = Color.gray;
 		
 		Tabs = new Tab[10];
@@ -71,7 +69,7 @@ public class Menu {
 	public void tabClicked(Point pos, boolean lmb) {
 		
 		int tabIndex = 0;
-		tabIndex = ((int)pos.x/tabSize)+tabsPerRow*((int)pos.y/tabSize);
+		tabIndex = ((int)pos.x/tabSize)+tabsPerRow*(int)(pos.y/tabSize);
 		if(tabIndex < activeTabs) {
 			selectedTabIndex = tabIndex;
 		}
@@ -83,27 +81,27 @@ public class Menu {
 		System.out.println("clicked tab content" + pos.x + ":" + pos.y + " " + lmb);
 	}
 	
-	public void toolbarClicked(Point pos, boolean lmb) {
+	public void toolbarClicked(Point pos, boolean lmb, MapGenerator mapGen) {
 		
 		if(pos.x <= 200 + toolbarItems.size()*tabSize) {
 			int index = ((pos.x - 200)-(pos.x - 200)%tabSize) / tabSize;
 			switch(index) {
 			case 0:{
-				Board.editorstate = "EDIT";
+				Board.editorState = Board.EditorState.EDIT;
 				toolbarItems.get(0).active = true;
 				toolbarItems.get(1).active = false;
 				break;
 				}
 			case 1:{
-				Board.editorstate = "MOVE";
+				Board.editorState = Board.EditorState.MOVE;
 				toolbarItems.get(0).active = false;
 				toolbarItems.get(1).active = true;
 				break;
 				}
 			case 2:{
-				Board.mapGen.generateNewMap();
-				MapRender.screenx = 0;
-				MapRender.screeny = 0;
+				mapGen.generateNewMap();
+				GameRender.screenx = 0;
+				GameRender.screeny = 0;
 				Board.MapOpen = true;
 				Map.mapChange = true;
 				break;
@@ -118,7 +116,6 @@ public class Menu {
 				// TODO implement reload textures mechanism
 				}
 			case 6:{
-				// TODO implement switching minimap mode mechanism
 				if (Board.MapOpen){
 					if (Map.miniMap)
 							Map.miniMap = false;

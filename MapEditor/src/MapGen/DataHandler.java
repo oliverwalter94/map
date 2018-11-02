@@ -31,8 +31,16 @@ public class DataHandler {
 		}
 		return null;
 	}
-	
-	public int getTileIdByName (String name, Tile.TileType type) {
+
+	public int getBiomeIdByName(String name){
+		for(Biome b:biomes){
+			if(b.name == name)
+				return biomes.indexOf(b);
+		}
+		return -1;
+	}
+
+	public int getTileIdByName (String name) {
 		for (Tile t:fields) {
 			if(t.name == name)
 				return fields.indexOf(t);
