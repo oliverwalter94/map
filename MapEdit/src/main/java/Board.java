@@ -30,8 +30,8 @@ public class Board extends JPanel implements ActionListener{
 	private static String Mapstate = "ID";
 	static int mx1,mx2,my1,my2;
 	
-	private Menu menu;
-	private DataHandler data;
+	Menu menu;
+	DataHandler data;
 
 	private GameRender gameRender;
 	

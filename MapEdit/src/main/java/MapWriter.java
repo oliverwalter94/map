@@ -29,7 +29,11 @@ public class MapWriter {
     	}
     	else if (type == 1)writer_v0();
     	else if (type == 2)writer_v1();
-    	propWriter();
+        try {
+            propWriter();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
     public static void writer_v1(){
@@ -186,21 +190,17 @@ public class MapWriter {
 					}
     }
     
-    public static void propWriter(){
+    public static void propWriter() throws FileNotFoundException {
 
 	    File file = new File(MAPDIR + "/properties.prop");
-	    try (PrintWriter pw = new PrintWriter(file)) {
-	        pw.println("MAPNAME: " + InterfaceNew.textField.getText());
-	        pw.println("EDITORVERSION: " + InterfaceNew.EditerVersion);
-	        pw.println("X SIZE: " + Map.map_xsize);
-	        pw.println("Y SIZE: " + Map.map_ysize);
-	        
-	    }
-	    catch(FileNotFoundException e)
-	    {
-	        System.out.println("File Not Found");
-	        System.exit( 1 );
-	    }
+	    if(file.exists()){
+			PrintWriter pw = new PrintWriter(file);
+			pw.println("MAPNAME: " + InterfaceNew.textField.getText());
+			pw.println("EDITORVERSION: " + InterfaceNew.EditerVersion);
+			pw.println("X SIZE: " + Map.map_xsize);
+			pw.println("Y SIZE: " + Map.map_ysize);
+		}
+
     }
     
 }

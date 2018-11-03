@@ -5,11 +5,11 @@ public class Tile {
 		FIELD, PLANT, BUILDING
 	}
 	public String name;
-	public ImageObj img;
+	public ImageObj imgObj;
 	
 	
-	public Tile(String Name, ImageObj Img) {
+	public Tile(String Name, ImageObj ImgObj) {
 		name = Name;
-		img = Img;
+		imgObj = ImgObj;
 	}
 }

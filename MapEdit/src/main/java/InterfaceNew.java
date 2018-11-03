@@ -8,9 +8,6 @@ public class InterfaceNew extends JFrame {
 	private JPanel contentPane;
 	public static JTextField textField;
 	static String FileName = "Map";
-	JLabel lblChosenID;
-	JLabel lblChosenExtra;
-	final ButtonGroup buttonGroup = new ButtonGroup();
 	static String EditerVersion = "0.3.0.4";
 	static String Features = "*More and finally editable extras :D \r\n*Extras will be saved now and can also  be loaded\r\n*Some bugfixes";
 	private JFrame frmTest;

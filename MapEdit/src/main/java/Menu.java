@@ -1,4 +1,5 @@
 import MapGen.DataHandler;
+import MapGen.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -62,7 +63,14 @@ public class Menu {
 		toolbarItems.add(new MenuItem("Reload Textures", data.getImageByName("Reload Textures"), false));
 		toolbarItems.add(new MenuItem("Minimap", data.getImageByName("Minimap"), false));
 	}
-	
+
+	private void fillTabs() {
+
+		for (Tile t:data.fields) {
+			this.Tabs[0].menuItems.add(new MenuItem(t.name, t.imgObj.img, false));
+		}
+	}
+
 	public void tabClicked(Point pos, boolean lmb) {
 		
 		int tabIndex = 0;

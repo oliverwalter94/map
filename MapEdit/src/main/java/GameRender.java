@@ -18,6 +18,7 @@ public class GameRender {
 
     public GameRender(DataHandler data, Menu menu){
         this.data = data;
+        this.menu = menu;
     }
     
     static Screen_Array[][] field = new Screen_Array[screenXSize][screenYSize];
@@ -53,14 +54,14 @@ public class GameRender {
 				g2d.setColor(menu.backgroundSelected);
 			else
 				g2d.setColor(menu.background);
-	    	g2d.fill((Shape) new Rectangle2D.Double(renderWidthToolbar, 0, TAB, TAB));
+	    	g2d.fill( new Rectangle2D.Double(renderWidthToolbar, 0, TAB, TAB));
 	    	if(item.img != null) {
 	    		g2d.drawImage(item.img,renderWidthToolbar + 4,4, null );
 	    	}
 			renderWidthToolbar += TAB;
 		}
 
-	    	g2d.fill((Shape) new Rectangle2D.Double(renderWidthToolbar, 0, boardSize.width - renderWidthToolbar, TAB));
+	    	g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, boardSize.width - renderWidthToolbar, TAB));
 		
 		//Draw Tabs
 		if(menu.calcRender) {
@@ -75,7 +76,7 @@ public class GameRender {
 				g2d.setColor(menu.background);
 			
 			
-		    g2d.fill((Shape) new Rectangle2D.Double((i%TPR)*TAB, (i-i%TPR)/TPR * TAB, TAB, TAB));
+		    g2d.fill(new Rectangle2D.Double((i%TPR)*TAB, (i-i%TPR)/TPR * TAB, TAB, TAB));
     		g2d.drawImage(menu.Tabs[i].img,(i%TPR)*TAB + 4,(i-i%TPR)/TPR * TAB + 4, null );
 			i++;
 		}
@@ -230,7 +231,7 @@ public class GameRender {
             	int b = field[xc][yc].abc.y;
             	int c = field[xc][yc].id;
             	int d = field[xc][yc].subId;
-            	g2d.drawImage(data.fields.get(c).img.img,a,b,null);
+            	g2d.drawImage(data.fields.get(c).imgObj.img,a,b,null);
                 //if(d!=0)g2d.drawImage(Images.ExtraImages[rs/32 -1][d], a,b,null);
                 counter++;
                 xc++;
