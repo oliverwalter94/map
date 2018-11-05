@@ -5,22 +5,22 @@ import java.awt.geom.Rectangle2D;
 
 public class GameRender {
 
-    static int screenXSize = 38;
-    static int screenYSize = 24;
+    static int screenXSize = 70;
+    static int screenYSize = 48;
     static int screenx = 0;
     static int screeny = 0;
 	static int counter = 1;
     static int factor = 5;
-    static int rs = 32; // rendersize
+    static int rs = 16; // rendersize
     static Dimension boardSize;
     DataHandler data;
     Menu menu;
 
-    public GameRender(DataHandler data, Menu menu){
-        this.data = data;
-        this.menu = menu;
+    public GameRender() {
+        this.data = Board.dataHandler;
+        this.menu = Board.menu;
     }
-    
+
     static Screen_Array[][] field = new Screen_Array[screenXSize][screenYSize];
 	
 	protected void drawGame(Graphics2D g2d, Dimension size, boolean mapOpen){
@@ -40,8 +40,6 @@ public class GameRender {
 		
 		//HARDCODED VARS FOR MENU
 		final int MBW = 200; // menu bar width
-		final int TAB = menu.tabSize; //Tab Size
-		final int TPR = menu.tabsPerRow; //Tabs per Row
 		final int LINE = 1;
 		
 		int renderHeightMenu = 0;
@@ -54,18 +52,18 @@ public class GameRender {
 				g2d.setColor(menu.backgroundSelected);
 			else
 				g2d.setColor(menu.background);
-	    	g2d.fill( new Rectangle2D.Double(renderWidthToolbar, 0, TAB, TAB));
+            g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, menu.tabSize, menu.tabSize));
 	    	if(item.img != null) {
 	    		g2d.drawImage(item.img,renderWidthToolbar + 4,4, null );
 	    	}
-			renderWidthToolbar += TAB;
+            renderWidthToolbar += menu.tabSize;
 		}
 
-	    	g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, boardSize.width - renderWidthToolbar, TAB));
+        g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, boardSize.width - renderWidthToolbar, menu.tabSize));
 		
 		//Draw Tabs
 		if(menu.calcRender) {
-            menu.tabsHeight = (((menu.activeTabs-menu.activeTabs%TPR) / TPR)+1) * TAB;
+            menu.tabsHeight = (((menu.activeTabs - menu.activeTabs % menu.tabsPerRow) / menu.tabsPerRow) + 1) * menu.tabSize;
             menu.calcRender = false;
 		}
 		int i = 0;
@@ -74,24 +72,24 @@ public class GameRender {
 				g2d.setColor(menu.backgroundSelected);
 			else
 				g2d.setColor(menu.background);
-			
-			
-		    g2d.fill(new Rectangle2D.Double((i%TPR)*TAB, (i-i%TPR)/TPR * TAB, TAB, TAB));
-    		g2d.drawImage(menu.Tabs[i].img,(i%TPR)*TAB + 4,(i-i%TPR)/TPR * TAB + 4, null );
+
+
+            g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize, menu.tabSize, menu.tabSize));
+            g2d.drawImage(menu.Tabs[i].img, (i % menu.tabsPerRow) * menu.tabSize + 4, (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize + 4, null);
 			i++;
 		}
-		renderHeightMenu = (i-i%TPR)/TPR * TAB;
+        renderHeightMenu = (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize;
 		
 		// Fill row of tabs with gray area
-		if(menu.activeTabs%TPR > 0) {
+        if (menu.activeTabs % menu.tabsPerRow > 0) {
 			g2d.setColor(menu.background);
-			
-		    g2d.fill((Shape) new Rectangle2D.Double((i%TPR)*TAB, renderHeightMenu, TAB*(TPR-menu.activeTabs%TPR), TAB ));
-		    renderHeightMenu += TAB;
+
+            g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, renderHeightMenu, menu.tabSize * (menu.tabsPerRow - menu.activeTabs % menu.tabsPerRow), menu.tabSize));
+            renderHeightMenu += menu.tabSize;
 		}
 		//Draw separator Line
 		g2d.setColor(menu.line);
-	    g2d.fill((Shape) new Rectangle2D.Double(0, renderHeightMenu, MBW, LINE));
+        g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, MBW, LINE));
 	    renderHeightMenu += LINE;
 		
 		//Draw Rest
@@ -100,7 +98,7 @@ public class GameRender {
 		
 	    
 		g2d.setColor(menu.background);
-	    g2d.fill((Shape) new Rectangle2D.Double(0, renderHeightMenu, MBW, boardSize.height - renderHeightMenu));
+        g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, MBW, boardSize.height - renderHeightMenu));
 	    
 	    
 	}
@@ -114,7 +112,7 @@ public class GameRender {
         int y_len = rs;
         do{
             do{
-                field[x_c][y_c] = new Screen_Array(Board.MAP[screenx + x_c][screeny + y_c].field, new Rectangle(x_val, y_val, x_len, y_len), Board.MAP[screenx + x_c][ screeny + y_c].biome, Board.MAP[screenx + x_c][ screeny + y_c].subId);
+                field[x_c][y_c] = new Screen_Array(Board.MAP[screenx + x_c][screeny + y_c].field, new Rectangle(x_val, y_val, x_len, y_len), Board.MAP[screenx + x_c][screeny + y_c].biome, Board.MAP[screenx + x_c][screeny + y_c].plant);
                 x_val += rs;
                 x_c++;
             } while (x_c < screenXSize);
@@ -231,8 +229,8 @@ public class GameRender {
             	int b = field[xc][yc].abc.y;
             	int c = field[xc][yc].id;
             	int d = field[xc][yc].subId;
-            	g2d.drawImage(data.fields.get(c).imgObj.img,a,b,null);
-                //if(d!=0)g2d.drawImage(Images.ExtraImages[rs/32 -1][d], a,b,null);
+                g2d.drawImage(data.fields.get(c).imgObj.img, a, b, rs, rs, null);
+                if (d != 0) g2d.drawImage(data.plants.get(d).imgObj.img, a, b, rs, rs, null);
                 counter++;
                 xc++;
             } while (xc < screenXSize);

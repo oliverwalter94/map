@@ -69,7 +69,7 @@ public class MapWriter {
     	iy = 0;
     	do {
 	    	do {
-		    	a.setRGB(ix,iy,Board.MAP[x][y].subId*encrypt);
+				a.setRGB(ix, iy, Board.MAP[x][y].plant * encrypt);
 		    	y++;
 		    	iy++;
 	    	}while (y < Map.map_ysize);

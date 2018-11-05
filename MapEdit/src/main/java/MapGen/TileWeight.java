@@ -2,8 +2,8 @@ package MapGen;
 import java.util.ArrayList;
 
 public class TileWeight {
-		Tile tile;
-		float weight;
+	public Tile tile;
+	public float weight;
 		ArrayList<Tile> requiredTile;
 		
 		public TileWeight(Tile t, float Weight) {

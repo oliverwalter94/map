@@ -1,4 +1,5 @@
 import MapGen.DataHandler;
+import MapGen.TileWeight;
 
 import java.util.Random;
 
@@ -13,9 +14,9 @@ public class MapGenerator {
 	    static int riverAmount = 5;
 	    
 	    DataHandler data;
-		
-		public MapGenerator(DataHandler Data) {
-			data = Data;
+
+    public MapGenerator() {
+        data = Board.dataHandler;
 		}
 		
 	    public void generateNewMap(){
@@ -60,6 +61,7 @@ public class MapGenerator {
 	                    	Board.MAP[x_c][y_c] = new Map(0,b,0,0);
 	                    }
 	                }
+//					Board.MAP[x_c][y_c] = new Map(0,0,0,0);
 	                x_c++;
 	            } while (x_c < map_xsize);
 	            if (x_c == map_xsize)
@@ -92,9 +94,9 @@ public class MapGenerator {
 	        x_c = 0;
 	        y_c = 0;
 
-	        generateCoast();
-	        
-	        create_rivers();
+//	        generateCoast();
+
+//	        create_rivers();
 	        
 	        generateBlocksNew(x_c, y_c);
 	    }
@@ -129,17 +131,6 @@ public class MapGenerator {
 	        } while (y_c < map_ysize);
 	    }
 
-//OLD:
-//	1 seawater
-//	2 freshwater
-//	3 floatingwater
-//	4 grass
-//	5 sand
-//	6 gravel
-//	7 farmland
-	    
-	    
-	    
 	    
 	    void generateBlocksNew(int x_c, int y_c) {
 	    	
@@ -148,11 +139,32 @@ public class MapGenerator {
         	do{
 	            do {
 	    	    	int b = Board.MAP[x][y].biome;
+                    //generate Field
 	            	if(data.biomes.get(b).fieldweights.size() == 1)
-	            		Board.MAP[x][y].field = data.fields.indexOf(data.biomes.get(b).fieldweights.get(0));
+                        Board.MAP[x][y].field = data.fields.indexOf(data.biomes.get(b).fieldweights.get(0).tile);
 	            	else {
-	            		
+                        float chance = R.nextFloat();
+                        float soFar = 0;
+                        for (TileWeight tileWeight : data.biomes.get(b).fieldweights) {
+                            soFar += tileWeight.weight;
+                            if (chance <= soFar) {
+                                Board.MAP[x][y].field = data.fields.indexOf(tileWeight.tile);
+                                break;
+                            }
+                        }
 	            	}
+                    //Generate plants
+                    if (data.biomes.get(b).plantweights != null) {
+                        float chance = R.nextFloat();
+                        float soFar = 0;
+                        for (TileWeight tileWeight : data.biomes.get(b).plantweights) {
+                            soFar += tileWeight.weight;
+                            if (chance <= soFar) {
+                                Board.MAP[x][y].plant = data.plants.indexOf(tileWeight.tile);
+                                break;
+                            }
+                        }
+                    }
 	                x++;
 	            } while (x < map_xsize);
 	            if (x == map_xsize)
@@ -164,68 +176,9 @@ public class MapGenerator {
 	        x = 0;
 	        y = 0;
 	    }
-	    
-	    static void generateBlocks(int x_c, int y_c){
-	    	do{
-	            do {
-//	            	int a = R.nextInt(10);
-//	                switch (Board.MAP[x_c][y_c].biome)
-//	                {
-//	                case 0:{
-//	                	Board.MAP[x_c][y_c].id = 1;// ocean
-//	                	break;
-//	                }
-//	                case 1:{
-//	                	Board.MAP[x_c][y_c].id = 4; //
-//	                	break;
-//	                }
-//	                case 2:{
-//	                	Board.MAP[x_c][y_c].id = 3;
-//	                	if (a == 1)Board.MAP[x_c][y_c].subId = 1;
-//	                	else if(a == 3) Board.MAP[x_c][y_c].subId = 3;
-//	                	else if (a == 5) Board.MAP[x_c][y_c].subId = 6;
-//	                	break;
-//	                }
-//	                case 3:{
-//	                	Board.MAP[x_c][y_c].id = 3;
-//	                	if (a <= 8)Board.MAP[x_c][y_c].subId = 1;
-//	                	break;
-//	                }
-//	                case 4:{
-//	                	Board.MAP[x_c][y_c].id = 3;
-//	                	if (a <= 8)Board.MAP[x_c][y_c].subId = 2;
-//	                	break;
-//	                }
-//	                case 5:{
-//	                	Board.MAP[x_c][y_c].id = 3;
-//	                	if (a <= 4)Board.MAP[x_c][y_c].subId = 1;
-//	                	else if (a <= 8)Board.MAP[x_c][y_c].subId = 2;
-//	                	break;
-//	                }
-//	                case 6:{
-//	                	Board.MAP[x_c][y_c].id = 4;
-//	                	if (a == 4)Board.MAP[x_c][y_c].subId = 4;
-//	                	break;
-//	                }
-//	                case 8:{
-//	                	Board.MAP[x_c][y_c].id = 1;
-//	                	break;
-//	                }
-//	                }
-//	                x_c++;
-	            } while (x_c < map_xsize);
-	            if (x_c == map_xsize)
-	            {
-	                x_c = 0;
-	                y_c++;
-	            }
-	        } while (y_c < map_ysize);
-	        x_c = 0;
-	        y_c = 0;
-	    }
-	  
-		
-	    void generateCoast() {
+
+
+    void generateCoast() {
 			int beach = data.getBiomeIdByName("Beach");
 			int ocean = data.getBiomeIdByName("Ocean");
 

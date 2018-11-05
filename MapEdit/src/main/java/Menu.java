@@ -27,10 +27,10 @@ public class Menu {
 	int tabsPerRow;
 	
 	DataHandler data;
-	
-	
-	public Menu(DataHandler data) {
-		this.data = data;
+
+
+	public Menu() {
+		this.data = Board.dataHandler;
 		
 		foreground = Color.lightGray;
 		background = new Color(21,21,21, 166);
@@ -113,12 +113,15 @@ public class Menu {
 				}
 			case 3:{
 				// TODO implement new saving mechanism
+				break;
 				}
 			case 4:{
 				// TODO implement new loading mechanism
+				break;
 				}
 			case 5:{
 				// TODO implement reload textures mechanism
+				break;
 				}
 			case 6:{
 				if (Board.MapOpen){
@@ -129,6 +132,7 @@ public class Menu {
 					Map.mapChange = true;
 					toolbarItems.get(6).active = !toolbarItems.get(6).active;
 					}
+				break;
 				}
 			}
 		}

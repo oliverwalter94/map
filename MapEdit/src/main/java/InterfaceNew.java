@@ -47,12 +47,6 @@ public class InterfaceNew extends JFrame {
 		frmTest.setSize(1101, 765);
 		frmTest.setVisible(true);
 		frmTest.setLocationRelativeTo(null);
-		
-
-		
-//
-		
-
 
 	}
 
