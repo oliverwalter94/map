@@ -118,6 +118,7 @@ public class Menu {
                     toolbarItems.get(0).active = true;
                     toolbarItems.get(1).active = false;
                     sidebarVisible = true;
+                    Board.addInfoMessage(new Message("Edit - Mode", Message.Type.INFO));
                     break;
                 }
                 case 1: {
@@ -125,6 +126,7 @@ public class Menu {
                     toolbarItems.get(0).active = false;
                     toolbarItems.get(1).active = true;
                     sidebarVisible = false;
+                    Board.addInfoMessage(new Message("Move - Mode", Message.Type.INFO));
                     break;
                 }
                 case 2: {
@@ -133,26 +135,33 @@ public class Menu {
                     GameRender.screeny = 0;
                     Board.MapOpen = true;
                     Map.mapChange = true;
+                    Board.addInfoMessage(new Message("Generated new Map", Message.Type.INFO));
                     break;
                 }
                 case 3: {
                     // TODO implement new saving mechanism
+                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
                 case 4: {
                     // TODO implement new loading mechanism
+                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
                 case 5: {
                     // TODO implement reload textures mechanism
+                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
                 case 6: {
                     if (Board.MapOpen) {
-                        if (Map.miniMap)
+                        if (Map.miniMap) {
                             Map.miniMap = false;
-                        else
+                            Board.addInfoMessage(new Message("Minimap off", Message.Type.INFO));
+                        } else {
                             Map.miniMap = true;
+                            Board.addInfoMessage(new Message("Minimap on", Message.Type.INFO));
+                        }
                         Map.mapChange = true;
                         toolbarItems.get(6).active = !toolbarItems.get(6).active;
                     }

@@ -2,6 +2,7 @@ import MapGen.DataHandler;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 class GameRender {
 
@@ -30,6 +31,7 @@ class GameRender {
             } else drawMiniMap(g2d);
         }
         renderMenu(g2d);
+        renderMessages(g2d);
     }
 
     private void renderMenu(Graphics2D g2d) {
@@ -71,7 +73,7 @@ class GameRender {
                 g2d.setColor(menu.background);
 
 
-            g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize, menu.tabSize, menu.tabSize));
+            g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, ((i - (i % menu.tabsPerRow)) / menu.tabsPerRow) * menu.tabSize, menu.tabSize, menu.tabSize));
             g2d.drawImage(menu.Tabs[i].img, (i % menu.tabsPerRow) * menu.tabSize + 4, (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize + 4, null);
             i++;
         }
@@ -114,6 +116,24 @@ class GameRender {
             g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, menu.sideBarWidth, boardSize.height - renderHeightMenu));
         }
 
+    }
+
+    private void renderMessages(Graphics2D g2d) {
+        for (Message message : Board.messages) {
+            g2d.setColor(message.background);
+            Rectangle2D bounds = g2d.getFontMetrics(message.font).getStringBounds(message.text, null);
+            g2d.setFont(message.font);
+            if (message.type == Message.Type.INFO || message.type == Message.Type.ERROR) {
+                g2d.fill(new RoundRectangle2D.Double((boardSize.getWidth() - bounds.getWidth()) / 2 - 8, 80, bounds.getWidth() + 16, bounds.getHeight() + 8, 7, 7));
+                if (message.type == Message.Type.INFO) g2d.setColor(message.fontColor);
+                else g2d.setColor(Color.red);
+                g2d.drawString(message.text, (int) (boardSize.getWidth() - bounds.getWidth()) / 2, 80 + (int) bounds.getHeight() + 1);
+            } else {
+                g2d.fill(new RoundRectangle2D.Double(message.position.x, message.position.y, bounds.getWidth() + 16, bounds.getHeight() + 8, 7, 7));
+                g2d.setColor(message.fontColor);
+                g2d.drawString(message.text, message.position.x + 8, message.position.y + (int) bounds.getHeight());
+            }
+        }
     }
 
     private void toScreenArray() {

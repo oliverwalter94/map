@@ -52,76 +52,6 @@ public class MapGenerator {
         return result;
     }
 
-    void generateNewMap() {
-        int x_c = 0;
-        int y_c = 0;
-        do {
-            do {
-                int a = R.nextInt(101);
-                int b = R.nextInt(6) + 1;
-                if (x_c == 0 || y_c == 0 || x_c == (map_xsize - 1) || y_c == (map_ysize - 1) || x_c == 1 || y_c == 1 || x_c == (map_xsize - 2) || y_c == (map_ysize - 2)) {
-                    Board.MAP[x_c][y_c] = new Map(0, 0, 0, 0);
-                } else if (x_c == 2 && y_c == 2) {
-                    Board.MAP[x_c][y_c] = new Map(0, 5, 0, 0);
-                } else {
-                    if (a <= 95) {
-                        if (y_c != 2 && x_c != 2) {
-                            if (Board.MAP[x_c][y_c - 1].biome == Board.MAP[x_c - 1][y_c].biome) {
-                                Board.MAP[x_c][y_c] = new Map(0, Board.MAP[x_c][y_c - 1].biome, 0, 0);
-                            } else {
-                                int i = R.nextInt(2);
-                                if (i == 0)
-                                    Board.MAP[x_c][y_c] = new Map(0, Board.MAP[x_c][y_c - 1].biome, 0, 0);
-                                else
-                                    Board.MAP[x_c][y_c] = new Map(0, Board.MAP[x_c - 1][y_c].biome, 0, 0);
-                            }
-                        } else if (x_c == 2) {
-                            Board.MAP[x_c][y_c] = new Map(0, Board.MAP[x_c][y_c - 1].biome, 0, 0);
-                        } else if (y_c == 2) {
-                            Board.MAP[x_c][y_c] = new Map(0, Board.MAP[x_c - 1][y_c].biome, 0, 0);
-                        }
-                    } else {
-                        if (b == 1) do {
-                            b = R.nextInt(6) + 1;
-                        } while (b == 1);
-                        Board.MAP[x_c][y_c] = new Map(0, b, 0, 0);
-                    }
-                }
-                x_c++;
-            } while (x_c < map_xsize);
-            if (x_c == map_xsize) {
-                x_c = 0;
-                y_c++;
-            }
-        } while (y_c < map_ysize);
-        x_c = 0;
-        y_c = 0;
-        int twice = 0;
-        do {
-            do {
-                do {
-                    if (x_c >= 2 && y_c >= 2 && x_c <= map_xsize - 2 && y_c <= map_ysize - 2) {
-                        int b = Board.MAP[x_c][y_c].biome;
-                        if (!check_up(x_c, y_c, b, 1, true) && !check_down(x_c, y_c, b, 1, true) && !check_left(x_c, y_c, b, 1, true) && !check_right(x_c, y_c, b, 1, true))
-                            Board.MAP[x_c][y_c] = new Map(0, Board.MAP[x_c - 1][y_c].biome, 0, 0);
-                    }
-                    x_c++;
-                } while (x_c < map_xsize);
-                if (x_c == map_xsize) {
-                    x_c = 0;
-                    y_c++;
-                }
-            } while (y_c < map_ysize);
-            twice++;
-        } while (twice < 2);
-
-        generateCoast();
-
-//	        create_rivers();
-
-        generateBlocksNew();
-    }
-
     public void generateNewEmptyMap() {
         int x_c = 0;
         int y_c = 0;
@@ -136,22 +66,6 @@ public class MapGenerator {
             }
         } while (y_c < map_ysize);
     }
-
-    public static void clearMap() {
-        int x_c = 0;
-        int y_c = 0;
-        do {
-            do {
-                Board.MAP[x_c][y_c] = null;
-                x_c++;
-            } while (x_c < map_xsize);
-            if (x_c == map_xsize) {
-                x_c = 0;
-                y_c++;
-            }
-        } while (y_c < map_ysize);
-    }
-
 
     private void generateBlocksNew() {
 
@@ -194,96 +108,6 @@ public class MapGenerator {
             }
         } while (y < map_ysize);
     }
-
-
-    private void generateCoast() {
-        int beach = data.getBiomeIdByName("Beach");
-        int ocean = data.getBiomeIdByName("Ocean");
-
-        int xc = 0;
-        int yc = 0;
-        int i = 0;
-        do {
-            do {
-                do {
-                    if (Board.MAP[xc][yc].biome != 0) {
-                        if (check_left(xc, yc, ocean, 1, true) || check_up(xc, yc, ocean, 1, true) || check_right(xc, yc, ocean, 1, true) || check_down(xc, yc, ocean, 1, true)) {
-                            if (R.nextInt(4) == 0)
-                                Board.MAP[xc][yc].biome = ocean;
-                        }
-                    }
-                    xc++;
-                } while (xc < map_xsize);
-                if (xc == map_xsize) {
-                    xc = 0;
-                    yc++;
-                }
-            } while (yc < map_ysize);
-            xc = 0;
-            yc = 0;
-            i++;
-        } while (i < 4);
-        do {
-            do {
-                if (Board.MAP[xc][yc].biome != 0) {
-                    if (check_left(xc, yc, 0, 1, true) || check_up(xc, yc, 0, 1, true) || check_right(xc, yc, 0, 1, true) || check_down(xc, yc, 0, 1, true)) {
-                        Board.MAP[xc][yc].biome = beach;
-                    }
-                    if (check_left(xc, yc, 1, 1, true) || check_up(xc, yc, 1, 1, true) || check_right(xc, yc, 1, 1, true) || check_down(xc, yc, 1, 1, true)) {
-                        if (R.nextInt(3) == 1) {
-                            Board.MAP[xc][yc].biome = beach;
-                        }
-                    }
-                }
-                xc++;
-            } while (xc < map_xsize);
-            if (xc == map_xsize) {
-                xc = 0;
-                yc++;
-            }
-        } while (yc < map_ysize);
-    }
-
-    private boolean check_right(int x, int y, int field_id, int distance, boolean biome) {
-        if (x + distance <= map_xsize) {
-            if (!biome) {
-                return Board.MAP[x + distance][y].field == field_id;
-            } else {
-                return Board.MAP[x + distance][y].biome == field_id;
-            }
-        } else return false;
-    }
-
-    private static boolean check_left(int x, int y, int field_id, int distance, boolean biome) {
-        if (x - distance >= 0) {
-            if (!biome) {
-                return Board.MAP[x - distance][y].field == field_id;
-            } else {
-                return Board.MAP[x - distance][y].biome == field_id;
-            }
-        } else return false;
-    }
-
-    private static boolean check_up(int x, int y, int field_id, int distance, boolean biome) {
-        if (y - distance >= 0) {
-            if (!biome) {
-                return Board.MAP[x][y - distance].field == field_id;
-            } else {
-                return Board.MAP[x][y - distance].biome == field_id;
-            }
-        } else return false;
-    }
-
-    private static boolean check_down(int x, int y, int field_id, int distance, boolean biome) {
-        if (y + distance <= map_xsize) {
-            if (!biome) {
-                return Board.MAP[x][y + distance].field == field_id;
-            } else {
-                return Board.MAP[x][y + distance].biome == field_id;
-            }
-        } else return false;
-    }
-
 
     public static void create_rivers() {
         int rivercounter = 0;

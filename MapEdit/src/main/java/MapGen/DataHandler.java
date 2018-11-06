@@ -206,7 +206,6 @@ public class DataHandler {
                     addTile(je.getAsJsonObject());
             }
 
-            System.out.println(fields.get(0).name);
         } catch (IOException e) {
             e.printStackTrace();
         }
