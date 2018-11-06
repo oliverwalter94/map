@@ -17,24 +17,19 @@ public class Board extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	static boolean MapOpen = false;
 	private static int timestat = 0;
-	public static Graphics2D g2d;
-	static int plusHor = 0;
-	static int plusVer = 0;
-	Timer time;
+	private static Graphics2D g2d;
+	private Timer time;
 	public static Map[][] MAP = new Map[Map.map_xsize][Map.map_ysize];
-	static boolean IDsel = false, Extrasel = false;
-	static int selID,selEXTRA;
-	static int x1,x2,y1,y2;
+	private static int x1, x2, y1, y2;
 	static EditorState editorState = EditorState.EDIT;
-	private static String Mapstate = "ID";
-	static int mx1,mx2,my1,my2;
+	private static int mx1, mx2, my1, my2;
 
 	static Menu menu;
 	static DataHandler dataHandler;
-	public static MapGenerator mapGen;
+	static MapGenerator mapGen;
 	private GameRender gameRenderer;
 
-	public Board(){
+	Board() {
 
 		dataHandler = new DataHandler();
 
@@ -48,16 +43,6 @@ public class Board extends JPanel implements ActionListener{
 		setFocusable(true);
 		time = new Timer(30,this);
 		time.start();
-		fillMenu();
-	}
-
-	public void fillMenu() {
-
-
-		menu.addTab("Fields", dataHandler.getImageByName("Fields"), 50);
-		menu.addTab("Plants", dataHandler.getImageByName("Plants"), 50);
-		menu.addTab("Buildings", dataHandler.getImageByName("Buildings"), 50);
-
 	}
 
 	public void actionPerformed(ActionEvent e){
@@ -85,8 +70,7 @@ public class Board extends JPanel implements ActionListener{
 			if((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && Tabs.contains(e.getPoint())) {
 				menu.tabClicked(e.getPoint(), e.getButton()==MouseEvent.BUTTON1);
 				m = true;
-			}
-			else if((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && TabContent.contains(e.getPoint())) {
+			} else if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && TabContent.contains(e.getPoint()) && menu.sidebarVisible) {
 				menu.tabContentClicked(e.getPoint(), e.getButton()==MouseEvent.BUTTON1);
 				m = true;
 			}
@@ -97,7 +81,7 @@ public class Board extends JPanel implements ActionListener{
 			else {
 				m = false;
 				if (editorState == EditorState.EDIT){
-					if (e.getButton() == MouseEvent.BUTTON1 && MapOpen && !Map.miniMap && (IDsel || Extrasel)){
+					if (e.getButton() == MouseEvent.BUTTON1 && MapOpen && !Map.miniMap) {
 						x1 = e.getX() / GameRender.rs;
 						y1 = e.getY() / GameRender.rs;
 					}
@@ -112,7 +96,7 @@ public class Board extends JPanel implements ActionListener{
 		}
 		public void mouseReleased(MouseEvent e){
 			if (editorState == EditorState.EDIT && !m){
-				if (e.getButton() == MouseEvent.BUTTON1 && MapOpen && !Map.miniMap && IDsel && Mapstate.equals("ID")){
+				if (e.getButton() == MouseEvent.BUTTON1 && MapOpen && !Map.miniMap && menu.selectedTabIndex == 0) {
 					x2 = e.getX()/ GameRender.rs;
 					y2 = e.getY()/ GameRender.rs;
 					int xdif,ydif;
@@ -125,7 +109,7 @@ public class Board extends JPanel implements ActionListener{
 
 					if(x2>x1 && y2>y1)do{
 						do{
-							MAP[x1+a+ GameRender.screenx][y1+b+ GameRender.screeny].field = selID;
+							MAP[x1 + a + GameRender.screenx][y1 + b + GameRender.screeny].field = menu.Tabs[0].selected;
 							a++;
 						}while(a<xdif);
 						if (a == xdif)a=0;
@@ -134,7 +118,7 @@ public class Board extends JPanel implements ActionListener{
 
 					else if(x2<x1 && y2<y1)do{
 						do{
-							MAP[x1-a + GameRender.screenx][y1-b+ GameRender.screeny].field = selID;
+							MAP[x1 - a + GameRender.screenx][y1 - b + GameRender.screeny].field = menu.Tabs[0].selected;
 							a++;
 						}while(a<xdif);
 						if (a == xdif)a=0;
@@ -143,7 +127,7 @@ public class Board extends JPanel implements ActionListener{
 
 					else if(x2>x1 && y2<y1)do{
 						do{
-							MAP[x1+a + GameRender.screenx][y1-b+ GameRender.screeny].field = selID;
+							MAP[x1 + a + GameRender.screenx][y1 - b + GameRender.screeny].field = menu.Tabs[0].selected;
 							a++;
 						}while(a<xdif);
 						if (a == xdif)a=0;
@@ -152,7 +136,7 @@ public class Board extends JPanel implements ActionListener{
 
 					else do{
 							do {
-								MAP[x1 - a + GameRender.screenx][y1 + b + GameRender.screeny].field = selID;
+								MAP[x1 - a + GameRender.screenx][y1 + b + GameRender.screeny].field = menu.Tabs[0].selected;
 								a++;
 							} while (a < xdif);
 							if (a == xdif) a = 0;
@@ -163,7 +147,7 @@ public class Board extends JPanel implements ActionListener{
 					Map.saved = false;
 				}
 
-				if (e.getButton() == MouseEvent.BUTTON1 && MapOpen && !Map.miniMap && Extrasel && Mapstate.equals("EXTRA")){
+				if (e.getButton() == MouseEvent.BUTTON1 && MapOpen && !Map.miniMap && menu.selectedTabIndex == 1) {
 					x2 = e.getX()/ GameRender.rs;
 					y2 = e.getY()/ GameRender.rs;
 					int xdif,ydif;
@@ -180,7 +164,7 @@ public class Board extends JPanel implements ActionListener{
 
 					if(x2>x1 && y2>y1)do{
 						do{
-							MAP[x1 + a + GameRender.screenx][y1 + b + GameRender.screeny].plant = selEXTRA;
+							MAP[x1 + a + GameRender.screenx][y1 + b + GameRender.screeny].plant = menu.Tabs[1].selected;
 							a++;
 						}while(a<xdif);
 						if (a == xdif)a=0;
@@ -189,7 +173,7 @@ public class Board extends JPanel implements ActionListener{
 
 					else if(x2<x1 && y2<y1)do{
 						do{
-							MAP[x1 - a + GameRender.screenx][y1 - b + GameRender.screeny].plant = selEXTRA;
+							MAP[x1 - a + GameRender.screenx][y1 - b + GameRender.screeny].plant = menu.Tabs[1].selected;
 							a++;
 						}while(a<xdif);
 						if (a == xdif)a=0;
@@ -198,7 +182,7 @@ public class Board extends JPanel implements ActionListener{
 
 					else if(x2>x1 && y2<y1)do{
 						do{
-							MAP[x1 + a + GameRender.screenx][y1 - b + GameRender.screeny].plant = selEXTRA;
+							MAP[x1 + a + GameRender.screenx][y1 - b + GameRender.screeny].plant = menu.Tabs[1].selected;
 							a++;
 						}while(a<xdif);
 						if (a == xdif)a=0;
@@ -207,7 +191,7 @@ public class Board extends JPanel implements ActionListener{
 
 					else do{
 							do {
-								MAP[x1 - a + GameRender.screenx][y1 + b + GameRender.screeny].plant = selEXTRA;
+								MAP[x1 - a + GameRender.screenx][y1 + b + GameRender.screeny].plant = menu.Tabs[1].selected;
 								a++;
 							} while (a < xdif);
 							if (a == xdif) a = 0;

@@ -7,10 +7,13 @@ public class Biome {
 	
 	public ArrayList<TileWeight> fieldweights;
 	public ArrayList<TileWeight> plantweights;
-	
-	public Biome(String Name, ArrayList<TileWeight> Fields, ArrayList<TileWeight> Plants) {
+
+	boolean naturallyGenerated;
+
+	Biome(String Name, ArrayList<TileWeight> Fields, ArrayList<TileWeight> Plants, boolean NaturallyGenerated) {
 		name = Name;
 		fieldweights = Fields;
 		plantweights = Plants;
+		naturallyGenerated = NaturallyGenerated;
 	}
 }

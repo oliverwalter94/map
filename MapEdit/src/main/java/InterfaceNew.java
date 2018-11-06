@@ -9,22 +9,20 @@ public class InterfaceNew extends JFrame {
 	public static JTextField textField;
 	static String FileName = "Map";
 	static String EditerVersion = "0.3.0.4";
-	static String Features = "*More and finally editable extras :D \r\n*Extras will be saved now and can also  be loaded\r\n*Some bugfixes";
+	private static String Features = "*More and finally editable extras :D \r\n*Extras will be saved now and can also  be loaded\r\n*Some bugfixes";
 	private JFrame frmTest;
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InterfaceNew EDIT = new InterfaceNew();
-					Installer.runInstaller();
-					JOptionPane.showMessageDialog(null,Features, EditerVersion + "   New Features", JOptionPane.INFORMATION_MESSAGE);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		EventQueue.invokeLater(() -> {
+			try {
+				new InterfaceNew();
+				Installer.runInstaller();
+//				JOptionPane.showMessageDialog(null,Features, EditerVersion + "   New Features", JOptionPane.INFORMATION_MESSAGE);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		});
 	}
@@ -32,7 +30,7 @@ public class InterfaceNew extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InterfaceNew() {
+	private InterfaceNew() {
 		
 		frmTest = new JFrame("2D Game");
 		frmTest.setIconImage(Toolkit.getDefaultToolkit().getImage(InterfaceNew.class.getResource("/sources/Environment/icon.png")));
@@ -76,10 +74,10 @@ public class InterfaceNew extends JFrame {
 		    if (file.isDirectory()) return true;
 		    else {
 		      String path = file.getAbsolutePath().toLowerCase();
-		      for (int i = 0, n = extensions.length; i < n; i++) {
-		        String extension = extensions[i];
-		        if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.')) return true;
-		      }
+				for (String extension : extensions) {
+					if ((path.endsWith(extension) && (path.charAt(path.length() - extension.length() - 1)) == '.'))
+						return true;
+				}
 		    }
 		    return false;
 		  }

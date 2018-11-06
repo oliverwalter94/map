@@ -17,39 +17,38 @@ import java.util.ArrayList;
 public class DataHandler {
 
 
+    public ArrayList<ImageObj> images;
 
-	public ArrayList<ImageObj> images;
+    public ArrayList<Tile> fields;
+    public ArrayList<Tile> plants;
+    public ArrayList<Tile> buildings;
 
-	public ArrayList<Tile> fields;
-	public ArrayList<Tile> plants;
-	public ArrayList<Tile> buildings;
-
-	public ArrayList<Biome> biomes;
+    public ArrayList<Biome> biomes;
 
     String PATH = System.getProperty("user.home") + "/2D Game/";
 
-	
-	public DataHandler() {
-		images = new ArrayList<ImageObj>();
-		fields = new ArrayList<Tile>();
-		plants = new ArrayList<Tile>();
-		buildings = new ArrayList<Tile>();
-		biomes = new ArrayList<Biome>();
+
+    public DataHandler() {
+        images = new ArrayList<ImageObj>();
+        fields = new ArrayList<Tile>();
+        plants = new ArrayList<Tile>();
+        buildings = new ArrayList<Tile>();
+        biomes = new ArrayList<Biome>();
 
         readJSONs();
-	}
-	
-	public int getImageIdByTile(Tile t) {
-		return images.indexOf(t.imgObj);
-	}
-	
-	public Image getImageByName(String name) {
-		for (ImageObj imob:images) {
+    }
+
+    public int getImageIdByTile(Tile t) {
+        return images.indexOf(t.imgObj);
+    }
+
+    public Image getImageByName(String name) {
+        for (ImageObj imob : images) {
             if (imob.name.equals(name))
-				return imob.img;
-		}
-		return null;
-	}
+                return imob.img;
+        }
+        return null;
+    }
 
     public ImageObj getImageObjByName(String name) {
         for (ImageObj imob : images) {
@@ -59,25 +58,23 @@ public class DataHandler {
         return null;
     }
 
-	public int getBiomeIdByName(String name){
-		for(Biome b:biomes){
-			if(b.name == name)
-				return biomes.indexOf(b);
-		}
-		return -1;
-	}
+    public int getBiomeIdByName(String name) {
+        for (Biome b : biomes)
+            if (b.name.equals(name)) return biomes.indexOf(b);
+        return -1;
+    }
 
-	public int getTileIdByName (String name) {
-		for (Tile t:fields) {
+    public int getTileIdByName(String name) {
+        for (Tile t : fields) {
             if (t.name.equals(name))
-				return fields.indexOf(t);
-		}
-		for (Tile t:plants) {
+                return fields.indexOf(t);
+        }
+        for (Tile t : plants) {
             if (t.name.equals(name))
-				return plants.indexOf(t);
-		}
-		return -1;
-	}
+                return plants.indexOf(t);
+        }
+        return -1;
+    }
 
     public void addTile(JsonObject obj) {
         String name = obj.getAsJsonPrimitive("name").getAsString();
@@ -103,16 +100,21 @@ public class DataHandler {
         ImageObj img = new ImageObj();
 
         ImageIcon icon = null;
-        File f = new File(PATH + "Textures/" + obj.getAsJsonPrimitive("fileName").getAsString());
-        if(f.exists())
-            icon = new ImageIcon(f.getPath());
+        try {
+            File f = new File(PATH + "Textures/" + obj.getAsJsonPrimitive("fileName").getAsString());
+            if (f.exists())
+                icon = new ImageIcon(f.getPath());
 
-        img.name = obj.get("name").getAsString();
-        img.img = icon.getImage();
-        img.transparent = obj.getAsJsonPrimitive("transparent").getAsBoolean();
-        img.resolution = obj.getAsJsonPrimitive("resolution").getAsInt();
+            img.name = obj.get("name").getAsString();
+            img.img = icon.getImage();
+            img.transparent = obj.getAsJsonPrimitive("transparent").getAsBoolean();
+            img.resolution = obj.getAsJsonPrimitive("resolution").getAsInt();
 
-        images.add(img);
+            images.add(img);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(null, "Could not load ImageObject: " + img.name, "InfoBox: " + "ERROR - ImageObject", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 
     public void addBiome(JsonObject obj) {
@@ -124,7 +126,9 @@ public class DataHandler {
         if (obj.getAsJsonArray("plants") != null)
             biomePlants = calcPlantWeights(obj.getAsJsonArray("plants"));
 
-        biomes.add(new Biome(name, biomeFields, biomePlants));
+
+        //TODO: Add naturallyGenerated field to reader
+        biomes.add(new Biome(name, biomeFields, biomePlants, false));
 
 
     }

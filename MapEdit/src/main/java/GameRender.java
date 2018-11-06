@@ -3,107 +3,120 @@ import MapGen.DataHandler;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
-public class GameRender {
+class GameRender {
 
-    static int screenXSize = 70;
+    static int screenXSize = 85;
     static int screenYSize = 48;
     static int screenx = 0;
     static int screeny = 0;
-	static int counter = 1;
-    static int factor = 5;
     static int rs = 16; // rendersize
-    static Dimension boardSize;
-    DataHandler data;
-    Menu menu;
+    private static Dimension boardSize;
+    private DataHandler data;
+    private Menu menu;
 
-    public GameRender() {
+    GameRender() {
         this.data = Board.dataHandler;
         this.menu = Board.menu;
     }
 
-    static Screen_Array[][] field = new Screen_Array[screenXSize][screenYSize];
-	
-	protected void drawGame(Graphics2D g2d, Dimension size, boolean mapOpen){
-		boardSize = size;
-		if(mapOpen) {
-	    	if (!Map.miniMap){
-	    		if(Map.mapDrawState == 0)drawMap(g2d);
-	    		else drawBiomesMap(g2d);
-	    	}
-	    	else drawMiniMap(g2d);
-		}
-    	renderMenu(g2d);
-    }
-	
-	private void renderMenu(Graphics2D g2d) {
+    private static Screen_Array[][] field = new Screen_Array[screenXSize][screenYSize];
 
-		
-		//HARDCODED VARS FOR MENU
-		final int MBW = 200; // menu bar width
-		final int LINE = 1;
-		
-		int renderHeightMenu = 0;
-		int renderWidthToolbar = MBW;
-		g2d.setColor(menu.background);
+    void drawGame(Graphics2D g2d, Dimension size, boolean mapOpen) {
+        boardSize = size;
+        if (mapOpen) {
+            if (!Map.miniMap) {
+                if (Map.mapDrawState == 0) drawMap(g2d);
+                else drawBiomesMap(g2d);
+            } else drawMiniMap(g2d);
+        }
+        renderMenu(g2d);
+    }
+
+    private void renderMenu(Graphics2D g2d) {
+
+
+        //HARDCODED VARS FOR MENU
+        final int LINE = 1;
+
+        int renderHeightMenu = 0;
+        g2d.setFont(menu.font);
+        int renderWidthToolbar = menu.sideBarWidth;
+        g2d.setColor(menu.background);
         menu.size = new Dimension(200, boardSize.height);
-		//Draw Toolbar
-		for(Menu.MenuItem item:menu.toolbarItems) {
-			if(item.active)
-				g2d.setColor(menu.backgroundSelected);
-			else
-				g2d.setColor(menu.background);
+        //Draw Toolbar
+        for (Menu.MenuItem item : menu.toolbarItems) {
+            if (item.active)
+                g2d.setColor(menu.backgroundSelected);
+            else
+                g2d.setColor(menu.background);
             g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, menu.tabSize, menu.tabSize));
-	    	if(item.img != null) {
-	    		g2d.drawImage(item.img,renderWidthToolbar + 4,4, null );
-	    	}
+            if (item.img != null) {
+                g2d.drawImage(item.img, renderWidthToolbar + 4, 4, null);
+            }
             renderWidthToolbar += menu.tabSize;
-		}
+        }
 
         g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, boardSize.width - renderWidthToolbar, menu.tabSize));
-		
-		//Draw Tabs
-		if(menu.calcRender) {
+
+        //Draw Tabs
+        if (menu.calcRender) {
             menu.tabsHeight = (((menu.activeTabs - menu.activeTabs % menu.tabsPerRow) / menu.tabsPerRow) + 1) * menu.tabSize;
             menu.calcRender = false;
-		}
-		int i = 0;
-		while(i < menu.activeTabs) {
-			if(i == menu.selectedTabIndex)
-				g2d.setColor(menu.backgroundSelected);
-			else
-				g2d.setColor(menu.background);
+        }
+        int i = 0;
+        while (i < menu.activeTabs) {
+            if (i == menu.selectedTabIndex)
+                g2d.setColor(menu.backgroundSelected);
+            else
+                g2d.setColor(menu.background);
 
 
             g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize, menu.tabSize, menu.tabSize));
             g2d.drawImage(menu.Tabs[i].img, (i % menu.tabsPerRow) * menu.tabSize + 4, (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize + 4, null);
-			i++;
-		}
+            i++;
+        }
         renderHeightMenu = (i - i % menu.tabsPerRow) / menu.tabsPerRow * menu.tabSize;
-		
-		// Fill row of tabs with gray area
+
+        // Fill row of tabs with gray area
         if (menu.activeTabs % menu.tabsPerRow > 0) {
-			g2d.setColor(menu.background);
+            g2d.setColor(menu.background);
 
             g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, renderHeightMenu, menu.tabSize * (menu.tabsPerRow - menu.activeTabs % menu.tabsPerRow), menu.tabSize));
             renderHeightMenu += menu.tabSize;
-		}
-		//Draw separator Line
-		g2d.setColor(menu.line);
-        g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, MBW, LINE));
-	    renderHeightMenu += LINE;
-		
-		//Draw Rest
+        }
 
-    	
-		
-	    
-		g2d.setColor(menu.background);
-        g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, MBW, boardSize.height - renderHeightMenu));
-	    
-	    
-	}
-	
-	private void toScreenArray() {
+        if (menu.sidebarVisible) {
+            //Draw separator Line
+            g2d.setColor(menu.line);
+            g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, menu.sideBarWidth, LINE));
+            renderHeightMenu += LINE;
+
+            //Draw Rest
+
+            for (Menu.MenuItem item : menu.Tabs[menu.selectedTabIndex].menuItems) {
+                if (item.active)
+                    g2d.setColor(menu.backgroundSelected);
+                else
+                    g2d.setColor(menu.background);
+
+                g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, menu.sideBarWidth, menu.Tabs[menu.selectedTabIndex].itemHeight));
+                g2d.drawImage(item.img, 16, renderHeightMenu + (menu.Tabs[menu.selectedTabIndex].itemHeight - item.img.getHeight(null)) / 2, null);
+                g2d.setColor(menu.text);
+                g2d.drawString(item.name, 64, renderHeightMenu + 32);
+                renderHeightMenu += menu.Tabs[menu.selectedTabIndex].itemHeight;
+                g2d.setColor(menu.line);
+                g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, menu.sideBarWidth, LINE));
+                renderHeightMenu += LINE;
+            }
+
+
+            g2d.setColor(menu.background);
+            g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, menu.sideBarWidth, boardSize.height - renderHeightMenu));
+        }
+
+    }
+
+    private void toScreenArray() {
         int x_c = 0;
         int y_c = 0;
         int x_val = 0;
@@ -124,55 +137,53 @@ public class GameRender {
             }
         } while (y_c < screenYSize);
     }
-    
+
     private void drawMiniMap(Graphics2D g2d){
-    	if (Map.mapChange)toScreenArray();
-    	Map.mapChange = false;
+        if (Map.mapChange) toScreenArray();
+        Map.mapChange = false;
         int xc = 0;
         int yc = 0;
         int xpos = 0,ypos = 0;
-        counter = 1;
         do{
+            int factor = 5;
             do{
-            	int c = Board.MAP[xc][yc].field;
+                int c = Board.MAP[xc][yc].field;
                 switch(c){
-                case 1:
-                	g2d.setColor(Color.blue);
-                	break;
-                case 2:
-                	g2d.setColor(Color.blue);
-                	break;
-                case 3:
-                	g2d.setColor(Color.green);
-                	break;
-                case 4:
-                	g2d.setColor(Color.yellow);
-                	break;
-                case 5:
-                	g2d.setColor(Color.gray);
-                	break;
-                case 6:
-                	g2d.setColor(Color.orange);
-                	break;
-                default:
-                    g2d.setColor(null);
-                	break;
+                    case 0:
+                    case 1:
+                    case 2:
+                        g2d.setColor(Color.blue);
+                        break;
+                    case 3:
+                        g2d.setColor(Color.green);
+                        break;
+                    case 4:
+                        g2d.setColor(Color.yellow);
+                        break;
+                    case 5:
+                        g2d.setColor(Color.gray);
+                        break;
+                    case 6:
+                        g2d.setColor(Color.orange);
+                        break;
+                    default:
+                        g2d.setColor(null);
+                        break;
                 }
-                g2d.drawRect(xpos, ypos,factor,factor);
-                counter++;
+                g2d.fill(new Rectangle2D.Double(xpos, ypos, factor, factor));
                 xc++;
                 xpos += factor + 1;
             } while (xc < Map.map_xsize);
             if (xc == Map.map_xsize){
                 xpos = 0;
                 xc = 0;
-               yc++;
-               ypos += factor + 1;
+                yc++;
+                ypos += factor + 1;
             }
         } while (yc < Map.map_ysize);
         g2d.setColor(null);
     }
-    
+
     private void drawBiomesMap(Graphics2D g2d){
 //    	if (Map.mapChange)toScreenArray();
 //    	Map.mapChange = false;
@@ -216,28 +227,26 @@ public class GameRender {
 //            }
 //        } while (yc < screenYSize);
     }
-    
+
     private void drawMap(Graphics2D g2d) {
         if (Map.mapChange)toScreenArray();
         Map.mapChange = false;
         int xc = 0;
         int yc = 0;
-        counter = 1;
         do{
             do{
-            	int a = field[xc][yc].abc.x;
-            	int b = field[xc][yc].abc.y;
-            	int c = field[xc][yc].id;
-            	int d = field[xc][yc].subId;
+                int a = field[xc][yc].abc.x;
+                int b = field[xc][yc].abc.y;
+                int c = field[xc][yc].id;
+                int d = field[xc][yc].subId;
                 g2d.drawImage(data.fields.get(c).imgObj.img, a, b, rs, rs, null);
-                if (d != 0) g2d.drawImage(data.plants.get(d).imgObj.img, a, b, rs, rs, null);
-                counter++;
+                if (d >= 0) g2d.drawImage(data.plants.get(d).imgObj.img, a, b, rs, rs, null);
                 xc++;
             } while (xc < screenXSize);
             if (xc == screenXSize)
             {
                 xc = 0;
-               yc++;
+                yc++;
             }
         } while (yc < screenYSize);
     }
