@@ -1,6 +1,8 @@
-package MapGen;
+package Data;
 
-
+import MapGen.Biome;
+import MapGen.Tile;
+import MapGen.TileWeight;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 public class DataHandler {
 
 
-    public ArrayList<ImageObj> images;
+    public ArrayList<ImageObject> images;
 
     public ArrayList<Tile> fields;
     public ArrayList<Tile> plants;
@@ -29,7 +31,7 @@ public class DataHandler {
 
 
     public DataHandler() {
-        images = new ArrayList<ImageObj>();
+        images = new ArrayList<ImageObject>();
         fields = new ArrayList<Tile>();
         plants = new ArrayList<Tile>();
         buildings = new ArrayList<Tile>();
@@ -39,19 +41,19 @@ public class DataHandler {
     }
 
     public int getImageIdByTile(Tile t) {
-        return images.indexOf(t.imgObj);
+        return images.indexOf(t.imageObject);
     }
 
     public Image getImageByName(String name) {
-        for (ImageObj imob : images) {
+        for (ImageObject imob : images) {
             if (imob.name.equals(name))
                 return imob.img;
         }
         return null;
     }
 
-    public ImageObj getImageObjByName(String name) {
-        for (ImageObj imob : images) {
+    public ImageObject getImageObjByName(String name) {
+        for (ImageObject imob : images) {
             if (imob.name.equals(name))
                 return imob;
         }
@@ -78,7 +80,7 @@ public class DataHandler {
 
     public void addTile(JsonObject obj) {
         String name = obj.getAsJsonPrimitive("name").getAsString();
-        ImageObj imgObj = getImageObjByName(obj.getAsJsonPrimitive("imageName").getAsString());
+        ImageObject imgObj = getImageObjByName(obj.getAsJsonPrimitive("imageName").getAsString());
         String type = obj.getAsJsonPrimitive("type").getAsString();
         Tile tile = new Tile(name, imgObj);
         switch (type) {
@@ -97,7 +99,7 @@ public class DataHandler {
 
     public void addImage(JsonObject obj) {
 
-        ImageObj img = new ImageObj();
+        ImageObject img = new ImageObject();
 
         ImageIcon icon = null;
         try {
@@ -112,7 +114,7 @@ public class DataHandler {
 
             images.add(img);
         } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(null, "Could not load ImageObject: " + img.name, "InfoBox: " + "ERROR - ImageObject", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Could not load Data.ImageObject: " + img.name, "InfoBox: " + "ERROR - Data.ImageObject", JOptionPane.INFORMATION_MESSAGE);
         }
 
     }

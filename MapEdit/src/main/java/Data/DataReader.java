@@ -1,4 +1,4 @@
-package MapGen;
+package Data;
 
 public class DataReader {
 

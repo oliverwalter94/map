@@ -1,13 +1,17 @@
-import MapGen.DataHandler;
+import Data.DataHandler;
+import MapGen.Map;
+import MapGen.MapGenerator;
 import MapGen.Tile;
+import UI.Message;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Menu {
-    Color background;
+    public int lineThickness;
+    Color backgroundColor;
     Color backgroundSelected;
-    Color foreground;
+    Color fontColor;
     Color line;
     Color text;
     Font font;
@@ -34,8 +38,8 @@ public class Menu {
     Menu() {
         this.data = Board.dataHandler;
 
-        foreground = Color.lightGray;
-        background = new Color(21, 21, 21, 182);
+        fontColor = Color.lightGray;
+        backgroundColor = new Color(21, 21, 21, 182);
         backgroundSelected = new Color(89, 89, 89, 190);
         line = Color.gray;
         text = new Color(255, 255, 255, 190);
@@ -53,6 +57,7 @@ public class Menu {
         tabSize = 40;
         tabsPerRow = 5;
         sideBarWidth = tabSize * tabsPerRow;
+        lineThickness = 1;
 
         sidebarVisible = true;
 
@@ -81,10 +86,10 @@ public class Menu {
     private void fillTabs() {
 
         for (Tile t : data.fields) {
-            this.Tabs[0].menuItems.add(new MenuItem(t.name, t.imgObj.img));
+            this.Tabs[0].menuItems.add(new MenuItem(t.name, t.imageObject.img));
         }
         for (Tile t : data.plants) {
-            this.Tabs[1].menuItems.add(new MenuItem(t.name, t.imgObj.img));
+            this.Tabs[1].menuItems.add(new MenuItem(t.name, t.imageObject.img));
         }
     }
 
@@ -114,7 +119,7 @@ public class Menu {
             int index = ((pos.x - 200) - (pos.x - 200) % tabSize) / tabSize;
             switch (index) {
                 case 0: {
-                    Board.editorState = Board.EditorState.EDIT;
+//                    Board.editorState = Board.EditorState.EDIT;
                     toolbarItems.get(0).active = true;
                     toolbarItems.get(1).active = false;
                     sidebarVisible = true;
@@ -130,11 +135,14 @@ public class Menu {
                     break;
                 }
                 case 2: {
-                    mapGen.generateNewPerlinMap();
-                    GameRender.screenx = 0;
-                    GameRender.screeny = 0;
-                    Board.MapOpen = true;
-                    Map.mapChange = true;
+//                    mapGen.generateNewPerlinMap();
+//                    GameRender.screenx = 0;
+//                    GameRender.screeny = 0;
+//                    Board.MapOpen = true;
+//                    Map.mapChange = true;
+                    Board.origin = new Point(0, 0);
+                    Board.chunks.clear();
+                    Board.existingChunks.clear();
                     Board.addInfoMessage(new Message("Generated new Map", Message.Type.INFO));
                     break;
                 }

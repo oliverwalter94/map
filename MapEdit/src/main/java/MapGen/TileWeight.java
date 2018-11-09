@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class TileWeight {
 	public Tile tile;
 	public float weight;
-		ArrayList<Tile> requiredTile;
+	public ArrayList<Tile> requiredTile;
 		
 		public TileWeight(Tile t, float Weight) {
 			tile = t;

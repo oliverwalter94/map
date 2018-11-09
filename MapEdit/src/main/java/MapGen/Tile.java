@@ -1,15 +1,18 @@
 package MapGen;
 
+
+import Data.ImageObject;
+
 public class Tile {
 	public enum TileType{
 		FIELD, PLANT, BUILDING
 	}
 	public String name;
-    public ImageObj imgObj;
+    public ImageObject imageObject;
     ;
-	
-	public Tile(String Name, ImageObj ImgObj) {
+
+    public Tile(String Name, ImageObject ImgObj) {
 		name = Name;
-		imgObj = ImgObj;
+        imageObject = ImgObj;
 	}
 }

@@ -1,17 +1,17 @@
-package MapGen;
+package Data;
 
 import java.awt.*;
 
-public class ImageObj {
+public class ImageObject {
 	public String name;
 	public Image img;
 	public boolean transparent;
 	public int resolution;
 
-	public ImageObj(){
-	}
+    public ImageObject() {
+    }
 
-	public ImageObj(String Name, Image Img) {
+    public ImageObject(String Name, Image Img) {
 		name = Name;
 		img = Img;
 	}
