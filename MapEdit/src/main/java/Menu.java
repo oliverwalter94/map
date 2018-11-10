@@ -1,6 +1,4 @@
 import Data.DataHandler;
-import MapGen.Map;
-import MapGen.MapGenerator;
 import MapGen.Tile;
 import UI.Message;
 
@@ -73,6 +71,7 @@ public class Menu {
         toolbarItems.add(new MenuItem("New Map", data.getImageByName("New Map")));
         toolbarItems.add(new MenuItem("Save Map", data.getImageByName("Save Map")));
         toolbarItems.add(new MenuItem("Load Map", data.getImageByName("Load Map")));
+        toolbarItems.add(new MenuItem("Close Map", data.getImageByName("Close Map")));
         toolbarItems.add(new MenuItem("Reload Textures", data.getImageByName("Reload Textures")));
         toolbarItems.add(new MenuItem("Minimap", data.getImageByName("Minimap")));
     }
@@ -95,7 +94,7 @@ public class Menu {
 
     void tabClicked(Point pos, boolean lmb) {
 
-        int tabIndex = 0;
+        int tabIndex;
         tabIndex = (pos.x / tabSize) + tabsPerRow * (pos.y / tabSize);
         if (tabIndex < activeTabs) {
             selectedTabIndex = tabIndex;
@@ -113,12 +112,12 @@ public class Menu {
         tab.selected = i;
     }
 
-    void toolbarClicked(Point pos, boolean lmb, MapGenerator mapGen) {
+    void toolbarClicked(Point pos, boolean lmb) {
 
         if (pos.x <= 200 + toolbarItems.size() * tabSize) {
             int index = ((pos.x - 200) - (pos.x - 200) % tabSize) / tabSize;
-            switch (index) {
-                case 0: {
+            switch (toolbarItems.get(index).name) {
+                case "Edit Mode": {
 //                    Board.editorState = Board.EditorState.EDIT;
                     toolbarItems.get(0).active = true;
                     toolbarItems.get(1).active = false;
@@ -126,7 +125,7 @@ public class Menu {
                     Board.addInfoMessage(new Message("Edit - Mode", Message.Type.INFO));
                     break;
                 }
-                case 1: {
+                case "Move Mode": {
                     Board.editorState = Board.EditorState.MOVE;
                     toolbarItems.get(0).active = false;
                     toolbarItems.get(1).active = true;
@@ -134,43 +133,46 @@ public class Menu {
                     Board.addInfoMessage(new Message("Move - Mode", Message.Type.INFO));
                     break;
                 }
-                case 2: {
-//                    mapGen.generateNewPerlinMap();
-//                    GameRender.screenx = 0;
-//                    GameRender.screeny = 0;
-//                    Board.MapOpen = true;
-//                    Map.mapChange = true;
-                    Board.origin = new Point(0, 0);
-                    Board.chunks.clear();
-                    Board.existingChunks.clear();
+                case "New Map": {
+                    Board.mapHandler.newMap();
                     Board.addInfoMessage(new Message("Generated new Map", Message.Type.INFO));
                     break;
                 }
-                case 3: {
+                case "Save Map": {
                     // TODO implement new saving mechanism
                     Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
-                case 4: {
+                case "Load Map": {
                     // TODO implement new loading mechanism
                     Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    if (Board.mapHandler.tileSize < 32)
+                        Board.mapHandler.tileSize *= 2;
+                    else
+                        Board.mapHandler.tileSize = 4;
+                    Board.mapHandler.calcNeededChunks();
                     break;
                 }
-                case 5: {
+                case "Close Map": {
+                    Board.mapHandler.clearMap();
+                    Board.addInfoMessage(new Message("Map closed", Message.Type.INFO));
+                    break;
+                }
+                case "Reload Textures": {
                     // TODO implement reload textures mechanism
                     Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
-                case 6: {
-                    if (Board.MapOpen) {
-                        if (Map.miniMap) {
-                            Map.miniMap = false;
-                            Board.addInfoMessage(new Message("Minimap off", Message.Type.INFO));
-                        } else {
-                            Map.miniMap = true;
-                            Board.addInfoMessage(new Message("Minimap on", Message.Type.INFO));
-                        }
-                        Map.mapChange = true;
+                case "Minimap": {
+                    if (Board.mapHandler.mapOpen) {
+//                        if (Map.miniMap) {
+//                            Map.miniMap = false;
+//                            Board.addInfoMessage(new Message("Minimap off", Message.Type.INFO));
+//                        } else {
+//                            Map.miniMap = true;
+//                            Board.addInfoMessage(new Message("Minimap on", Message.Type.INFO));
+//                        }
+//                        Map.mapChange = true;
                         toolbarItems.get(6).active = !toolbarItems.get(6).active;
                     }
                     break;

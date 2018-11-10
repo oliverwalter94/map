@@ -1,14 +1,10 @@
 package Data;
 
-import MapGen.Map;
-
-import java.awt.image.BufferedImage;
-
 public class MapWriter {
 
 	public static String FileName;
-	static BufferedImage a = new BufferedImage(Map.map_xsize * 3, Map.map_ysize, BufferedImage.TYPE_INT_RGB);
-	static BufferedImage b = new BufferedImage(Map.map_xsize * 2 + 2, Map.map_ysize, BufferedImage.TYPE_INT_RGB);
+	//	static BufferedImage a = new BufferedImage(Map.map_xsize * 3, Map.map_ysize, BufferedImage.TYPE_INT_RGB);
+//	static BufferedImage b = new BufferedImage(Map.map_xsize * 2 + 2, Map.map_ysize, BufferedImage.TYPE_INT_RGB);
 	static int encrypt = 1;
 	static String MAPDIR;
 

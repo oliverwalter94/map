@@ -1,6 +1,4 @@
-import Data.DataHandler;
 import MapGen.Chunk;
-import MapGen.Map;
 import MapGen.MapTile;
 import UI.Message;
 
@@ -10,31 +8,18 @@ import java.awt.geom.RoundRectangle2D;
 
 class GameRender {
 
-    //    static int screenXSize = 128;
-//    static int screenYSize = 64;
-//    static int screenx = 0;
-//    static int screeny = 0;
-    static int tileSize = 16; // rendersize
     private static Dimension boardSize;
-    private DataHandler data;
     private Menu menu;
 
     GameRender() {
-        this.data = Board.dataHandler;
         this.menu = Board.menu;
     }
-//
-//    private static Screen_Array[][] screenArray = new Screen_Array[screenXSize][screenYSize];
 
     void drawGame(Graphics2D g2d, Dimension size, boolean mapOpen) {
         boardSize = size;
         if (mapOpen) {
-            if (!Map.miniMap) {
-                if (Map.mapDrawState == 0) {
+            if (!Board.mapHandler.miniMap) {
                     renderMapNew(g2d);
-//                    drawMap(g2d);
-                }
-                else drawBiomesMap(g2d);
             } else drawMiniMap(g2d);
         }
         renderMenu(g2d);
@@ -140,28 +125,6 @@ class GameRender {
         }
     }
 
-    private void toScreenArray() {
-//        int x_c = 0;
-//        int y_c = 0;
-//        int x_val = 0;
-//        int y_val = 0;
-//        int x_len = tileSize;
-//        int y_len = tileSize;
-//        do{
-//            do{
-//                screenArray[x_c][y_c] = new Screen_Array(Board.MAP[screenx + x_c][screeny + y_c].field, new Rectangle(x_val, y_val, x_len, y_len), Board.MAP[screenx + x_c][screeny + y_c].biome, Board.MAP[screenx + x_c][screeny + y_c].plant);
-//                x_val += tileSize;
-//                x_c++;
-//            } while (x_c < screenXSize);
-//            if (x_c == screenXSize) {
-//                x_c = 0;
-//                x_val = 0;
-//                y_c++;
-//                y_val += tileSize;
-//            }
-//        } while (y_c < screenYSize);
-    }
-
     private void drawMiniMap(Graphics2D g2d){
 //        if (Map.mapChange) toScreenArray();
 //        Map.mapChange = false;
@@ -208,80 +171,14 @@ class GameRender {
 //        g2d.setColor(null);
     }
 
-    private void drawBiomesMap(Graphics2D g2d){
-//    	if (MapGen.Map.mapChange)toScreenArray();
-//    	MapGen.Map.mapChange = false;
-//        int xc = 0;
-//        int yc = 0;
-//        counter = 1;
-//        do{
-//            do{
-//            	int a = field[xc][yc].abc.x;
-//            	int b = field[xc][yc].abc.y;
-//            	Biome c = field[xc][yc].biome;
-//            	switch (c){
-//	            	case 0:{
-//	            		g2d.drawImage(Images.BiomeImages[tileSize/32 -1][1],a,b,null);
-//		            	break;
-//	            	}
-//	            	case 1:{
-//	            		g2d.drawImage(Images.BiomeImages[tileSize/32 -1][4],a,b,null);
-//	            		break;
-//	            	}
-//	            	case 2:{
-//	            		g2d.drawImage(Images.BiomeImages[tileSize/32 -1][2],a,b,null);
-//	            		break;
-//	            	}
-//	            	case 3:{
-//	            		g2d.drawImage(Images.BiomeImages[tileSize/32 -1][1],a,b,null);
-//	            		break;
-//	            	}
-//	            	case 4:{
-//	            		g2d.drawImage(Images.BiomeImages[tileSize/32 -1][1],a,b,null);
-//	            		break;
-//	            	}
-//            	}
-//                counter++;
-//                xc++;
-//            } while (xc < screenXSize);
-//            if (xc == screenXSize)
-//            {
-//                xc = 0;
-//               yc++;
-//            }
-//        } while (yc < screenYSize);
-    }
-
-    private void drawMap(Graphics2D g2d) {
-//        if (Map.mapChange)toScreenArray();
-//        Map.mapChange = false;
-//        int x_screen = 0;
-//        int y_screen = 0;
-//        do{
-//            do{
-//                int x = screenArray[x_screen][y_screen].abc.x;
-//                int y = screenArray[x_screen][y_screen].abc.y;
-//                int field = screenArray[x_screen][y_screen].id;
-//                int d = screenArray[x_screen][y_screen].subId;
-//                g2d.drawImage(data.fields.get(field).imageObject.img, x, y, tileSize, tileSize, null);
-//                if (d >= 0) g2d.drawImage(data.plants.get(d).imageObject.img, x, y, tileSize, tileSize, null);
-//                x_screen++;
-//            } while (x_screen < screenXSize);
-//            if (x_screen == screenXSize)
-//            {
-//                x_screen = 0;
-//                y_screen++;
-//            }
-//        } while (y_screen < screenYSize);
-    }
-
     public void renderMapNew(Graphics2D g2d) {
-        for (Chunk chunk : Board.chunks) {
+        for (Chunk chunk : Board.mapHandler.chunks) {
             chunk.rendering = true;
+            int tileSize = Board.mapHandler.tileSize;
             for (int x = 0; x < 16; x++) {
                 for (int y = 0; y < 16; y++) {
-                    int x_draw = (chunk.x * 16 + x) * tileSize - Board.origin.x;
-                    int y_draw = (chunk.y * 16 + y) * tileSize - Board.origin.y;
+                    int x_draw = (chunk.pos.x * 16 + x) * tileSize - Board.mapHandler.getOrigin().x;
+                    int y_draw = (chunk.pos.y * 16 + y) * tileSize - Board.mapHandler.getOrigin().y;
                     MapTile tile = chunk.chunkTiles[x][y];
                     g2d.drawImage(tile.ground.imageObject.img, x_draw, y_draw, tileSize, tileSize, null);
                     if (tile.plant != null)
