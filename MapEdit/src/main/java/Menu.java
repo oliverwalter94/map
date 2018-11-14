@@ -37,9 +37,9 @@ public class Menu {
         this.data = Board.dataHandler;
 
         fontColor = Color.lightGray;
-        backgroundColor = new Color(21, 21, 21, 182);
+        backgroundColor = new Color(21, 21, 21, 200);
         backgroundSelected = new Color(89, 89, 89, 190);
-        line = Color.gray;
+        line = new Color(147, 147, 147, 200);
         text = new Color(255, 255, 255, 190);
         font = new Font("Arial", Font.PLAIN, 15);
 
@@ -72,6 +72,7 @@ public class Menu {
         toolbarItems.add(new MenuItem("Save Map", data.getImageByName("Save Map")));
         toolbarItems.add(new MenuItem("Load Map", data.getImageByName("Load Map")));
         toolbarItems.add(new MenuItem("Close Map", data.getImageByName("Close Map")));
+        toolbarItems.add(new MenuItem("Show Grid", data.getImageByName("Show Grid")));
         toolbarItems.add(new MenuItem("Reload Textures", data.getImageByName("Reload Textures")));
         toolbarItems.add(new MenuItem("Minimap", data.getImageByName("Minimap")));
     }
@@ -140,16 +141,19 @@ public class Menu {
                 }
                 case "Save Map": {
                     // TODO implement new saving mechanism
-                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
                 case "Load Map": {
                     // TODO implement new loading mechanism
+                    // TODO Remove Scaling
                     Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
-                    if (Board.mapHandler.tileSize < 32)
+                    if (Board.mapHandler.tileSize < 32) {
+                        Board.mapHandler.tileSpacing += Board.mapHandler.tileSize;
                         Board.mapHandler.tileSize *= 2;
-                    else
+                    } else {
                         Board.mapHandler.tileSize = 4;
+                        Board.mapHandler.tileSpacing -= 28;
+                    }
                     Board.mapHandler.calcNeededChunks();
                     break;
                 }
@@ -161,6 +165,20 @@ public class Menu {
                 case "Reload Textures": {
                     // TODO implement reload textures mechanism
                     Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    break;
+                }
+                case "Show Grid": {
+                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    toolbarItems.get(6).active ^= true;
+                    if (Board.mapHandler.tileSpacing == Board.mapHandler.tileSize) {
+                        Board.mapHandler.tileSpacing += 1;
+                        Board.mapHandler.showGrid = true;
+                    } else {
+                        Board.mapHandler.tileSpacing -= 1;
+                        Board.mapHandler.showGrid = false;
+                    }
+                    Board.mapHandler.calcNeededChunks();
+                    Board.addInfoMessage(new Message("Grid " + Board.mapHandler.showGrid, Message.Type.INFO));
                     break;
                 }
                 case "Minimap": {

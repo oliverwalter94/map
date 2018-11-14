@@ -1,5 +1,6 @@
 import MapGen.Chunk;
 import MapGen.MapTile;
+import UI.Frame;
 import UI.Message;
 
 import java.awt.*;
@@ -24,10 +25,10 @@ class GameRender {
         }
         renderMenu(g2d);
         renderMessages(g2d);
+        renderFrames(g2d);
     }
 
     private void renderMenu(Graphics2D g2d) {
-
 
         int renderHeightMenu = 0;
         g2d.setFont(menu.font);
@@ -175,10 +176,11 @@ class GameRender {
         for (Chunk chunk : Board.mapHandler.chunks) {
             chunk.rendering = true;
             int tileSize = Board.mapHandler.tileSize;
+            int tileSpacing = Board.mapHandler.tileSpacing;
             for (int x = 0; x < 16; x++) {
                 for (int y = 0; y < 16; y++) {
-                    int x_draw = (chunk.pos.x * 16 + x) * tileSize - Board.mapHandler.getOrigin().x;
-                    int y_draw = (chunk.pos.y * 16 + y) * tileSize - Board.mapHandler.getOrigin().y;
+                    int x_draw = (chunk.pos.x * 16 + x) * tileSpacing - Board.mapHandler.getOrigin().x;
+                    int y_draw = (chunk.pos.y * 16 + y) * tileSpacing - Board.mapHandler.getOrigin().y;
                     MapTile tile = chunk.chunkTiles[x][y];
                     g2d.drawImage(tile.ground.imageObject.img, x_draw, y_draw, tileSize, tileSize, null);
                     if (tile.plant != null)
@@ -187,5 +189,11 @@ class GameRender {
             }
             chunk.rendering = false;
         }
+    }
+
+    public void renderFrames(Graphics2D g2d) {
+        for (Frame frame : Board.frames)
+            frame.render(g2d);
+
     }
 }

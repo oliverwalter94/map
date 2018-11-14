@@ -9,15 +9,18 @@ import java.util.ArrayList;
 public class MapHandler {
     boolean mapOpen;
     boolean miniMap;
+    boolean showGrid = false;
 
     private MapGenerator mapGenerator;
     private Board board;
     private Point neededChunks;
 
+
     ArrayList<Chunk> chunks = new ArrayList<>();
 
     private Point origin = new Point(0, 0);
     int tileSize = 16;
+    int tileSpacing = 16;
 
     public Point getOrigin() {
         return origin;
@@ -72,7 +75,7 @@ public class MapHandler {
     }
 
     void calcNeededChunks() {
-        int chunkSize = tileSize * 16;
+        int chunkSize = tileSpacing * 16;
         neededChunks.x = (int) Math.ceil(((chunkSize - origin.x % chunkSize) + (double) board.getWidth()) / chunkSize);
         neededChunks.y = (int) Math.ceil(((chunkSize - origin.y % chunkSize) + (double) board.getHeight()) / chunkSize);
 
@@ -87,7 +90,7 @@ public class MapHandler {
                 addChunk(x, y);
             }
         }
-        System.out.println(origin);
+//        System.out.println(origin);
         Board.addInfoMessage(new Message(topLeft.toString(), Message.Type.INFO));
         mapOpen = true;
     }

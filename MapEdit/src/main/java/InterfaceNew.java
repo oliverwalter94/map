@@ -35,6 +35,7 @@ public class InterfaceNew extends JFrame {
         frmTest.setBackground(Color.LIGHT_GRAY);
         frmTest.setTitle("MapGen.Map Editor " + editorVersion);
         final Board board = new Board();
+        board.setBackground(Color.black);
         frmTest.getContentPane().add(board);
         board.setLayout(null);
 

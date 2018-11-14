@@ -4,10 +4,7 @@ import UI.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -19,14 +16,13 @@ public class Board extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1L;
     private static int timestat = 0;
-    private static Graphics2D g2d;
-    private static int x1, x2, y1, y2;
+    private static int x1, y1;
     static EditorState editorState = EditorState.EDIT;
     private static int mxa1, mya1;
-
+    private static boolean dragging = false;
 
     static Menu menu;
-    public static DataHandler dataHandler;
+    static DataHandler dataHandler;
     private static GameRender gameRenderer;
     static MapHandler mapHandler;
 
@@ -45,15 +41,34 @@ public class Board extends JPanel implements ActionListener {
         Timer time = new Timer(30, this);
         time.start();
 
+//        addFrame();
+
     }
 
+    public void debug() {
 
+    }
 
     public void actionPerformed(ActionEvent e) {
         timestat++;
         if (timestat == 100) timestat = 0;
         repaint();
         updateMessages();
+
+        if (dragging) {
+
+            try {
+                Point newOrigin = new Point((int) (mapHandler.getOrigin().x + mxa1 - this.getMousePosition().getX()), (int) (mapHandler.getOrigin().y + mya1 - this.getMousePosition().getY()));
+                mapHandler.setOrigin(newOrigin);
+                mapHandler.calcNeededChunks();
+                mxa1 = (int) this.getMousePosition().getX();
+                mya1 = (int) this.getMousePosition().getY();
+            } catch (NullPointerException e1) {
+                //Probably just mousepointer out of Frame...
+            }
+        }
+
+        debug();
     }
 
     private void updateMessages() {
@@ -80,13 +95,33 @@ public class Board extends JPanel implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
         gameRenderer.drawGame(g2d, this.getSize(), mapHandler.mapOpen);
+    }
+
+    public void addFrame() {
+        Frame f = new Frame();
+
+        f.backgroundColor = Color.gray;
+        f.title = "Test";
+        f.width = 200;
+        f.height = 200;
+        f.addLabel("Test", new Point(20, 20));
+        f.addTextbox(new Point(20, 80), 100, 25);
+        f.addTextbox(new Point(20, 120), 100, 25);
+        frames.add(f);
     }
 
     private class CD extends MouseAdapter {
 
         boolean m = false;
+
+        public void mouseWheelMoved(MouseWheelEvent e) {
+//            if(mapHandler.mapOpen){
+            System.out.println("Test" + e.getScrollAmount());
+            System.out.println(e.getPreciseWheelRotation());
+//            }
+        }
 
 
         public void mousePressed(MouseEvent e) {
@@ -107,30 +142,26 @@ public class Board extends JPanel implements ActionListener {
                 m = false;
                 if (editorState == EditorState.EDIT) {
                     if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
-                        x1 = e.getX() / mapHandler.tileSize;
-                        y1 = e.getY() / mapHandler.tileSize;
+                        x1 = e.getX() / mapHandler.tileSpacing;
+                        y1 = e.getY() / mapHandler.tileSpacing;
                     }
                 } else if (editorState == EditorState.MOVE) {
                     if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
                         mxa1 = e.getX();
                         mya1 = e.getY();
+                        dragging = true;
                     }
                 }
             }
         }
 
         //TODO: Add Movement to Map
-//        @Override
-//        public void mouseDragged(MouseEvent e) {
-//            System.out.println("Teset");
-//            if (editorState == EditorState.MOVE && e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
-//                Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - e.getX(),mapHandler.getOrigin().y + mya1 - e.getY());
-//                mapHandler.setOrigin(newOrigin);
-//            }
-//        }
+//
 
         public void mouseReleased(MouseEvent e) {
             if (editorState == EditorState.EDIT && !m) {
+                int y2;
+                int x2;
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
                     x2 = e.getX() / mapHandler.tileSize;
                     y2 = e.getY() / mapHandler.tileSize;
@@ -238,6 +269,7 @@ public class Board extends JPanel implements ActionListener {
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
                     Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - e.getX(), mapHandler.getOrigin().y + mya1 - e.getY());
                     mapHandler.setOrigin(newOrigin);
+                    dragging = false;
                     mya1 = -1;
                     mxa1 = -1;
                     mapHandler.calcNeededChunks();
