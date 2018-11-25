@@ -1,3 +1,5 @@
+package main;
+
 import Data.Installer;
 
 import javax.swing.*;

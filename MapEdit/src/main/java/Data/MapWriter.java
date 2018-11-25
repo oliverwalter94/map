@@ -1,5 +1,12 @@
 package Data;
 
+import main.MapHandler;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
+
 public class MapWriter {
 
 	public static String FileName;
@@ -7,34 +14,22 @@ public class MapWriter {
 //	static BufferedImage b = new BufferedImage(Map.map_xsize * 2 + 2, Map.map_ysize, BufferedImage.TYPE_INT_RGB);
 	static int encrypt = 1;
 	static String MAPDIR;
+    private String saveName;
+    private MapHandler mapHandler;
 
-	void writeFiles(int type) {
-//    	MAPDIR = System.getProperty("user.home") + "/2D Game/Maps/" + InterfaceNew.textField.getText();
-//    	File MapDIR = new File(MAPDIR);
-//    	if (!MapDIR.exists()){
-//    		boolean result = MapDIR.mkdir();
-//    		if(result)System.out.println("Save Dir created");
-//    	}
-//    	FileName = MAPDIR+ "/" + InterfaceNew.textField.getText();
-//    	Installer.runInstaller();
-//    	if(type == 0) {
-//    		writer_v0();
-//    		writer_v1();
-//    	}
-//    	else if (type == 1)writer_v0();
-//    	else if (type == 2)writer_v1();
-//        try {
-//            propWriter();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-	}
+
+    public MapWriter(String saveName, MapHandler mapHandler) {
+        this.saveName = saveName;
+        this.mapHandler = mapHandler;
+    }
+
+
 
 	private static void writer_v1() {
 //		int x=0,y=0,ix=0,iy=0;
 //		do {
 //			do {
-//				a.setRGB(ix, iy, Board.MAP[x][y].field*encrypt);
+//				a.setRGB(ix, iy, main.Board.MAP[x][y].field*encrypt);
 //				y++;
 //				iy++;
 //			}while (y < Map.map_ysize);
@@ -48,7 +43,7 @@ public class MapWriter {
 //		iy = 0;
 //		do {
 //			do {
-////		    	a.setRGB(ix,iy,Board.MAP[x][y].biome*encrypt);
+////		    	a.setRGB(ix,iy,main.Board.MAP[x][y].biome*encrypt);
 //				y++;
 //				iy++;
 //			}while (y < Map.map_ysize);
@@ -63,7 +58,7 @@ public class MapWriter {
 //		iy = 0;
 //		do {
 //			do {
-//				a.setRGB(ix, iy, Board.MAP[x][y].plant * encrypt);
+//				a.setRGB(ix, iy, main.Board.MAP[x][y].plant * encrypt);
 //				y++;
 //				iy++;
 //			}while (y < Map.map_ysize);
@@ -88,7 +83,7 @@ public class MapWriter {
 //		int iy = 0;
 //		do {
 //			do {
-//				switch(Board.MAP[x][y].field){
+//				switch(main.Board.MAP[x][y].field){
 //					case 1:{
 //						b.setRGB(ix, iy, Color.blue.getRGB());
 //						break;
@@ -134,7 +129,7 @@ public class MapWriter {
 //
 //		do {
 //			do {
-////		    	switch(Board.MAP[x][y].biome){
+////		    	switch(main.Board.MAP[x][y].biome){
 ////		    	case 0:{
 ////		    		b.setRGB(ix, iy, Color.BLUE.getRGB());
 ////		    		break;
@@ -184,17 +179,39 @@ public class MapWriter {
 //		}
 	}
 
-//	private void propWriter() throws FileNotFoundException {
-//
-//		File file = new File(MAPDIR + "/properties.prop");
-//		if(file.exists()){
-//			PrintWriter pw = new PrintWriter(file);
-//			pw.println("MAPNAME: " + InterfaceNew.textField.getText());
-//			pw.println("EDITORVERSION: " + InterfaceNew.editorVersion);
-//			pw.println("X SIZE: " + Map.map_xsize);
-//			pw.println("Y SIZE: " + Map.map_ysize);
-//		}
-//
-//	}
+    private void createProperties() throws FileNotFoundException {
+
+        File file = new File(MAPDIR + "/properties.prop");
+        if (file.exists()) {
+            PrintWriter pw = new PrintWriter(file);
+            pw.println("MAPNAME: " + mapHandler.saveName);
+            pw.println("EDITORVERSION: " + mapHandler.editorVersion);
+            pw.println("LOADED IMAGES: " + mapHandler.board.dataHandler.images.size());
+            pw.println("LOADED FIELDS: " + mapHandler.board.dataHandler.fields.size());
+        }
+
+    }
+
+    private void createSaveDir(String saveName) {
+        Installer.runInstaller();
+        MAPDIR = System.getProperty("user.home") + "/2D Game/Saves/" + saveName;
+        File MapDIR = new File(MAPDIR);
+        if (!MapDIR.exists()) {
+            boolean result = MapDIR.mkdir();
+            if (result) System.out.println("Save Dir created");
+        }
+        FileName = MAPDIR + "/" + "map.mp";
+//    	if(type == 0) {
+//    		writer_v0();
+//    		writer_v1();
+//    	}
+//    	else if (type == 1)writer_v0();
+//    	else if (type == 2)writer_v1();
+//        try {
+//            propWriter();
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+    }
 
 }

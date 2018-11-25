@@ -1,3 +1,5 @@
+package main;
+
 import Data.DataHandler;
 import MapGen.Tile;
 import UI.Message;
@@ -88,6 +90,7 @@ public class Menu {
         for (Tile t : data.fields) {
             this.Tabs[0].menuItems.add(new MenuItem(t.name, t.imageObject.img));
         }
+        this.Tabs[1].menuItems.add(new MenuItem("Remove", data.getImageByName("Delete")));
         for (Tile t : data.plants) {
             this.Tabs[1].menuItems.add(new MenuItem(t.name, t.imageObject.img));
         }
@@ -119,7 +122,7 @@ public class Menu {
             int index = ((pos.x - 200) - (pos.x - 200) % tabSize) / tabSize;
             switch (toolbarItems.get(index).name) {
                 case "Edit Mode": {
-//                    Board.editorState = Board.EditorState.EDIT;
+                    Board.editorState = Board.EditorState.EDIT;
                     toolbarItems.get(0).active = true;
                     toolbarItems.get(1).active = false;
                     sidebarVisible = true;
@@ -185,10 +188,10 @@ public class Menu {
                     if (Board.mapHandler.mapOpen) {
 //                        if (Map.miniMap) {
 //                            Map.miniMap = false;
-//                            Board.addInfoMessage(new Message("Minimap off", Message.Type.INFO));
+//                            main.Board.addInfoMessage(new Message("Minimap off", Message.Type.INFO));
 //                        } else {
 //                            Map.miniMap = true;
-//                            Board.addInfoMessage(new Message("Minimap on", Message.Type.INFO));
+//                            main.Board.addInfoMessage(new Message("Minimap on", Message.Type.INFO));
 //                        }
 //                        Map.mapChange = true;
                         toolbarItems.get(6).active = !toolbarItems.get(6).active;

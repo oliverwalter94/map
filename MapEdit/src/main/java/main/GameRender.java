@@ -1,7 +1,10 @@
+package main;
+
 import MapGen.Chunk;
 import MapGen.MapTile;
 import UI.Frame;
 import UI.Message;
+import main.Menu.MenuItem;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -20,12 +23,33 @@ class GameRender {
         boardSize = size;
         if (mapOpen) {
             if (!Board.mapHandler.miniMap) {
-                    renderMapNew(g2d);
+                renderMapNew(g2d);
             } else drawMiniMap(g2d);
         }
         renderMenu(g2d);
+        if (Board.editorState == Board.EditorState.EDIT && Board.dragging)
+            renderSelection(g2d);
         renderMessages(g2d);
         renderFrames(g2d);
+
+    }
+
+    private void renderSelection(Graphics2D g2d) {
+
+        Rectangle r = new Rectangle(Board.mouse1);
+        r.add(Board.mouse2);
+        if (!Board.remove) {
+            g2d.setColor(new Color(47, 205, 0, 120));
+            g2d.fill(r);
+            g2d.setColor(new Color(13, 205, 36, 255));
+//            g2d.draw(r);
+        } else {
+            g2d.setColor(new Color(255, 39, 7, 120));
+            g2d.fill(r);
+            g2d.setColor(new Color(255, 0, 25, 255));
+//            g2d.draw(r);
+
+        }
     }
 
     private void renderMenu(Graphics2D g2d) {
@@ -36,7 +60,7 @@ class GameRender {
         g2d.setColor(menu.backgroundColor);
         menu.size = new Dimension(200, boardSize.height);
         //Draw Toolbar
-        for (Menu.MenuItem item : menu.toolbarItems) {
+        for (MenuItem item : menu.toolbarItems) {
             if (item.active)
                 g2d.setColor(menu.backgroundSelected);
             else
@@ -85,7 +109,7 @@ class GameRender {
 
             //Draw Rest
 
-            for (Menu.MenuItem item : menu.Tabs[menu.selectedTabIndex].menuItems) {
+            for (MenuItem item : menu.Tabs[menu.selectedTabIndex].menuItems) {
                 if (item.active)
                     g2d.setColor(menu.backgroundSelected);
                 else
@@ -135,7 +159,7 @@ class GameRender {
 //        do{
 //            int factor = 5;
 //            do{
-//                int c = Board.MAP[xc][yc].field;
+//                int c = main.Board.MAP[xc][yc].field;
 //                switch(c){
 //                    case 0:
 //                    case 1:

@@ -191,6 +191,7 @@ public class DataHandler {
                 JsonArray jsonObject = jsonTree.getAsJsonArray();
                 for (JsonElement je : jsonObject)
                     addImage(je.getAsJsonObject());
+
             }
         } catch (IOException e) {
             e.printStackTrace();

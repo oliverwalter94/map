@@ -1,10 +1,15 @@
+package main;
+
 import Data.DataHandler;
 import UI.Frame;
 import UI.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -19,10 +24,13 @@ public class Board extends JPanel implements ActionListener {
     private static int x1, y1;
     static EditorState editorState = EditorState.EDIT;
     private static int mxa1, mya1;
-    private static boolean dragging = false;
+    static boolean dragging = false;
+    static boolean remove = false;
+    static Point mouse1, mouse2;
+    public static Rectangle2D selectedTiles;
 
     static Menu menu;
-    static DataHandler dataHandler;
+    public static DataHandler dataHandler;
     private static GameRender gameRenderer;
     static MapHandler mapHandler;
 
@@ -42,7 +50,6 @@ public class Board extends JPanel implements ActionListener {
         time.start();
 
 //        addFrame();
-
     }
 
     public void debug() {
@@ -52,22 +59,9 @@ public class Board extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         timestat++;
         if (timestat == 100) timestat = 0;
+        mouseMoved();
         repaint();
         updateMessages();
-
-        if (dragging) {
-
-            try {
-                Point newOrigin = new Point((int) (mapHandler.getOrigin().x + mxa1 - this.getMousePosition().getX()), (int) (mapHandler.getOrigin().y + mya1 - this.getMousePosition().getY()));
-                mapHandler.setOrigin(newOrigin);
-                mapHandler.calcNeededChunks();
-                mxa1 = (int) this.getMousePosition().getX();
-                mya1 = (int) this.getMousePosition().getY();
-            } catch (NullPointerException e1) {
-                //Probably just mousepointer out of Frame...
-            }
-        }
-
         debug();
     }
 
@@ -77,6 +71,32 @@ public class Board extends JPanel implements ActionListener {
             if (message.timeToLive <= 0) {
                 messages.remove(message);
                 break;
+            }
+
+        }
+    }
+
+    private void mouseMoved() {
+        if (dragging) {
+            switch (editorState) {
+                case EDIT:
+                    try {
+                        mouse2 = new Point(Math.floorDiv((int) this.getMousePosition().getX(), mapHandler.tileSpacing) * mapHandler.tileSpacing, Math.floorDiv((int) this.getMousePosition().getY(), mapHandler.tileSpacing) * mapHandler.tileSpacing);
+                    } catch (NullPointerException e) {
+
+                    }
+                    break;
+                case MOVE:
+                    try {
+                        Point newOrigin = new Point((int) (mapHandler.getOrigin().x + mxa1 - this.getMousePosition().getX()), (int) (mapHandler.getOrigin().y + mya1 - this.getMousePosition().getY()));
+                        mapHandler.setOrigin(newOrigin);
+                        mapHandler.calcNeededChunks();
+                        mxa1 = (int) this.getMousePosition().getX();
+                        mya1 = (int) this.getMousePosition().getY();
+                    } catch (NullPointerException e1) {
+                        //Probably just mousepointer out of Frame...
+                    }
+                    break;
             }
 
         }
@@ -116,12 +136,12 @@ public class Board extends JPanel implements ActionListener {
 
         boolean m = false;
 
-        public void mouseWheelMoved(MouseWheelEvent e) {
-//            if(mapHandler.mapOpen){
-            System.out.println("Test" + e.getScrollAmount());
-            System.out.println(e.getPreciseWheelRotation());
-//            }
-        }
+//        public void mouseWheelMoved(MouseWheelEvent e) {
+////            if(mapHandler.mapOpen){
+//            System.out.println("Test" + e.getScrollAmount());
+//            System.out.println(e.getPreciseWheelRotation());
+////            }
+//        }
 
 
         public void mousePressed(MouseEvent e) {
@@ -141,9 +161,13 @@ public class Board extends JPanel implements ActionListener {
             } else {
                 m = false;
                 if (editorState == EditorState.EDIT) {
-                    if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
-                        x1 = e.getX() / mapHandler.tileSpacing;
-                        y1 = e.getY() / mapHandler.tileSpacing;
+                    if (mapHandler.mapOpen && !mapHandler.miniMap && (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3)) {
+                        x1 = Math.floorDiv(mapHandler.getOrigin().x + e.getX(), mapHandler.tileSpacing);
+                        y1 = Math.floorDiv(mapHandler.getOrigin().y + e.getY(), mapHandler.tileSpacing);
+                        mouse1 = new Point(x1 * mapHandler.tileSpacing, y1 * mapHandler.tileSpacing);
+                        mouse2 = mouse1;
+                        dragging = true;
+                        remove = e.getButton() == MouseEvent.BUTTON3;
                     }
                 } else if (editorState == EditorState.MOVE) {
                     if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
@@ -155,16 +179,13 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
-        //TODO: Add Movement to Map
-//
-
         public void mouseReleased(MouseEvent e) {
             if (editorState == EditorState.EDIT && !m) {
                 int y2;
                 int x2;
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
-                    x2 = e.getX() / mapHandler.tileSize;
-                    y2 = e.getY() / mapHandler.tileSize;
+                    x2 = Math.floorDiv(mapHandler.getOrigin().x + e.getX(), mapHandler.tileSpacing);
+                    y2 = Math.floorDiv(mapHandler.getOrigin().y + e.getY(), mapHandler.tileSpacing);
                     int x_dif, y_dif;
 
                     if (x2 > x1) x_dif = x2 - x1 + 1;
@@ -175,7 +196,7 @@ public class Board extends JPanel implements ActionListener {
 
                     if (x2 > x1 && y2 > y1) do {
                         do {
-//                            MAP[x1 + a + GameRender.screenx][y1 + b + GameRender.screeny].field = menu.Tabs[0].selected;
+                            mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 + a, y1 + b));
                             a++;
                         } while (a < x_dif);
                         if (a == x_dif) a = 0;
@@ -184,7 +205,7 @@ public class Board extends JPanel implements ActionListener {
 
                     else if (x2 < x1 && y2 < y1) do {
                         do {
-//                            MAP[x1 - a + GameRender.screenx][y1 - b + GameRender.screeny].field = menu.Tabs[0].selected;
+                            mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 - a, y1 - b));
                             a++;
                         } while (a < x_dif);
                         if (a == x_dif) a = 0;
@@ -193,7 +214,7 @@ public class Board extends JPanel implements ActionListener {
 
                     else if (x2 > x1 && y2 < y1) do {
                         do {
-//                            MAP[x1 + a + GameRender.screenx][y1 - b + GameRender.screeny].field = menu.Tabs[0].selected;
+                            mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 + a, y1 - b));
                             a++;
                         } while (a < x_dif);
                         if (a == x_dif) a = 0;
@@ -202,14 +223,12 @@ public class Board extends JPanel implements ActionListener {
 
                     else do {
                             do {
-//                                MAP[x1 - a + GameRender.screenx][y1 + b + GameRender.screeny].field = menu.Tabs[0].selected;
+                                mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 - a, y1 + b));
                                 a++;
                             } while (a < x_dif);
                             if (a == x_dif) a = 0;
                             b++;
                         } while (b < y_dif);
-//                    Map.mapChange = true;
-//                    Map.saved = false;
                 }
 
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 1) {
@@ -229,7 +248,7 @@ public class Board extends JPanel implements ActionListener {
 
                     if (x2 > x1 && y2 > y1) do {
                         do {
-//                            MAP[x1 + a + GameRender.screenx][y1 + b + GameRender.screeny].plant = menu.Tabs[1].selected;
+                            mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 + b));
                             a++;
                         } while (a < xdif);
                         if (a == xdif) a = 0;
@@ -238,7 +257,7 @@ public class Board extends JPanel implements ActionListener {
 
                     else if (x2 < x1 && y2 < y1) do {
                         do {
-//                            MAP[x1 - a + GameRender.screenx][y1 - b + GameRender.screeny].plant = menu.Tabs[1].selected;
+                            mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 - b));
                             a++;
                         } while (a < xdif);
                         if (a == xdif) a = 0;
@@ -247,7 +266,7 @@ public class Board extends JPanel implements ActionListener {
 
                     else if (x2 > x1 && y2 < y1) do {
                         do {
-//                            MAP[x1 + a + GameRender.screenx][y1 - b + GameRender.screeny].plant = menu.Tabs[1].selected;
+                            mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 - b));
                             a++;
                         } while (a < xdif);
                         if (a == xdif) a = 0;
@@ -256,15 +275,15 @@ public class Board extends JPanel implements ActionListener {
 
                     else do {
                             do {
-//                                MAP[x1 - a + GameRender.screenx][y1 + b + GameRender.screeny].plant = menu.Tabs[1].selected;
+                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 + b));
                                 a++;
                             } while (a < xdif);
                             if (a == xdif) a = 0;
                             b++;
                         } while (b < ydif);
-//                    Map.mapChange = true;
-//                    Map.saved = false;
                 }
+
+                dragging = false;
             } else if (editorState == EditorState.MOVE && !m) {
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
                     Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - e.getX(), mapHandler.getOrigin().y + mya1 - e.getY());

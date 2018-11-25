@@ -16,7 +16,7 @@ public class Installer {
             boolean result = texturesDir.mkdir();
             if(result)System.out.println("DIR created");
         }
-        File mapsDir = new File(home + "/Maps");
+        File mapsDir = new File(home + "/Saves");
         if (!mapsDir.exists()){
             boolean result = mapsDir.mkdir();
             if(result)System.out.println("DIR created");

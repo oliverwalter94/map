@@ -18,7 +18,7 @@ public class MapReader{
 //					int c = 16777216 + map.getRGB(x+Map.map_xsize*2,y);
 //					int b = 16777216 + map.getRGB(x+Map.map_xsize,y);
 //					int a = 16777216 + map.getRGB(x, y);
-////					Board.MAP[x][y] = new MapGen.Map(a,b,c,0);
+////					main.Board.MAP[x][y] = new MapGen.Map(a,b,c,0);
 //					x++;
 //				}while (x < w);
 //				if (x == w){
@@ -26,8 +26,8 @@ public class MapReader{
 //					y++;
 //				}
 //			} while (y < h);
-////			Board.MapOpen = true;
-//			//GameRender.drawMap(Board.g2d, new Dimension(500,500),Board.images);
+////			main.Board.MapOpen = true;
+//			//GameRender.drawMap(main.Board.g2d, new Dimension(500,500),main.Board.images);
 //		} catch(Exception e){
 //			System.out.println("Your MapGen.Map could not be loaded. Either your map does not match the right map format or it was not a MapGen.Map.");
 //		}
