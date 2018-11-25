@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0831dc75-2af5-4428-bc09-2807f8d5cb34" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../MapEdit/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/MapEdit.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/Biome.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/DataHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/DataReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/Field.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/Generator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/ImageObj.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/Tile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/MapGen/TileWeight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/Technical/Spawner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/Technical/Trigger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/Technical/newMob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/Technical/newSpawner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/GameRender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/Images.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/Installer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/InterfaceNew.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/Map.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/MapGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/MapReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/MapWriter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/Menu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/main/Screen_Array.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/1174260_640975935913442_1669847629_t.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/apples32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/beach32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/biomes32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/buildings32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/bush32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/cactus32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/closemap32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/deleteextra32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/desert32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/edit32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/empty32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/farmland32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/fields32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/fir32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/fireplace32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/floatingwater32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/flowers32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/forest32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/freshwater32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/grass32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/grassland32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/gravel32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/icon32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/lake32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/loadmap32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/minimap32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/move32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/newmap32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/ocean32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/path32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/plants32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/reloadtextures32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/river32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/sand32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/savemap32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/seawater32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/technicals32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/tent32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Environment/tree32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/Logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/Player/player-hd_u1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/Player/player-hd_u2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/Player/player-hd_u3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/Player/player-hd_u4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/endurance-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/halfheart-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/heart-empty-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/heart-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/player-hd - Kopie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/player-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/player-hd_sword_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/player-hd_sword_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/shield-empty-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/shield-full-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/skeleton/skeleton-hd_9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/speed-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/steak.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/sword-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/HD/zombie-hd.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/halfheart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/heart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/player.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/player_sword.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/player_sword_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/skeleton.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/sword.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/NPCs/newImg/zombie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/DaytimeLayer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/DaytimeLayerColor.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/MAp.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/berrybush_stat3_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/bgw.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/damage_off_btn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/dirt_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/freshwater_03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/icon_table.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/icons.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/inco.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/player.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/saltwater_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/saltwater_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/saltwater_03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sand_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sand_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sand_03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sand_04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/savanngras_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sc1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sc2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/sc3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/tree_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/water1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/Mapping/water2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/bush.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/cactus.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/enemy_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/farmland_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/fir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/floatingwater_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/flowers.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/freshwater_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/freshwater_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/freshwater_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass32_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass32_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass32_4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_03.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_04.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_05.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_berrries_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_bush_stat1_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_bush_stat2_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_bush_stat3_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_fir_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_tree_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_tree_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_with_unripe_berrries_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/grass_without_berrries_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/gravel_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/gravel_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/halfheart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/heart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/lava_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/move_32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/player2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/player2_sword.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/rasen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/rasen2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/sand_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/sand_with_catus_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/sand_with_palm_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/sand_with_thornbush_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/seawater32_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/seawater_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/snow_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/stone_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/stone_with_coal_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/swampgrass_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/swampgrass_02.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/swampwater_01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/sword.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/textures Load.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/tree.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/tree_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/water_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/OLD/zombie.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/UI_Elements/ArrowUp.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/UI_Elements/ScrollIn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/UI_Elements/ScrollOut.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/UI_Elements/particle1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MapEdit/src/sources/UI_Elements/tree_1_boundingbox.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Board$CD.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Board$CD.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Images$ImageCategory.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Images$ImageCategory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Images$Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Images$Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Images.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Images.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Installer.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Installer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/InterfaceNew$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/InterfaceNew$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/InterfaceNew$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/InterfaceNew$ExtensionFileFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/InterfaceNew$ExtensionFileFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/InterfaceNew.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/InterfaceNew.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Map.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Map.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/MapGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/MapGenerator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/MapReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/MapReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/MapRender.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/MapWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/MapWriter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Menu$MenuItem.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Menu$MenuItem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Menu$Tab.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Menu$Tab.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Menu.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Menu.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Screen_Array.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Screen_Array.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/Spawner.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/Spawner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/Trigger.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/Trigger.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newMob.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newMob.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newSpawner$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newSpawner$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Technical/newSpawner.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Technical/newSpawner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/org/eclipse/wb/swing/FocusTraversalOnArray.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/org/eclipse/wb/swing/FocusTraversalOnArray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InterfaceNew.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InterfaceNew.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Map.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Map.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapGen/DataHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapGen/DataHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapGen/ImageObj.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapGen/ImageObj.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapRender.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameRender.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MapWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MapWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Technical/newMob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Technical/newMob.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/bin/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-1367338527">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.4" value="2" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="iml" value="1" />
+          <entry key="java" value="15" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="IDEA_MODULE" value="1" />
+          <entry key="JAVA" value="15" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="dummy" value="34" />
+          <entry key="java" value="905" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="905" />
+          <entry key="PLAIN_TEXT" value="34" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Board.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="539">
+              <caret line="92" column="26" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="26" />
+              <folding>
+                <element signature="method#mouseReleased#0;class#CD#0;class#Board#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GameRender.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="28" column="27" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="27" />
+              <folding>
+                <element signature="e#528#529#0" expanded="true" />
+                <element signature="e#549#550#0" expanded="true" />
+                <element signature="method#drawBiomesMap#0;class#MapRender#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Menu.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="106" column="22" selection-start-line="106" selection-start-column="22" selection-end-line="106" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Images.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-101">
+              <caret line="32" column="29" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/InterfaceNew.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
+              <caret line="59" selection-start-line="59" selection-end-line="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MapGenerator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+              <folding>
+                <element signature="method#generateBlocks#0;class#MapGenerator#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/MapGen/DataHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="277">
+              <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Screen_Array.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Map.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Images</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/RenderEngine.java" />
+        <option value="$PROJECT_DIR$/src/MapRender.java" />
+        <option value="$PROJECT_DIR$/src/MapGen/ImageObj.java" />
+        <option value="$PROJECT_DIR$/src/Map.java" />
+        <option value="$PROJECT_DIR$/src/MapWriter.java" />
+        <option value="$PROJECT_DIR$/src/MapGenerator.java" />
+        <option value="$PROJECT_DIR$/src/MapGen/DataHandler.java" />
+        <option value="$PROJECT_DIR$/src/InterfaceNew.java" />
+        <option value="$PROJECT_DIR$/src/GameRender.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
+        <option value="$PROJECT_DIR$/src/Menu.java" />
+        <option value="$PROJECT_DIR$/src/Technical/newMob.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="usePluginRegistry" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1176" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages ProjectPane="false" />
+      <hideEmptyPackages ProjectPane="true" />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MapEditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MapEditor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MapEditor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MapEditor" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="C:/Program Files/Git/git-cmd.exe" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.newMob">
+    <configuration name="Unnamed" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="InterfaceNew" />
+      <module name="MapEditor" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="newMob" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Technical.newMob" />
+      <module name="MapEditor" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Technical.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.newMob" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.newMob" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0831dc75-2af5-4428-bc09-2807f8d5cb34" name="Default Changelist" comment="" />
+      <created>1541156342347</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1541156342347</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4993395" visible="true" weight="0.18123667" />
+      <window_info id="Structure" order="1" sideWeight="0.5006605" side_tool="true" weight="0.18123667" />
+      <window_info id="Designer" order="2" />
+      <window_info id="UI Designer" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="0" sideWeight="0.49840087" weight="0.32917467" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" sideWeight="0.4989339" weight="0.32917467" />
+      <window_info anchor="bottom" id="Run" order="3" weight="0.32917467" />
+      <window_info anchor="bottom" id="Debug" order="4" sideWeight="0.4989339" weight="0.12763916" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" sideWeight="0.49946696" weight="0.32821497" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50053304" side_tool="true" weight="0.32821497" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.32995737" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="280" column="15" selection-start-line="280" selection-start-column="15" selection-end-line="280" selection-end-column="15" />
+          <folding>
+            <element signature="e#10361#10362#0" expanded="true" />
+            <element signature="e#10388#10389#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapGen/ImageObj.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="11" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MapEditor.iml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-471">
+          <caret line="93" column="44" selection-start-line="93" selection-start-column="44" selection-end-line="93" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Screen_Array.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/modules.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="10" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
+          <folding>
+            <element signature="method#generateBlocks#0;class#MapGenerator#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MapGen/DataHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InterfaceNew.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Images.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-101">
+          <caret line="32" column="29" selection-start-line="32" selection-start-column="23" selection-end-line="32" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameRender.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="28" column="27" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="27" />
+          <folding>
+            <element signature="e#528#529#0" expanded="true" />
+            <element signature="e#549#550#0" expanded="true" />
+            <element signature="method#drawBiomesMap#0;class#MapRender#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="92" column="26" selection-start-line="92" selection-start-column="26" selection-end-line="92" selection-end-column="26" />
+          <folding>
+            <element signature="method#mouseReleased#0;class#CD#0;class#Board#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Technical/newMob.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="72" selection-start-line="72" selection-end-line="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="106" column="22" selection-start-line="106" selection-start-column="22" selection-end-line="106" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>MapEditor</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
