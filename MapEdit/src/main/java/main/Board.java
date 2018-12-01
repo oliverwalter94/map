@@ -1,6 +1,7 @@
 package main;
 
 import Data.DataHandler;
+import Entities.Item;
 import UI.Frame;
 import UI.Message;
 
@@ -36,6 +37,7 @@ public class Board extends JPanel implements ActionListener {
 
     static ArrayList<Message> messages = new ArrayList<>();
     static ArrayList<Frame> frames = new ArrayList<>();
+    static ArrayList<Item> items;
 
     Board() {
 

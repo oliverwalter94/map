@@ -5,10 +5,7 @@ import Data.ImageObject;
 public class Item {
     String name;
     ImageObject imgObj;
-    int durability;
-    int amount;
     boolean breakable;
+    boolean hasDurability;
     ItemClass itemClass;
-
-
 }
