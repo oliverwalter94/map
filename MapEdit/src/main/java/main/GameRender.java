@@ -10,27 +10,69 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
+
 class GameRender {
+    private final ImagePicker imagePicker;
+
+    enum renderMode {
+        NONE, MAPEDIT, STRUCT, MINIMAP, IMAGEPICKER
+    }
 
     private static Dimension boardSize;
     private Menu menu;
+    public renderMode mode = renderMode.NONE;
 
     GameRender() {
         this.menu = Board.menu;
+        this.imagePicker = Board.imagePicker;
     }
 
-    void drawGame(Graphics2D g2d, Dimension size, boolean mapOpen) {
+    void drawGame(Graphics2D g2d, Dimension size, boolean renderMap) {
         boardSize = size;
-        if (mapOpen) {
-            if (!Board.mapHandler.miniMap) {
-                renderMapNew(g2d);
-            } else drawMiniMap(g2d);
+        switch (mode) {
+            case MAPEDIT:
+                renderMap(g2d);
+                break;
+            case STRUCT:
+                renderStructEditor(g2d);
+                break;
+            case IMAGEPICKER:
+                renderImagePicker(g2d);
+                break;
         }
+
         renderMenu(g2d);
         if (Board.editorState == Board.EditorState.EDIT && Board.dragging)
             renderSelection(g2d);
         renderMessages(g2d);
         renderFrames(g2d);
+
+    }
+
+    private void renderStructEditor(Graphics2D g2d) {
+        //TODO add struct editor renderer
+    }
+
+    private void renderImagePicker(Graphics2D g2d) {
+        //Render Background
+        g2d.setColor(new Color(42, 42, 42));
+        g2d.fill(new Rectangle2D.Double(0, 0, boardSize.width, boardSize.height));
+        //Render Title Bar
+        g2d.setColor(Color.lightGray);
+        Font f = new Font("Calibri", Font.PLAIN, 40);
+        g2d.setFont(f);
+        g2d.drawString(imagePicker.selection.name, boardSize.width / 2 - (int) g2d.getFontMetrics(f).getStringBounds(imagePicker.selection.name, null).getWidth() / 2, 150);
+        //Render Images
+        int origin_x = boardSize.width / 2 - 310;
+        for (int x = 0; x < imagePicker.itemsPerRow; x++) {
+            for (int y = 0; y < imagePicker.images[0].length; y++) {
+                if (imagePicker.images[x][y] != null)
+                    g2d.drawImage(imagePicker.images[x][y].img, origin_x + x * 80, 200 + y * 80, 64, 64, null);
+            }
+        }
+
+        //TODO add image picker renderer
+
 
     }
 
@@ -196,7 +238,7 @@ class GameRender {
 //        g2d.setColor(null);
     }
 
-    public void renderMapNew(Graphics2D g2d) {
+    public void renderMap(Graphics2D g2d) {
         for (Chunk chunk : Board.mapHandler.chunks) {
             chunk.rendering = true;
             int tileSize = Board.mapHandler.tileSize;

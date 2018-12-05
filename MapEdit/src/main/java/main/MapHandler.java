@@ -81,7 +81,6 @@ public class MapHandler {
         }
         Board.addInfoMessage(new Message(topLeft.toString(), Message.Type.INFO));
         mapOpen = true;
-//        System.out.println("-----------------");
     }
 
     private void loadChunk(int x, int y) {
@@ -98,7 +97,6 @@ public class MapHandler {
     private boolean chunkOffloaded(int x, int y) {
         for (Chunk chunk : offloadedChunks)
             if (chunk.pos.x == x && chunk.pos.y == y) {
-//                System.out.println("found old chunk " + x + ":" + y);
                 return true;
             }
 

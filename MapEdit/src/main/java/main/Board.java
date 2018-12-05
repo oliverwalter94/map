@@ -16,8 +16,10 @@ import java.util.ArrayList;
 
 public class Board extends JPanel implements ActionListener {
 
+    public static ImagePicker imagePicker;
+
     public enum EditorState {
-        EDIT, MOVE
+        EDIT, MOVE, IMAGEPICKER
     }
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +34,7 @@ public class Board extends JPanel implements ActionListener {
 
     static Menu menu;
     public static DataHandler dataHandler;
-    private static GameRender gameRenderer;
+    public static GameRender gameRenderer;
     static MapHandler mapHandler;
 
     static ArrayList<Message> messages = new ArrayList<>();
@@ -42,6 +44,7 @@ public class Board extends JPanel implements ActionListener {
     Board() {
 
         dataHandler = new DataHandler();
+        imagePicker = new ImagePicker(dataHandler);
         menu = new Menu();
         mapHandler = new MapHandler(this);
         gameRenderer = new GameRender();
@@ -137,13 +140,6 @@ public class Board extends JPanel implements ActionListener {
     private class CD extends MouseAdapter {
 
         boolean m = false;
-
-//        public void mouseWheelMoved(MouseWheelEvent e) {
-////            if(mapHandler.mapOpen){
-//            System.out.println("Test" + e.getScrollAmount());
-//            System.out.println(e.getPreciseWheelRotation());
-////            }
-//        }
 
 
         public void mousePressed(MouseEvent e) {

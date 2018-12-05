@@ -1,6 +1,9 @@
 package Data;
 
+import Entities.Item;
+import Entities.NPC;
 import MapGen.Biome;
+import MapGen.Structure;
 import MapGen.Tile;
 import MapGen.TileWeight;
 import com.google.gson.JsonArray;
@@ -24,18 +27,24 @@ public class DataHandler {
     public ArrayList<Tile> fields;
     public ArrayList<Tile> plants;
     public ArrayList<Tile> buildings;
-
+    public ArrayList<Structure> structures;
     public ArrayList<Biome> biomes;
+
+    public ArrayList<Item> items;
+    public ArrayList<NPC> npcs;
 
     String PATH = System.getProperty("user.home") + "/2D Game/";
 
 
     public DataHandler() {
-        images = new ArrayList<ImageObject>();
-        fields = new ArrayList<Tile>();
-        plants = new ArrayList<Tile>();
-        buildings = new ArrayList<Tile>();
-        biomes = new ArrayList<Biome>();
+        images = new ArrayList<>();
+        fields = new ArrayList<>();
+        plants = new ArrayList<>();
+        buildings = new ArrayList<>();
+        biomes = new ArrayList<>();
+        structures = new ArrayList<>();
+        items = new ArrayList<>();
+        npcs = new ArrayList<>();
 
         readJSONs();
     }
@@ -49,6 +58,8 @@ public class DataHandler {
             if (imob.name.equals(name))
                 return imob.img;
         }
+        System.out.println("Could not load image for: " + name);
+        //TODO: Add live message
         return null;
     }
 

@@ -83,6 +83,9 @@ public class Menu {
         this.addTab("Fields", data.getImageByName("Fields"), 50);
         this.addTab("Plants", data.getImageByName("Plants"), 50);
         this.addTab("Buildings", data.getImageByName("Buildings"), 50);
+        this.addTab("Technical", data.getImageByName("Technical"), 50);
+        this.addTab("NPC", data.getImageByName("NPC"), 50);
+        this.addTab("Items", data.getImageByName("Items"), 50);
     }
 
     private void fillTabs() {
@@ -140,10 +143,24 @@ public class Menu {
                 case "New Map": {
                     Board.mapHandler.newMap();
                     Board.addInfoMessage(new Message("Generated new Map", Message.Type.INFO));
+                    Board.gameRenderer.mode = GameRender.renderMode.MAPEDIT;
                     break;
                 }
                 case "Save Map": {
                     // TODO implement new saving mechanism
+                    // TODO remove ImagePicker mechanism
+                    if (Board.gameRenderer.mode != GameRender.renderMode.IMAGEPICKER) {
+                        Board.gameRenderer.mode = GameRender.renderMode.IMAGEPICKER;
+                        sidebarVisible = false;
+                        Board.editorState = Board.EditorState.IMAGEPICKER;
+                    } else if (Board.mapHandler.mapOpen) {
+                        Board.gameRenderer.mode = GameRender.renderMode.MAPEDIT;
+                        if (toolbarItems.get(0).active) {
+                            Board.editorState = Board.EditorState.EDIT;
+                            sidebarVisible = true;
+                        } else
+                            Board.editorState = Board.EditorState.MOVE;
+                    }
                     break;
                 }
                 case "Load Map": {
