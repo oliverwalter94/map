@@ -2,8 +2,9 @@ package main;
 
 import MapGen.Chunk;
 import MapGen.MapTile;
-import UI.Frame;
+import UI.ImagePicker;
 import UI.Message;
+import UI.UIFrame;
 import main.Menu.MenuItem;
 
 import java.awt.*;
@@ -20,7 +21,7 @@ class GameRender {
 
     private static Dimension boardSize;
     private Menu menu;
-    public renderMode mode = renderMode.NONE;
+    renderMode mode = renderMode.NONE;
 
     GameRender() {
         this.menu = Board.menu;
@@ -51,6 +52,8 @@ class GameRender {
 
     private void renderStructEditor(Graphics2D g2d) {
         //TODO add struct editor renderer
+
+
     }
 
     private void renderImagePicker(Graphics2D g2d) {
@@ -63,17 +66,20 @@ class GameRender {
         g2d.setFont(f);
         g2d.drawString(imagePicker.selection.name, boardSize.width / 2 - (int) g2d.getFontMetrics(f).getStringBounds(imagePicker.selection.name, null).getWidth() / 2, 150);
         //Render Images
-        int origin_x = boardSize.width / 2 - 310;
+        g2d.setColor(Color.gray);
+
+        int size = imagePicker.imageSize;
+        int spacing = imagePicker.spacing;
+        imagePicker.origin.x = boardSize.width / 2 - (imagePicker.itemsPerRow * size / 2 + (int) ((double) (imagePicker.itemsPerRow - 1) / 2 * spacing));
         for (int x = 0; x < imagePicker.itemsPerRow; x++) {
             for (int y = 0; y < imagePicker.images[0].length; y++) {
-                if (imagePicker.images[x][y] != null)
-                    g2d.drawImage(imagePicker.images[x][y].img, origin_x + x * 80, 200 + y * 80, 64, 64, null);
+                if (imagePicker.images[x][y] != null) {
+                    if (imagePicker.images[x][y].transparent)
+                        g2d.fill(new Rectangle2D.Double(imagePicker.origin.x + x * (size + spacing), imagePicker.origin.y + y * (size + spacing), size, size));
+                    g2d.drawImage(imagePicker.images[x][y].img, imagePicker.origin.x + x * (size + spacing), imagePicker.origin.y + y * (size + spacing), size, size, null);
+                }
             }
         }
-
-        //TODO add image picker renderer
-
-
     }
 
     private void renderSelection(Graphics2D g2d) {
@@ -192,53 +198,8 @@ class GameRender {
         }
     }
 
-    private void drawMiniMap(Graphics2D g2d){
-//        if (Map.mapChange) toScreenArray();
-//        Map.mapChange = false;
-//        int xc = 0;
-//        int yc = 0;
-//        int xpos = 0,ypos = 0;
-//        do{
-//            int factor = 5;
-//            do{
-//                int c = main.Board.MAP[xc][yc].field;
-//                switch(c){
-//                    case 0:
-//                    case 1:
-//                    case 2:
-//                        g2d.setColor(Color.blue);
-//                        break;
-//                    case 3:
-//                        g2d.setColor(Color.green);
-//                        break;
-//                    case 4:
-//                        g2d.setColor(Color.yellow);
-//                        break;
-//                    case 5:
-//                        g2d.setColor(Color.gray);
-//                        break;
-//                    case 6:
-//                        g2d.setColor(Color.orange);
-//                        break;
-//                    default:
-//                        g2d.setColor(null);
-//                        break;
-//                }
-//                g2d.fill(new Rectangle2D.Double(xpos, ypos, factor, factor));
-//                xc++;
-//                xpos += factor + 1;
-//            } while (xc < Map.map_xsize);
-//            if (xc == Map.map_xsize){
-//                xpos = 0;
-//                xc = 0;
-//                yc++;
-//                ypos += factor + 1;
-//            }
-//        } while (yc < Map.map_ysize);
-//        g2d.setColor(null);
-    }
 
-    public void renderMap(Graphics2D g2d) {
+    private void renderMap(Graphics2D g2d) {
         for (Chunk chunk : Board.mapHandler.chunks) {
             chunk.rendering = true;
             int tileSize = Board.mapHandler.tileSize;
@@ -257,8 +218,8 @@ class GameRender {
         }
     }
 
-    public void renderFrames(Graphics2D g2d) {
-        for (Frame frame : Board.frames)
+    private void renderFrames(Graphics2D g2d) {
+        for (UIFrame frame : Board.frames)
             frame.render(g2d);
 
     }

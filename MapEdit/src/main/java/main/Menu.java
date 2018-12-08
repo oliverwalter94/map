@@ -250,6 +250,7 @@ public class Menu {
         String name;
         Image img;
         boolean active;
+//        VoidConsumer<> onClick;
 
         MenuItem(String Name, Image Img) {
             name = Name;
@@ -262,6 +263,8 @@ public class Menu {
             img = Img;
             active = Active;
         }
+
+
     }
 
 

@@ -58,7 +58,7 @@ public class DataHandler {
             if (imob.name.equals(name))
                 return imob.img;
         }
-        System.out.println("Could not load image for: " + name);
+        System.out.println("No image is loaded for: " + name);
         //TODO: Add live message
         return null;
     }
@@ -133,6 +133,7 @@ public class DataHandler {
     public void addBiome(JsonObject obj) {
 
         String name = obj.getAsJsonPrimitive("name").getAsString();
+        Boolean natGen = obj.getAsJsonPrimitive("naturallyGenerated").getAsBoolean();
 
         ArrayList<TileWeight> biomeFields = calcFieldWeights(obj.getAsJsonArray("fields"));
         ArrayList<TileWeight> biomePlants = null;
@@ -140,8 +141,7 @@ public class DataHandler {
             biomePlants = calcPlantWeights(obj.getAsJsonArray("plants"));
 
 
-        //TODO: Add naturallyGenerated field to reader
-        biomes.add(new Biome(name, biomeFields, biomePlants, false));
+        biomes.add(new Biome(name, biomeFields, biomePlants, natGen));
 
 
     }

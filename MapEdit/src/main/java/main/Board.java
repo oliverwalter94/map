@@ -2,8 +2,7 @@ package main;
 
 import Data.DataHandler;
 import Entities.Item;
-import UI.Frame;
-import UI.Message;
+import UI.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +37,7 @@ public class Board extends JPanel implements ActionListener {
     static MapHandler mapHandler;
 
     static ArrayList<Message> messages = new ArrayList<>();
-    static ArrayList<Frame> frames = new ArrayList<>();
+    static ArrayList<UIFrame> frames = new ArrayList<>();
     static ArrayList<Item> items;
 
     Board() {
@@ -58,7 +57,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void debug() {
+//        if(frames.size()==1) frames.clear();
 
+//        if(frames.size()==0) addFrame();
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -121,19 +122,20 @@ public class Board extends JPanel implements ActionListener {
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         gameRenderer.drawGame(g2d, this.getSize(), mapHandler.mapOpen);
     }
 
     public void addFrame() {
-        Frame f = new Frame();
+        UIFrame f = new UIFrame(new Point(200, 200), "");
 
-        f.backgroundColor = Color.gray;
-        f.title = "Test";
-        f.width = 200;
-        f.height = 200;
-        f.addLabel("Test", new Point(20, 20));
-        f.addTextbox(new Point(20, 80), 100, 25);
-        f.addTextbox(new Point(20, 120), 100, 25);
+        f.setBackgroundColor(Color.gray);
+        f.setTitle("frame1");
+        f.setWidth(200);
+        f.setHeight(200);
+        f.addChildElement(new UILabel(new Point(20, 20), "label1", "test"));
+        f.addChildElement(new UITextbox(new Point(20, 80), "textbox1", 100, 25));
+        f.addChildElement(new UITextbox(new Point(20, 120), "textbox2", 100, 25));
         frames.add(f);
     }
 

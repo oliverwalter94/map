@@ -1,15 +1,20 @@
-package main;
+package UI;
 
 import Data.DataHandler;
 import Data.ImageObject;
 
+import java.awt.*;
+
 public class ImagePicker {
 
-    ImageObject selection;
+    public ImageObject selection;
     boolean done = false;
-    ImageObject[][] images;
+    public ImageObject[][] images;
     DataHandler data;
-    int itemsPerRow = 8;
+    public int itemsPerRow = 8;
+    public Point origin = new Point(0, 200);
+    public int spacing = 16;
+    public int imageSize = 64;
 
     public ImagePicker(DataHandler dataHandler) {
         data = dataHandler;
@@ -35,7 +40,7 @@ public class ImagePicker {
         selection = null;
     }
 
-    void clicked(int x, int y) {
+    void clicked(Point position) {
 
     }
 }
