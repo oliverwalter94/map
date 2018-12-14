@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class Board extends JPanel implements ActionListener {
 
     public static ImagePicker imagePicker;
+    public static BiomeBuilder biomeBuilder;
+    public static StructureEditor structureEditor;
 
     public enum EditorState {
         EDIT, MOVE, IMAGEPICKER
@@ -44,6 +46,8 @@ public class Board extends JPanel implements ActionListener {
 
         dataHandler = new DataHandler();
         imagePicker = new ImagePicker(dataHandler);
+        biomeBuilder = new BiomeBuilder(dataHandler);
+        structureEditor = new StructureEditor(dataHandler);
         menu = new Menu();
         mapHandler = new MapHandler(this);
         gameRenderer = new GameRender();
@@ -110,7 +114,7 @@ public class Board extends JPanel implements ActionListener {
 
     static void addTooltip(Message message, Point pos) {
         messages.removeIf(message1 -> message1.type == Message.Type.TOOLTIP);
-        message.position = pos;
+        message.setPosition(pos);
         messages.add(message);
     }
 

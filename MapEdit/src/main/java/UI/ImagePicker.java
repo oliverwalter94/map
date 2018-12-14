@@ -5,7 +5,7 @@ import Data.ImageObject;
 
 import java.awt.*;
 
-public class ImagePicker {
+public class ImagePicker extends UIElement {
 
     public ImageObject selection;
     boolean done = false;
@@ -17,6 +17,7 @@ public class ImagePicker {
     public int imageSize = 64;
 
     public ImagePicker(DataHandler dataHandler) {
+        super(new Point(0, 0), "imagePicker");
         data = dataHandler;
         reset();
         selection = images[0][0];
@@ -41,6 +42,11 @@ public class ImagePicker {
     }
 
     void clicked(Point position) {
+
+    }
+
+    @Override
+    public void render(Graphics2D g2d) {
 
     }
 }

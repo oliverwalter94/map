@@ -2,6 +2,7 @@ package main;
 
 import MapGen.Chunk;
 import MapGen.MapTile;
+import UI.BiomeBuilder;
 import UI.ImagePicker;
 import UI.Message;
 import UI.UIFrame;
@@ -9,78 +10,53 @@ import main.Menu.MenuItem;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
 
 
 class GameRender {
     private final ImagePicker imagePicker;
+    private final BiomeBuilder biomeBuilder;
+    private final StructureEditor structureEditor;
 
-    enum renderMode {
-        NONE, MAPEDIT, STRUCT, MINIMAP, IMAGEPICKER
+    enum RenderMode {
+        NONE, MAPEDIT, MINIMAP, IMAGEPICKER, BIOMEBUILDER, STRUCTEDITOR
     }
 
     private static Dimension boardSize;
     private Menu menu;
-    renderMode mode = renderMode.NONE;
+    RenderMode renderMode = RenderMode.NONE;
 
     GameRender() {
         this.menu = Board.menu;
         this.imagePicker = Board.imagePicker;
+        this.biomeBuilder = Board.biomeBuilder;
+        this.structureEditor = Board.structureEditor;
     }
 
     void drawGame(Graphics2D g2d, Dimension size, boolean renderMap) {
         boardSize = size;
-        switch (mode) {
+        switch (renderMode) {
             case MAPEDIT:
                 renderMap(g2d);
+                if (Board.editorState == Board.EditorState.EDIT && Board.dragging)
+                    renderSelection(g2d);
                 break;
-            case STRUCT:
-                renderStructEditor(g2d);
+            case STRUCTEDITOR:
+                structureEditor.render(g2d);
                 break;
             case IMAGEPICKER:
-                renderImagePicker(g2d);
+                imagePicker.render(g2d);
+                break;
+            case BIOMEBUILDER:
+                biomeBuilder.render(g2d);
                 break;
         }
 
         renderMenu(g2d);
-        if (Board.editorState == Board.EditorState.EDIT && Board.dragging)
-            renderSelection(g2d);
-        renderMessages(g2d);
         renderFrames(g2d);
+        renderMessages(g2d);
 
     }
 
-    private void renderStructEditor(Graphics2D g2d) {
-        //TODO add struct editor renderer
-
-
-    }
-
-    private void renderImagePicker(Graphics2D g2d) {
-        //Render Background
-        g2d.setColor(new Color(42, 42, 42));
-        g2d.fill(new Rectangle2D.Double(0, 0, boardSize.width, boardSize.height));
-        //Render Title Bar
-        g2d.setColor(Color.lightGray);
-        Font f = new Font("Calibri", Font.PLAIN, 40);
-        g2d.setFont(f);
-        g2d.drawString(imagePicker.selection.name, boardSize.width / 2 - (int) g2d.getFontMetrics(f).getStringBounds(imagePicker.selection.name, null).getWidth() / 2, 150);
-        //Render Images
-        g2d.setColor(Color.gray);
-
-        int size = imagePicker.imageSize;
-        int spacing = imagePicker.spacing;
-        imagePicker.origin.x = boardSize.width / 2 - (imagePicker.itemsPerRow * size / 2 + (int) ((double) (imagePicker.itemsPerRow - 1) / 2 * spacing));
-        for (int x = 0; x < imagePicker.itemsPerRow; x++) {
-            for (int y = 0; y < imagePicker.images[0].length; y++) {
-                if (imagePicker.images[x][y] != null) {
-                    if (imagePicker.images[x][y].transparent)
-                        g2d.fill(new Rectangle2D.Double(imagePicker.origin.x + x * (size + spacing), imagePicker.origin.y + y * (size + spacing), size, size));
-                    g2d.drawImage(imagePicker.images[x][y].img, imagePicker.origin.x + x * (size + spacing), imagePicker.origin.y + y * (size + spacing), size, size, null);
-                }
-            }
-        }
-    }
 
     private void renderSelection(Graphics2D g2d) {
 
@@ -182,22 +158,11 @@ class GameRender {
 
     private void renderMessages(Graphics2D g2d) {
         for (Message message : Board.messages) {
-            g2d.setColor(message.backgroundColor);
-            Rectangle2D bounds = g2d.getFontMetrics(message.font).getStringBounds(message.text, null);
-            g2d.setFont(message.font);
-            if (message.type == Message.Type.INFO || message.type == Message.Type.ERROR) {
-                g2d.fill(new RoundRectangle2D.Double((boardSize.getWidth() - bounds.getWidth()) / 2 - 8, 80, bounds.getWidth() + 16, bounds.getHeight() + 8, 7, 7));
-                if (message.type == Message.Type.INFO) g2d.setColor(message.fontColor);
-                else g2d.setColor(Color.red);
-                g2d.drawString(message.text, (int) (boardSize.getWidth() - bounds.getWidth()) / 2, 80 + (int) bounds.getHeight() + 1);
-            } else {
-                g2d.fill(new RoundRectangle2D.Double(message.position.x, message.position.y, bounds.getWidth() + 16, bounds.getHeight() + 8, 7, 7));
-                g2d.setColor(message.fontColor);
-                g2d.drawString(message.text, message.position.x + 8, message.position.y + (int) bounds.getHeight());
-            }
+            message.render(g2d, boardSize);
+
+
         }
     }
-
 
     private void renderMap(Graphics2D g2d) {
         for (Chunk chunk : Board.mapHandler.chunks) {

@@ -143,18 +143,18 @@ public class Menu {
                 case "New Map": {
                     Board.mapHandler.newMap();
                     Board.addInfoMessage(new Message("Generated new Map", Message.Type.INFO));
-                    Board.gameRenderer.mode = GameRender.renderMode.MAPEDIT;
+                    Board.gameRenderer.renderMode = GameRender.RenderMode.MAPEDIT;
                     break;
                 }
                 case "Save Map": {
                     // TODO implement new saving mechanism
                     // TODO remove ImagePicker mechanism
-                    if (Board.gameRenderer.mode != GameRender.renderMode.IMAGEPICKER) {
-                        Board.gameRenderer.mode = GameRender.renderMode.IMAGEPICKER;
+                    if (Board.gameRenderer.renderMode != GameRender.RenderMode.IMAGEPICKER) {
+                        Board.gameRenderer.renderMode = GameRender.RenderMode.IMAGEPICKER;
                         sidebarVisible = false;
                         Board.editorState = Board.EditorState.IMAGEPICKER;
                     } else if (Board.mapHandler.mapOpen) {
-                        Board.gameRenderer.mode = GameRender.renderMode.MAPEDIT;
+                        Board.gameRenderer.renderMode = GameRender.RenderMode.MAPEDIT;
                         if (toolbarItems.get(0).active) {
                             Board.editorState = Board.EditorState.EDIT;
                             sidebarVisible = true;
