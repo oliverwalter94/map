@@ -32,7 +32,7 @@ class GameRender {
         this.structureEditor = Board.structureEditor;
     }
 
-    void drawGame(Graphics2D g2d, Dimension size, boolean renderMap) {
+    void drawGame(Graphics2D g2d, Dimension size) {
         boardSize = size;
         switch (renderMode) {
             case MAPEDIT:
@@ -44,7 +44,7 @@ class GameRender {
                 structureEditor.render(g2d);
                 break;
             case IMAGEPICKER:
-                imagePicker.render(g2d);
+                imagePicker.render(g2d, boardSize);
                 break;
             case BIOMEBUILDER:
                 biomeBuilder.render(g2d);
@@ -188,4 +188,5 @@ class GameRender {
             frame.render(g2d);
 
     }
+
 }

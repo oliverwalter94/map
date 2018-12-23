@@ -4,6 +4,7 @@ import Data.DataHandler;
 import Data.ImageObject;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class ImagePicker extends UIElement {
 
@@ -21,6 +22,10 @@ public class ImagePicker extends UIElement {
         data = dataHandler;
         reset();
         selection = images[0][0];
+
+        this.font = new Font("Calibri", Font.PLAIN, 40);
+        this.foregroundColor = Color.lightGray;
+        this.backgroundColor = new Color(42, 42, 42);
     }
 
     void reset() {
@@ -45,8 +50,31 @@ public class ImagePicker extends UIElement {
 
     }
 
-    @Override
-    public void render(Graphics2D g2d) {
 
+    public void render(Graphics2D g2d, Dimension boardSize) {
+//        super.render(g2d);
+
+        //Render Background
+        g2d.setColor(backgroundColor);
+        g2d.fill(new Rectangle2D.Double(0, 0, boardSize.width, boardSize.height));
+        //Render Title Bar
+        g2d.setColor(foregroundColor);
+        g2d.setFont(font);
+        g2d.drawString(selection.name, boardSize.width / 2 - (int) g2d.getFontMetrics(font).getStringBounds(selection.name, null).getWidth() / 2, 150);
+        //Render Images
+        //Set Images background color
+        g2d.setColor(Color.gray);
+
+        int size = imageSize;
+        int spacing = this.spacing;
+        for (int x = 0; x < itemsPerRow; x++) {
+            for (int y = 0; y < images[0].length; y++) {
+                if (images[x][y] != null) {
+                    if (images[x][y].transparent)
+                        g2d.fill(new Rectangle2D.Double(origin.x + x * (size + spacing), origin.y + y * (size + spacing), size, size));
+                    g2d.drawImage(images[x][y].img, origin.x + x * (size + spacing), origin.y + y * (size + spacing), size, size, null);
+                }
+            }
+        }
     }
 }

@@ -68,6 +68,8 @@ public class Menu {
     }
 
     private void fillToolbar() {
+        MenuItem item = new MenuItem("Edit Mode", data.getImageByName("Edit Mode"));
+
         toolbarItems.add(new MenuItem("Edit Mode", data.getImageByName("Edit Mode"), true));
         toolbarItems.add(new MenuItem("Move Mode", data.getImageByName("Move Mode")));
         toolbarItems.add(new MenuItem("New Map", data.getImageByName("New Map")));
@@ -188,17 +190,7 @@ public class Menu {
                     break;
                 }
                 case "Show Grid": {
-                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
-                    toolbarItems.get(6).active ^= true;
-                    if (Board.mapHandler.tileSpacing == Board.mapHandler.tileSize) {
-                        Board.mapHandler.tileSpacing += 1;
-                        Board.mapHandler.showGrid = true;
-                    } else {
-                        Board.mapHandler.tileSpacing -= 1;
-                        Board.mapHandler.showGrid = false;
-                    }
-                    Board.mapHandler.calcNeededChunks();
-                    Board.addInfoMessage(new Message("Grid " + Board.mapHandler.showGrid, Message.Type.INFO));
+//                   toolbarItems.get(index).onClick();
                     break;
                 }
                 case "Minimap": {
@@ -250,7 +242,11 @@ public class Menu {
         String name;
         Image img;
         boolean active;
-//        VoidConsumer<> onClick;
+
+        Runnable onClick() {
+            return null;
+        }
+
 
         MenuItem(String Name, Image Img) {
             name = Name;
@@ -265,7 +261,25 @@ public class Menu {
         }
 
 
+        public MenuItem(String Name, Image Img, boolean Active, Runnable onClick) {
+            name = Name;
+            img = Img;
+            active = Active;
+        }
+
     }
 
-
+    public void showGrid() {
+        Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
+        toolbarItems.get(6).active ^= true;
+        if (Board.mapHandler.tileSpacing == Board.mapHandler.tileSize) {
+            Board.mapHandler.tileSpacing += 1;
+            Board.mapHandler.showGrid = true;
+        } else {
+            Board.mapHandler.tileSpacing -= 1;
+            Board.mapHandler.showGrid = false;
+        }
+        Board.mapHandler.calcNeededChunks();
+        Board.addInfoMessage(new Message("Grid " + Board.mapHandler.showGrid, Message.Type.INFO));
+    }
 }
