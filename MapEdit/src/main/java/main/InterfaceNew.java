@@ -33,7 +33,7 @@ public class InterfaceNew extends JFrame {
     private InterfaceNew() {
 
         JFrame frmTest = new JFrame("2D Game");
-        frmTest.setIconImage(Toolkit.getDefaultToolkit().getImage(InterfaceNew.class.getResource("/sources/Environment/icon.png")));
+        //frmTest.setIconImage(Toolkit.getDefaultToolkit().getImage(InterfaceNew.class.getResource("/sources/Environment/icon.png")));
         frmTest.setBackground(Color.LIGHT_GRAY);
         frmTest.setTitle("MapGen.Map Editor " + editorVersion);
         final Board board = new Board();
