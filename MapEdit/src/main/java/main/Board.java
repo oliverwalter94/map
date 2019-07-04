@@ -137,13 +137,13 @@ public class Board extends JPanel implements ActionListener {
         f.setTitle("frame1");
         f.setWidth(200);
         f.setHeight(200);
-        f.addChildElement(new UILabel(new Point(20, 20), "label1", "test"));
+        //f.addChildElement(new UILabel(new Point(20, 20), "label1", "test"));
         f.addChildElement(new UITextbox(new Point(20, 80), "textbox1", 100, 25));
         f.addChildElement(new UITextbox(new Point(20, 120), "textbox2", 100, 25));
         frames.add(f);
     }
 
-    private class CD extends MouseAdapter {
+    public class CD extends MouseAdapter {
 
         boolean m = false;
 

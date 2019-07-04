@@ -66,12 +66,12 @@ class GameRender {
             g2d.setColor(new Color(47, 205, 0, 120));
             g2d.fill(r);
             g2d.setColor(new Color(13, 205, 36, 255));
-//            g2d.draw(r);
+            g2d.draw(r);
         } else {
             g2d.setColor(new Color(255, 39, 7, 120));
             g2d.fill(r);
-            g2d.setColor(new Color(255, 0, 25, 255));
-//            g2d.draw(r);
+            g2d.setColor(new Color(169, 20, 0, 255));
+            g2d.draw(r);
 
         }
     }

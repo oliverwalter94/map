@@ -4,6 +4,7 @@ import Data.DataHandler;
 import Data.ImageObject;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 public class ImagePicker extends UIElement {
@@ -16,16 +17,28 @@ public class ImagePicker extends UIElement {
     public Point origin = new Point(0, 200);
     public int spacing = 16;
     public int imageSize = 64;
+    UILabel title;
 
     public ImagePicker(DataHandler dataHandler) {
+
         super(new Point(0, 0), "imagePicker");
         data = dataHandler;
         reset();
         selection = images[0][0];
 
+        title = new UILabel(new Point(0, 0), "TitleBar", "Image Picker");
+        title.setBackground(new Color(42, 42, 42));
+
+        title.setForeground(foregroundColor);
+        title.setFont(font);
+//        g2d.drawString(selection.name, boardSize.width / 2 - (int) g2d.getFontMetrics(font).getStringBounds(selection.name, null).getWidth() / 2, 150);
+
+
+
         this.font = new Font("Calibri", Font.PLAIN, 40);
         this.foregroundColor = Color.lightGray;
         this.backgroundColor = new Color(42, 42, 42);
+
     }
 
     void reset() {
@@ -46,10 +59,11 @@ public class ImagePicker extends UIElement {
         selection = null;
     }
 
-    void clicked(Point position) {
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("Clicked " + this.title);
     }
-
 
     public void render(Graphics2D g2d, Dimension boardSize) {
 //        super.render(g2d);

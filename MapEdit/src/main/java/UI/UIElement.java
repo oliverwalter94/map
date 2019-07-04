@@ -1,10 +1,12 @@
 package UI;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class UIElement {
+public class UIElement implements MouseListener {
     Point position;
     Point parentPosition;
     int width = 50;
@@ -23,130 +25,102 @@ public class UIElement {
     Color borderColor;
     Color backgroundColor;
 
-    public Point getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point position) {
-        this.position = position;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public boolean isVisible() {
-        return visible;
-    }
-
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
-    public boolean hasBorder() {
-        return border;
-    }
-
-    public void setBorder(boolean border) {
-        this.border = border;
-    }
-
-    public boolean hasBackground() {
-        return background;
-    }
-
-    public void setBackground(boolean background) {
-        this.background = background;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public Color getBorderColor() {
-        return borderColor;
-    }
-
-    public void setBorderColor(Color borderColor) {
-        this.borderColor = borderColor;
-    }
-
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
-
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    public Color getActiveColor() {
-        return activeColor;
-    }
-
-    public void setActiveColor(Color activeColor) {
-        this.activeColor = activeColor;
-    }
-
-    public Color getForegroundColor() {
-        return foregroundColor;
-    }
-
-    public void setForegroundColor(Color foregroundColor) {
-        this.foregroundColor = foregroundColor;
-    }
-
-    public Font getFont() {
-        return font;
-    }
-
-    public void setFont(Font font) {
-        this.font = font;
-    }
-
     Color activeColor;
     Color foregroundColor;
 
     Font font;
+
+    public Point getPosition() {
+        return position;
+    }
+    public void setPosition(Point position) {
+        this.position = position;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public void setWidth(int width) {
+        this.width = width;
+    }
+    public int getHeight() {
+        return height;
+    }
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    public Image getImage() {
+        return image;
+    }
+    public void setImage(Image image) {
+        this.image = image;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getText() {
+        return text;
+    }
+    public void setText(String text) {
+        this.text = text;
+    }
+    public boolean isVisible() {
+        return visible;
+    }
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+    public boolean hasBorder() {
+        return border;
+    }
+    public void setBorder(boolean border) {
+        this.border = border;
+    }
+    public boolean hasBackground() {
+        return background;
+    }
+    public void setBackground(boolean background) {
+        this.background = background;
+    }
+    public boolean isActive() {
+        return active;
+    }
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+    public Color getBorderColor() {
+        return borderColor;
+    }
+    public void setBorderColor(Color borderColor) {
+        this.borderColor = borderColor;
+    }
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+    public Color getActiveColor() {
+        return activeColor;
+    }
+    public void setActiveColor(Color activeColor) {
+        this.activeColor = activeColor;
+    }
+    public Color getForegroundColor() {
+        return foregroundColor;
+    }
+    public void setForegroundColor(Color foregroundColor) {
+        this.foregroundColor = foregroundColor;
+    }
+    public Font getFont() {
+        return font;
+    }
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
 
     ArrayList<UIElement> childElements;
 
@@ -190,6 +164,31 @@ public class UIElement {
         element.parentPosition = this.position;
         childElements.add(element);
 
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("Clicked " + this.title);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 }

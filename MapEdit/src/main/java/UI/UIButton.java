@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class UIButton extends UIElement {
 
@@ -10,8 +11,9 @@ public class UIButton extends UIElement {
     }
 
     @Override
-    public void onClick() {
-        System.out.println("Clicked Button");
-        super.onClick();
+    public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        System.out.println("Clicked " + this.title);
     }
+
 }

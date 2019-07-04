@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class UITextbox extends UIElement {
 
@@ -16,5 +17,8 @@ public class UITextbox extends UIElement {
         this.borderColor = new Color(68, 68, 68, 255);
     }
 
-
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+    }
 }
