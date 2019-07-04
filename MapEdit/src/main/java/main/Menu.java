@@ -108,16 +108,21 @@ public class Menu {
             selectedTabIndex = tabIndex;
         }
 
+
     }
 
     void tabContentClicked(Point pos, boolean lmb) {
         Tab tab = Tabs[selectedTabIndex];
         pos.y -= (((int) Math.ceil(activeTabs / (double) tabsPerRow)) * tabSize);
-        for (MenuItem item : tab.menuItems)
-            item.active = false;
         int i = pos.y / tab.itemHeight;
-        tab.menuItems.get(i).active = true;
-        tab.selected = i;
+        if(i < tab.menuItems.size()){
+            for (MenuItem item : tab.menuItems)
+                item.active = false;
+            tab.menuItems.get(i).active = true;
+            tab.selected = i;
+        }
+
+
     }
 
     void toolbarClicked(Point pos, boolean lmb) {
@@ -167,7 +172,7 @@ public class Menu {
                 case "Load Map": {
                     // TODO implement new loading mechanism
                     // TODO Remove Scaling
-                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    Board.addInfoMessage(new Message("LOADING MAPS NOT IMPLEMENTED YET", Message.Type.ERROR));
                     if (Board.mapHandler.tileSize < 32) {
                         Board.mapHandler.tileSpacing += Board.mapHandler.tileSize;
                         Board.mapHandler.tileSize *= 2;
@@ -185,11 +190,11 @@ public class Menu {
                 }
                 case "Reload Textures": {
                     // TODO implement reload textures mechanism
-                    Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    Board.addInfoMessage(new Message("RELOADING TEXTURES NOT IMPLEMENTED YET", Message.Type.ERROR));
                     break;
                 }
                 case "Show Grid": {
-//                   toolbarItems.get(index).onClick();
+                    showGrid();
                     break;
                 }
                 case "Minimap": {
@@ -202,7 +207,7 @@ public class Menu {
 //                            main.Board.addInfoMessage(new Message("Minimap on", Message.Type.INFO));
 //                        }
 //                        Map.mapChange = true;
-                        toolbarItems.get(6).active = !toolbarItems.get(6).active;
+                        toolbarItems.get(8).active = !toolbarItems.get(8).active;
                     }
                     break;
                 }

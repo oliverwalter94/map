@@ -20,7 +20,7 @@ public class Board extends JPanel implements ActionListener {
     public static StructureEditor structureEditor;
 
     public enum EditorState {
-        EDIT, MOVE, IMAGEPICKER
+        EDIT, MOVE, IMAGEPICKER, TILEMENU, TILE_EDITOR
     }
 
     private static final long serialVersionUID = 1L;
@@ -31,7 +31,6 @@ public class Board extends JPanel implements ActionListener {
     static boolean dragging = false;
     static boolean remove = false;
     static Point mouse1, mouse2;
-    public static Rectangle2D selectedTiles;
 
     static Menu menu;
     public static DataHandler dataHandler;
@@ -145,7 +144,7 @@ public class Board extends JPanel implements ActionListener {
 
     private class CD extends MouseAdapter {
 
-        boolean m = false;
+        boolean menu_clicked = false;
 
 
         public void mousePressed(MouseEvent e) {
@@ -156,17 +155,17 @@ public class Board extends JPanel implements ActionListener {
             if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && Tabs.contains(e.getPoint())) {
                 //Tab
                 menu.tabClicked(e.getPoint(), e.getButton() == MouseEvent.BUTTON1);
-                m = true;
+                menu_clicked = true;
             } else if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && TabContent.contains(e.getPoint()) && menu.sidebarVisible) {
                 //Tab Content
                 menu.tabContentClicked(e.getPoint(), e.getButton() == MouseEvent.BUTTON1);
-                m = true;
+                menu_clicked = true;
             } else if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && Toolbar.contains(e.getPoint())) {
                 //Toolbar
                 menu.toolbarClicked(e.getPoint(), e.getButton() == MouseEvent.BUTTON1);
-                m = true;
+                menu_clicked = true;
             } else {
-                m = false;
+                menu_clicked = false;
                 if (editorState == EditorState.EDIT) {
                     if (mapHandler.mapOpen && !mapHandler.miniMap && (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3)) {
                         x1 = Math.floorDiv(mapHandler.getOrigin().x + e.getX(), mapHandler.tileSpacing);
@@ -188,8 +187,68 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
-        public void mouseReleased(MouseEvent e) {
-            if (editorState == EditorState.EDIT && !m) {
+        public void mouseReleased(MouseEvent mouse){
+            if(editorState == EditorState.EDIT && !menu_clicked && mapHandler.mapOpen){
+                int y2;
+                int x2;
+                if ((mouse.getButton() == MouseEvent.BUTTON1 ||mouse.getButton() == MouseEvent.BUTTON3) && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
+                    x2 = Math.floorDiv(mapHandler.getOrigin().x + mouse.getX(), mapHandler.tileSpacing);
+                    y2 = Math.floorDiv(mapHandler.getOrigin().y + mouse.getY(), mapHandler.tileSpacing);
+                    int x_dif, y_dif;
+
+                    x_dif = x2 - x1;
+                    y_dif = y2 - y1;
+                    ArrayList<Point> selectedTiles = new ArrayList<>();
+                    int x_step = (int)Math.signum(x_dif);
+                    int y_step = (int)Math.signum(y_dif);
+
+                    int x = x1;
+                    int y = y1;
+                    do{
+                        do{
+                            selectedTiles.add(new Point(x, y));
+                            y += (y_step);
+                        }while (y != y1 + y_dif);
+                        y = y1;
+                        x += (x_step);
+                    }while (x != x1 + x_dif);
+
+                    if(mouse.getButton() == MouseEvent.BUTTON1) {
+                        if (menu.selectedTabIndex == 0) {
+                            for (Point tile : selectedTiles) {
+                                mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), tile);
+                            }
+                        } else if (menu.selectedTabIndex == 1) {
+                            for (Point tile : selectedTiles) {
+                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), tile);
+                            }
+                        }
+                    }else {
+                        for (Point tile : selectedTiles) {
+                            mapHandler.setPlant(null, tile);
+                        }
+                    }
+
+
+
+
+
+                dragging = false;
+                } else if (editorState == EditorState.MOVE && !menu_clicked) {
+                    if (mouse.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
+                        Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - mouse.getX(), mapHandler.getOrigin().y + mya1 - mouse.getY());
+                        mapHandler.setOrigin(newOrigin);
+                        dragging = false;
+                        mya1 = -1;
+                        mxa1 = -1;
+                        mapHandler.calcNeededChunks();
+                }
+            }
+            }
+        }
+
+        public void mouseReleased_old(MouseEvent e) {
+            if (editorState == EditorState.EDIT && !menu_clicked) {
                 int y2;
                 int x2;
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
@@ -305,7 +364,7 @@ public class Board extends JPanel implements ActionListener {
                 }
 
                 dragging = false;
-            } else if (editorState == EditorState.MOVE && !m) {
+            } else if (editorState == EditorState.MOVE && !menu_clicked) {
                 if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
                     Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - e.getX(), mapHandler.getOrigin().y + mya1 - e.getY());
                     mapHandler.setOrigin(newOrigin);
