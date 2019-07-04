@@ -47,6 +47,11 @@ public class UIElement {
         this.height = height;
     }
 
+    public void setSize(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
+
     public Image getImage() {
         return image;
     }
@@ -117,6 +122,7 @@ public class UIElement {
 
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+        this.background = true;
     }
 
     public Color getActiveColor() {
@@ -148,7 +154,7 @@ public class UIElement {
 
     Font font;
 
-    ArrayList<UIElement> childElements;
+    private ArrayList<UIElement> childElements;
 
 
     public UIElement(Point position, String title) {
@@ -159,7 +165,7 @@ public class UIElement {
         this.parentPosition = new Point(0, 0);
     }
 
-    public void onClick() {
+    public void onClick(Point position) {
         System.out.println("Element clicked");
     }
 

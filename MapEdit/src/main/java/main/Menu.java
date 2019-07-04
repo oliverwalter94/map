@@ -95,7 +95,6 @@ public class Menu {
         for (Tile t : data.fields) {
             this.Tabs[0].menuItems.add(new MenuItem(t.name, t.imageObject.img));
         }
-        this.Tabs[1].menuItems.add(new MenuItem("Remove", data.getImageByName("Delete")));
         for (Tile t : data.plants) {
             this.Tabs[1].menuItems.add(new MenuItem(t.name, t.imageObject.img));
         }

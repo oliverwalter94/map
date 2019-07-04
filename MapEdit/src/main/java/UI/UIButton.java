@@ -10,8 +10,8 @@ public class UIButton extends UIElement {
     }
 
     @Override
-    public void onClick() {
+    public void onClick(Point position) {
         System.out.println("Clicked Button");
-        super.onClick();
+        super.onClick(position);
     }
 }

@@ -2,13 +2,14 @@ package UI;
 
 import Data.DataHandler;
 import Data.ImageObject;
+import java.util.ArrayList;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class ImagePicker extends UIElement {
 
-    public ImageObject selection;
+    public PickerItem selection;
     boolean done = false;
     public ImageObject[][] images;
     DataHandler data;
@@ -16,12 +17,32 @@ public class ImagePicker extends UIElement {
     public Point origin = new Point(0, 200);
     public int spacing = 16;
     public int imageSize = 64;
+    public ArrayList<PickerItem> pickerItemList;
+    public UIButton chooseSelected;
+
+    class PickerItem {
+        ImageObject image;
+        Point position;
+        boolean active;
+
+        PickerItem(ImageObject img, Point pos, boolean act){
+            image = img;
+            position = pos;
+            active = act;
+        }
+
+    }
 
     public ImagePicker(DataHandler dataHandler) {
         super(new Point(0, 0), "imagePicker");
         data = dataHandler;
+        pickerItemList = new ArrayList<>();
         reset();
-        selection = images[0][0];
+        chooseSelected = new UIButton(new Point( 800,800), "Save");
+        chooseSelected.setSize(80,30);
+        chooseSelected.setBackgroundColor(Color.gray);
+        this.addChildElement(chooseSelected);
+        selection = pickerItemList.get(0);
 
         this.font = new Font("Calibri", Font.PLAIN, 40);
         this.foregroundColor = Color.lightGray;
@@ -32,6 +53,9 @@ public class ImagePicker extends UIElement {
         int a = (int) Math.ceil((float) data.images.size() / itemsPerRow);
         images = new ImageObject[itemsPerRow][a];
 
+        int size = imageSize;
+        int spacing = this.spacing;
+
         int x = 0;
         int y = 0;
         for (int i = 0; i < data.images.size(); i++) {
@@ -39,20 +63,29 @@ public class ImagePicker extends UIElement {
                 x = 0;
                 y++;
             }
-            images[x][y] = data.images.get(i);
+            //images[x][y] = data.images.get(i);
+            pickerItemList.add(new PickerItem(data.images.get(i),new Point(x * (size + spacing),y * (size + spacing)),false));
+
             x++;
         }
         done = false;
         selection = null;
     }
 
-    void clicked(Point position) {
+    public void onClick(Point position) {
+        Point newPosition = new Point(position.x - origin.x, position.y - origin.y);
+        for (PickerItem item:pickerItemList) {
+            if(new Rectangle2D.Double(item.position.x , item.position.y , imageSize, imageSize).contains(newPosition)){
+                selection = item;
+                return;
+            }
+        }
+
 
     }
 
 
     public void render(Graphics2D g2d, Dimension boardSize) {
-//        super.render(g2d);
 
         //Render Background
         g2d.setColor(backgroundColor);
@@ -60,21 +93,25 @@ public class ImagePicker extends UIElement {
         //Render Title Bar
         g2d.setColor(foregroundColor);
         g2d.setFont(font);
-        g2d.drawString(selection.name, boardSize.width / 2 - (int) g2d.getFontMetrics(font).getStringBounds(selection.name, null).getWidth() / 2, 150);
+        g2d.drawString(selection.image.name, boardSize.width / 2 - (int) g2d.getFontMetrics(font).getStringBounds(selection.image.name, null).getWidth() / 2, 150);
         //Render Images
-        //Set Images background color
-        g2d.setColor(Color.gray);
 
-        int size = imageSize;
-        int spacing = this.spacing;
-        for (int x = 0; x < itemsPerRow; x++) {
-            for (int y = 0; y < images[0].length; y++) {
-                if (images[x][y] != null) {
-                    if (images[x][y].transparent)
-                        g2d.fill(new Rectangle2D.Double(origin.x + x * (size + spacing), origin.y + y * (size + spacing), size, size));
-                    g2d.drawImage(images[x][y].img, origin.x + x * (size + spacing), origin.y + y * (size + spacing), size, size, null);
-                }
-            }
+        origin.x = (boardSize.width /2)-(itemsPerRow*imageSize+ spacing *(itemsPerRow-1))/2;
+        for (PickerItem item: pickerItemList) {
+            Point pos = new Point(item.position.x + origin.x, item.position.y + origin.y);
+
+            //Set Images background color
+            g2d.setColor(Color.gray);
+            if(item == selection)
+                g2d.setColor(new Color(85, 185, 62));
+
+            g2d.fill(new Rectangle2D.Double(pos.x-2 , pos.y-2 , imageSize+4, imageSize+4));
+            g2d.drawImage(item.image.img, pos.x, pos.y, imageSize, imageSize, null);
         }
+
+        chooseSelected.position = new Point(boardSize.width -100, boardSize.height - 50);
+
+
+        super.render(g2d);
     }
 }

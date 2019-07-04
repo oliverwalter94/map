@@ -154,12 +154,15 @@ public class Board extends JPanel implements ActionListener {
             Rectangle2D Toolbar = new Rectangle2D.Double(200, 0, 10000, menu.tabSize);
 
             if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && Tabs.contains(e.getPoint())) {
+                //Tab
                 menu.tabClicked(e.getPoint(), e.getButton() == MouseEvent.BUTTON1);
                 m = true;
             } else if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && TabContent.contains(e.getPoint()) && menu.sidebarVisible) {
+                //Tab Content
                 menu.tabContentClicked(e.getPoint(), e.getButton() == MouseEvent.BUTTON1);
                 m = true;
             } else if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && Toolbar.contains(e.getPoint())) {
+                //Toolbar
                 menu.toolbarClicked(e.getPoint(), e.getButton() == MouseEvent.BUTTON1);
                 m = true;
             } else {
@@ -168,7 +171,7 @@ public class Board extends JPanel implements ActionListener {
                     if (mapHandler.mapOpen && !mapHandler.miniMap && (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3)) {
                         x1 = Math.floorDiv(mapHandler.getOrigin().x + e.getX(), mapHandler.tileSpacing);
                         y1 = Math.floorDiv(mapHandler.getOrigin().y + e.getY(), mapHandler.tileSpacing);
-                        mouse1 = new Point(x1 * mapHandler.tileSpacing, y1 * mapHandler.tileSpacing);
+                        mouse1 = new Point(Math.floorDiv(e.getX(), mapHandler.tileSpacing) * mapHandler.tileSpacing, Math.floorDiv(e.getY(), mapHandler.tileSpacing) * mapHandler.tileSpacing);
                         mouse2 = mouse1;
                         dragging = true;
                         remove = e.getButton() == MouseEvent.BUTTON3;
@@ -179,6 +182,8 @@ public class Board extends JPanel implements ActionListener {
                         mya1 = e.getY();
                         dragging = true;
                     }
+                }else if(editorState == EditorState.IMAGEPICKER){
+                    imagePicker.onClick(e.getPoint());
                 }
             }
         }
@@ -235,7 +240,7 @@ public class Board extends JPanel implements ActionListener {
                         } while (b < y_dif);
                 }
 
-                if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 1) {
+                if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 1) {
                     x2 = e.getX() / mapHandler.tileSize;
                     y2 = e.getY() / mapHandler.tileSize;
                     int xdif, ydif;
@@ -252,7 +257,10 @@ public class Board extends JPanel implements ActionListener {
 
                     if (x2 > x1 && y2 > y1) do {
                         do {
-                            mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 + b));
+                            if(e.getButton() == MouseEvent.BUTTON1)
+                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 + b));
+                            else
+                                mapHandler.setPlant(null, new Point(x1 + a, y1 + b));
                             a++;
                         } while (a < xdif);
                         if (a == xdif) a = 0;
@@ -261,7 +269,10 @@ public class Board extends JPanel implements ActionListener {
 
                     else if (x2 < x1 && y2 < y1) do {
                         do {
-                            mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 - b));
+                            if(e.getButton() == MouseEvent.BUTTON1)
+                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 - b));
+                            else
+                                mapHandler.setPlant(null, new Point(x1 - a, y1 - b));
                             a++;
                         } while (a < xdif);
                         if (a == xdif) a = 0;
@@ -270,7 +281,10 @@ public class Board extends JPanel implements ActionListener {
 
                     else if (x2 > x1 && y2 < y1) do {
                         do {
-                            mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 - b));
+                            if(e.getButton() == MouseEvent.BUTTON1)
+                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 - b));
+                            else
+                                mapHandler.setPlant(null, new Point(x1 + a, y1 - b));
                             a++;
                         } while (a < xdif);
                         if (a == xdif) a = 0;
@@ -279,7 +293,10 @@ public class Board extends JPanel implements ActionListener {
 
                     else do {
                             do {
-                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 + b));
+                                if(e.getButton() == MouseEvent.BUTTON1)
+                                    mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 + b));
+                                else
+                                    mapHandler.setPlant(null, new Point(x1 - a, y1 + b));
                                 a++;
                             } while (a < xdif);
                             if (a == xdif) a = 0;
