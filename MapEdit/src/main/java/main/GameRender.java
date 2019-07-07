@@ -59,8 +59,13 @@ class GameRender {
 
 
     private void renderSelection(Graphics2D g2d) {
+        Point mouse1actual = new Point(Board.mouse1.x, Board.mouse1.y);
+        if (Board.mouse1.x > Board.mouse2.x)
+            mouse1actual.x += Board.mapHandler.tileSpacing;
+        if (Board.mouse1.y > Board.mouse2.y)
+            mouse1actual.y += Board.mapHandler.tileSpacing;
 
-        Rectangle r = new Rectangle(Board.mouse1);
+        Rectangle r = new Rectangle(mouse1actual);
         r.add(Board.mouse2);
         if (!Board.remove) {
             g2d.setColor(new Color(47, 205, 0, 120));

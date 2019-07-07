@@ -91,6 +91,14 @@ public class Board extends JPanel implements ActionListener {
                 case EDIT:
                     try {
                         mouse2 = new Point(Math.floorDiv((int) this.getMousePosition().getX(), mapHandler.tileSpacing) * mapHandler.tileSpacing, Math.floorDiv((int) this.getMousePosition().getY(), mapHandler.tileSpacing) * mapHandler.tileSpacing);
+                        if (mouse1.x < mouse2.x)
+                            mouse2.x += mapHandler.tileSpacing;
+                        else if (mouse1.x == mouse2.x)
+                            mouse2.x += mapHandler.tileSpacing;
+                        if (mouse1.y < mouse2.y)
+                            mouse2.y += mapHandler.tileSpacing;
+                        else if (mouse1.y == mouse2.y)
+                            mouse2.y += mapHandler.tileSpacing;
                     } catch (NullPointerException e) {
 
                     }
@@ -194,6 +202,13 @@ public class Board extends JPanel implements ActionListener {
                 if ((mouse.getButton() == MouseEvent.BUTTON1 ||mouse.getButton() == MouseEvent.BUTTON3) && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
                     x2 = Math.floorDiv(mapHandler.getOrigin().x + mouse.getX(), mapHandler.tileSpacing);
                     y2 = Math.floorDiv(mapHandler.getOrigin().y + mouse.getY(), mapHandler.tileSpacing);
+                    if (x2 > x1)
+                        x2++;
+                    else x2--;
+                    if (y2 > y1)
+                        y2++;
+                    else y2--;
+
                     int x_dif, y_dif;
 
                     x_dif = x2 - x1;
@@ -247,133 +262,5 @@ public class Board extends JPanel implements ActionListener {
             }
         }
 
-        public void mouseReleased_old(MouseEvent e) {
-            if (editorState == EditorState.EDIT && !menu_clicked) {
-                int y2;
-                int x2;
-                if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
-                    x2 = Math.floorDiv(mapHandler.getOrigin().x + e.getX(), mapHandler.tileSpacing);
-                    y2 = Math.floorDiv(mapHandler.getOrigin().y + e.getY(), mapHandler.tileSpacing);
-                    int x_dif, y_dif;
-
-                    if (x2 > x1) x_dif = x2 - x1 + 1;
-                    else x_dif = x1 - x2 + 1;
-                    if (y2 > y1) y_dif = y2 - y1 + 1;
-                    else y_dif = y1 - y2 + 1;
-                    int a = 0, b = 0;
-
-                    if (x2 > x1 && y2 > y1) do {
-                        do {
-                            mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 + a, y1 + b));
-                            a++;
-                        } while (a < x_dif);
-                        if (a == x_dif) a = 0;
-                        b++;
-                    } while (b < y_dif);
-
-                    else if (x2 < x1 && y2 < y1) do {
-                        do {
-                            mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 - a, y1 - b));
-                            a++;
-                        } while (a < x_dif);
-                        if (a == x_dif) a = 0;
-                        b++;
-                    } while (b < y_dif);
-
-                    else if (x2 > x1 && y2 < y1) do {
-                        do {
-                            mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 + a, y1 - b));
-                            a++;
-                        } while (a < x_dif);
-                        if (a == x_dif) a = 0;
-                        b++;
-                    } while (b < y_dif);
-
-                    else do {
-                            do {
-                                mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), new Point(x1 - a, y1 + b));
-                                a++;
-                            } while (a < x_dif);
-                            if (a == x_dif) a = 0;
-                            b++;
-                        } while (b < y_dif);
-                }
-
-                if ((e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 1) {
-                    x2 = e.getX() / mapHandler.tileSize;
-                    y2 = e.getY() / mapHandler.tileSize;
-                    int xdif, ydif;
-
-                    if (x2 > x1)
-                        xdif = x2 - x1 + 1;
-                    else
-                        xdif = x1 - x2 + 1;
-                    if (y2 > y1)
-                        ydif = y2 - y1 + 1;
-                    else
-                        ydif = y1 - y2 + 1;
-                    int a = 0, b = 0;
-
-                    if (x2 > x1 && y2 > y1) do {
-                        do {
-                            if(e.getButton() == MouseEvent.BUTTON1)
-                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 + b));
-                            else
-                                mapHandler.setPlant(null, new Point(x1 + a, y1 + b));
-                            a++;
-                        } while (a < xdif);
-                        if (a == xdif) a = 0;
-                        b++;
-                    } while (b < ydif);
-
-                    else if (x2 < x1 && y2 < y1) do {
-                        do {
-                            if(e.getButton() == MouseEvent.BUTTON1)
-                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 - b));
-                            else
-                                mapHandler.setPlant(null, new Point(x1 - a, y1 - b));
-                            a++;
-                        } while (a < xdif);
-                        if (a == xdif) a = 0;
-                        b++;
-                    } while (b < ydif);
-
-                    else if (x2 > x1 && y2 < y1) do {
-                        do {
-                            if(e.getButton() == MouseEvent.BUTTON1)
-                                mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 + a, y1 - b));
-                            else
-                                mapHandler.setPlant(null, new Point(x1 + a, y1 - b));
-                            a++;
-                        } while (a < xdif);
-                        if (a == xdif) a = 0;
-                        b++;
-                    } while (b < ydif);
-
-                    else do {
-                            do {
-                                if(e.getButton() == MouseEvent.BUTTON1)
-                                    mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), new Point(x1 - a, y1 + b));
-                                else
-                                    mapHandler.setPlant(null, new Point(x1 - a, y1 + b));
-                                a++;
-                            } while (a < xdif);
-                            if (a == xdif) a = 0;
-                            b++;
-                        } while (b < ydif);
-                }
-
-                dragging = false;
-            } else if (editorState == EditorState.MOVE && !menu_clicked) {
-                if (e.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
-                    Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - e.getX(), mapHandler.getOrigin().y + mya1 - e.getY());
-                    mapHandler.setOrigin(newOrigin);
-                    dragging = false;
-                    mya1 = -1;
-                    mxa1 = -1;
-                    mapHandler.calcNeededChunks();
-                }
-            }
-        }
     }
 }
