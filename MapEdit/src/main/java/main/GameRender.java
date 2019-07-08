@@ -59,26 +59,26 @@ class GameRender {
 
 
     private void renderSelection(Graphics2D g2d) {
-        Point mouse1actual = new Point(Board.mouse1.x, Board.mouse1.y);
-        if (Board.mouse1.x > Board.mouse2.x)
-            mouse1actual.x += Board.mapHandler.tileSpacing;
-        if (Board.mouse1.y > Board.mouse2.y)
-            mouse1actual.y += Board.mapHandler.tileSpacing;
-
-        Rectangle r = new Rectangle(mouse1actual);
-        r.add(Board.mouse2);
-        if (!Board.remove) {
-            g2d.setColor(new Color(47, 205, 0, 120));
-            g2d.fill(r);
-            g2d.setColor(new Color(13, 205, 36, 255));
-//            g2d.draw(r);
-        } else {
-            g2d.setColor(new Color(255, 39, 7, 120));
-            g2d.fill(r);
-            g2d.setColor(new Color(255, 0, 25, 255));
-//            g2d.draw(r);
-
-        }
+//        Point mouse1actual = new Point(Board.mouse1.x, Board.mouse1.y);
+//        if (Board.mouse1.x > Board.mouse2.x)
+//            mouse1actual.x += Board.mapHandler.tileSpacing;
+//        if (Board.mouse1.y > Board.mouse2.y)
+//            mouse1actual.y += Board.mapHandler.tileSpacing;
+//
+//        Rectangle r = new Rectangle(mouse1actual);
+//        r.add(Board.mouse2);
+//        if (!Board.remove) {
+//            g2d.setColor(new Color(47, 205, 0, 120));
+//            g2d.fill(r);
+//            g2d.setColor(new Color(13, 205, 36, 255));
+////            g2d.draw(r);
+//        } else {
+//            g2d.setColor(new Color(255, 39, 7, 120));
+//            g2d.fill(r);
+//            g2d.setColor(new Color(255, 0, 25, 255));
+////            g2d.draw(r);
+//
+//        }
     }
 
     private void renderMenu(Graphics2D g2d) {
@@ -178,10 +178,19 @@ class GameRender {
                 for (int y = 0; y < 16; y++) {
                     int x_draw = (chunk.pos.x * 16 + x) * tileSpacing - Board.mapHandler.getOrigin().x;
                     int y_draw = (chunk.pos.y * 16 + y) * tileSpacing - Board.mapHandler.getOrigin().y;
+
                     MapTile tile = chunk.chunkTiles[x][y];
                     g2d.drawImage(tile.ground.imageObject.img, x_draw, y_draw, tileSize, tileSize, null);
                     if (tile.plant != null)
                         g2d.drawImage(tile.plant.imageObject.img, x_draw, y_draw, tileSize, tileSize, null);
+                    for (Point point : Board.selectedTiles) {
+                        Point p = new Point(x_draw / tileSpacing, y_draw / tileSpacing);
+                        if (point.equals(p)) {
+                            g2d.setColor(new Color(47, 205, 0, 120));
+                            g2d.fillRect(x_draw, y_draw, tileSpacing, tileSpacing);
+                        }
+
+                    }
                 }
             }
             chunk.rendering = false;

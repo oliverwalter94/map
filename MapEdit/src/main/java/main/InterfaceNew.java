@@ -54,7 +54,7 @@ public class InterfaceNew extends JFrame {
         String extensions[];
 
         public ExtensionFileFilter(String description, String extension) {
-            this(description, new String[] { extension });
+            this(description, new String[]{extension});
         }
 
         ExtensionFileFilter(String description, String extensions[]) {

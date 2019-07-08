@@ -2,7 +2,6 @@ package main;
 
 import Data.DataHandler;
 import MapGen.Tile;
-import UI.Message;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -79,6 +78,10 @@ public class Menu {
         toolbarItems.add(new MenuItem("Show Grid", data.getImageByName("Show Grid")));
         toolbarItems.add(new MenuItem("Reload Textures", data.getImageByName("Reload Textures")));
         toolbarItems.add(new MenuItem("Minimap", data.getImageByName("Minimap")));
+        toolbarItems.add(new MenuItem("ZoomIn", data.getImageByName("ZoomIn")));
+        toolbarItems.add(new MenuItem("ZoomOut", data.getImageByName("ZoomOut")));
+        toolbarItems.add(new MenuItem("Imagepicker", data.getImageByName("Imagepicker")));
+        toolbarItems.add(new MenuItem("Sidebar", data.getImageByName("Sidebar")));
     }
 
     private void addTabs() {
@@ -86,8 +89,8 @@ public class Menu {
         this.addTab("Plants", data.getImageByName("Plants"), 50);
         this.addTab("Buildings", data.getImageByName("Buildings"), 50);
         this.addTab("Technical", data.getImageByName("Technical"), 50);
-        this.addTab("NPC", data.getImageByName("NPC"), 50);
-        this.addTab("Items", data.getImageByName("Items"), 50);
+        //his.addTab("NPC", data.getImageByName("NPC"), 50);
+        //this.addTab("Items", data.getImageByName("Items"), 50);
     }
 
     private void fillTabs() {
@@ -115,7 +118,7 @@ public class Menu {
         Tab tab = Tabs[selectedTabIndex];
         pos.y -= (((int) Math.ceil(activeTabs / (double) tabsPerRow)) * tabSize);
         int i = pos.y / tab.itemHeight;
-        if(i < tab.menuItems.size()){
+        if (i < tab.menuItems.size()) {
             for (MenuItem item : tab.menuItems)
                 item.active = false;
             tab.menuItems.get(i).active = true;
@@ -135,7 +138,7 @@ public class Menu {
                     toolbarItems.get(0).active = true;
                     toolbarItems.get(1).active = false;
                     sidebarVisible = true;
-                    Board.addInfoMessage(new Message("Edit - Mode", Message.Type.INFO));
+                    Board.addInfoMessage("Edit - Mode");
                     break;
                 }
                 case "Move Mode": {
@@ -143,58 +146,61 @@ public class Menu {
                     toolbarItems.get(0).active = false;
                     toolbarItems.get(1).active = true;
                     sidebarVisible = false;
-                    Board.addInfoMessage(new Message("Move - Mode", Message.Type.INFO));
+                    Board.addInfoMessage("Move - Mode");
                     break;
                 }
                 case "New Map": {
                     Board.mapHandler.newMap();
-                    Board.addInfoMessage(new Message("Generated new Map", Message.Type.INFO));
+                    Board.addInfoMessage("Generated new Map");
                     Board.gameRenderer.renderMode = GameRender.RenderMode.MAPEDIT;
                     break;
                 }
                 case "Save Map": {
                     // TODO implement new saving mechanism
-                    // TODO remove ImagePicker mechanism
-                    if (Board.gameRenderer.renderMode != GameRender.RenderMode.IMAGEPICKER) {
-                        Board.gameRenderer.renderMode = GameRender.RenderMode.IMAGEPICKER;
-                        sidebarVisible = false;
-                        Board.editorState = Board.EditorState.IMAGEPICKER;
-                    } else if (Board.mapHandler.mapOpen) {
-                        Board.gameRenderer.renderMode = GameRender.RenderMode.MAPEDIT;
-                        if (toolbarItems.get(0).active) {
-                            Board.editorState = Board.EditorState.EDIT;
-                            sidebarVisible = true;
-                        } else
-                            Board.editorState = Board.EditorState.MOVE;
-                    }
                     break;
                 }
                 case "Load Map": {
                     // TODO implement new loading mechanism
-                    // TODO Remove Scaling
-                    Board.addInfoMessage(new Message("LOADING MAPS NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    Board.addInfoMessage("LOADING MAPS NOT IMPLEMENTED YET");
+                    break;
+                }
+                case "ZoomIn": {
                     if (Board.mapHandler.tileSize < 32) {
                         Board.mapHandler.tileSpacing += Board.mapHandler.tileSize;
                         Board.mapHandler.tileSize *= 2;
-                    } else {
-                        Board.mapHandler.tileSize = 4;
-                        Board.mapHandler.tileSpacing -= 28;
+                        Board.mapHandler.calcNeededChunks();
                     }
-                    Board.mapHandler.calcNeededChunks();
+                    break;
+                }
+                case "ZoomOut": {
+                    if (Board.mapHandler.tileSize > 4) {
+                        Board.mapHandler.tileSize /= 2;
+                        Board.mapHandler.tileSpacing -= Board.mapHandler.tileSize;
+                        Board.mapHandler.calcNeededChunks();
+                    }
                     break;
                 }
                 case "Close Map": {
                     Board.mapHandler.clearMap();
-                    Board.addInfoMessage(new Message("Map closed", Message.Type.INFO));
+                    Board.addInfoMessage("Map closed");
                     break;
                 }
                 case "Reload Textures": {
                     // TODO implement reload textures mechanism
-                    Board.addInfoMessage(new Message("RELOADING TEXTURES NOT IMPLEMENTED YET", Message.Type.ERROR));
+                    Board.addInfoMessage("RELOADING TEXTURES NOT IMPLEMENTED YET");
                     break;
                 }
                 case "Show Grid": {
-                    showGrid();
+                    toolbarItems.get(6).active ^= true;
+                    if (Board.mapHandler.tileSpacing == Board.mapHandler.tileSize) {
+                        Board.mapHandler.tileSpacing += 1;
+                        Board.mapHandler.showGrid = true;
+                    } else {
+                        Board.mapHandler.tileSpacing -= 1;
+                        Board.mapHandler.showGrid = false;
+                    }
+                    Board.mapHandler.calcNeededChunks();
+                    Board.addInfoMessage("Grid " + Board.mapHandler.showGrid);
                     break;
                 }
                 case "Minimap": {
@@ -208,6 +214,21 @@ public class Menu {
 //                        }
 //                        Map.mapChange = true;
                         toolbarItems.get(8).active = !toolbarItems.get(8).active;
+                    }
+                    break;
+                }
+                case "Imagepicker": {
+                    if (Board.gameRenderer.renderMode != GameRender.RenderMode.IMAGEPICKER) {
+                        Board.gameRenderer.renderMode = GameRender.RenderMode.IMAGEPICKER;
+                        sidebarVisible = false;
+                        Board.editorState = Board.EditorState.IMAGEPICKER;
+                    } else if (Board.mapHandler.mapOpen) {
+                        Board.gameRenderer.renderMode = GameRender.RenderMode.MAPEDIT;
+                        if (toolbarItems.get(0).active) {
+                            Board.editorState = Board.EditorState.EDIT;
+                            sidebarVisible = true;
+                        } else
+                            Board.editorState = Board.EditorState.MOVE;
                     }
                     break;
                 }
@@ -273,17 +294,4 @@ public class Menu {
 
     }
 
-    public void showGrid() {
-        Board.addInfoMessage(new Message("NOT IMPLEMENTED YET", Message.Type.ERROR));
-        toolbarItems.get(6).active ^= true;
-        if (Board.mapHandler.tileSpacing == Board.mapHandler.tileSize) {
-            Board.mapHandler.tileSpacing += 1;
-            Board.mapHandler.showGrid = true;
-        } else {
-            Board.mapHandler.tileSpacing -= 1;
-            Board.mapHandler.showGrid = false;
-        }
-        Board.mapHandler.calcNeededChunks();
-        Board.addInfoMessage(new Message("Grid " + Board.mapHandler.showGrid, Message.Type.INFO));
-    }
 }

@@ -3,7 +3,6 @@ package main;
 import MapGen.Chunk;
 import MapGen.MapGenerator;
 import MapGen.Tile;
-import UI.Message;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -79,7 +78,7 @@ public class MapHandler {
                 loadChunk(x, y);
             }
         }
-        Board.addInfoMessage(new Message(topLeft.toString(), Message.Type.INFO));
+        Board.addInfoMessage(topLeft.toString());
         mapOpen = true;
     }
 

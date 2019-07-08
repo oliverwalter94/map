@@ -2,10 +2,10 @@ package UI;
 
 import Data.DataHandler;
 import Data.ImageObject;
-import java.util.ArrayList;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class ImagePicker extends UIElement {
 
@@ -25,7 +25,7 @@ public class ImagePicker extends UIElement {
         Point position;
         boolean active;
 
-        PickerItem(ImageObject img, Point pos, boolean act){
+        PickerItem(ImageObject img, Point pos, boolean act) {
             image = img;
             position = pos;
             active = act;
@@ -38,8 +38,8 @@ public class ImagePicker extends UIElement {
         data = dataHandler;
         pickerItemList = new ArrayList<>();
         reset();
-        chooseSelected = new UIButton(new Point( 800,800), "Save");
-        chooseSelected.setSize(80,30);
+        chooseSelected = new UIButton(new Point(800, 800), "Save");
+        chooseSelected.setSize(80, 30);
         chooseSelected.setBackgroundColor(Color.gray);
         this.addChildElement(chooseSelected);
         selection = pickerItemList.get(0);
@@ -64,7 +64,7 @@ public class ImagePicker extends UIElement {
                 y++;
             }
             //images[x][y] = data.images.get(i);
-            pickerItemList.add(new PickerItem(data.images.get(i),new Point(x * (size + spacing),y * (size + spacing)),false));
+            pickerItemList.add(new PickerItem(data.images.get(i), new Point(x * (size + spacing), y * (size + spacing)), false));
 
             x++;
         }
@@ -74,8 +74,8 @@ public class ImagePicker extends UIElement {
 
     public void onClick(Point position) {
         Point newPosition = new Point(position.x - origin.x, position.y - origin.y);
-        for (PickerItem item:pickerItemList) {
-            if(new Rectangle2D.Double(item.position.x , item.position.y , imageSize, imageSize).contains(newPosition)){
+        for (PickerItem item : pickerItemList) {
+            if (new Rectangle2D.Double(item.position.x, item.position.y, imageSize, imageSize).contains(newPosition)) {
                 selection = item;
                 return;
             }
@@ -96,20 +96,20 @@ public class ImagePicker extends UIElement {
         g2d.drawString(selection.image.name, boardSize.width / 2 - (int) g2d.getFontMetrics(font).getStringBounds(selection.image.name, null).getWidth() / 2, 150);
         //Render Images
 
-        origin.x = (boardSize.width /2)-(itemsPerRow*imageSize+ spacing *(itemsPerRow-1))/2;
-        for (PickerItem item: pickerItemList) {
+        origin.x = (boardSize.width / 2) - (itemsPerRow * imageSize + spacing * (itemsPerRow - 1)) / 2;
+        for (PickerItem item : pickerItemList) {
             Point pos = new Point(item.position.x + origin.x, item.position.y + origin.y);
 
             //Set Images background color
             g2d.setColor(Color.gray);
-            if(item == selection)
+            if (item == selection)
                 g2d.setColor(new Color(85, 185, 62));
 
-            g2d.fill(new Rectangle2D.Double(pos.x-2 , pos.y-2 , imageSize+4, imageSize+4));
+            g2d.fill(new Rectangle2D.Double(pos.x - 2, pos.y - 2, imageSize + 4, imageSize + 4));
             g2d.drawImage(item.image.img, pos.x, pos.y, imageSize, imageSize, null);
         }
 
-        chooseSelected.position = new Point(boardSize.width -100, boardSize.height - 50);
+        chooseSelected.position = new Point(boardSize.width - 100, boardSize.height - 50);
 
 
         super.render(g2d);

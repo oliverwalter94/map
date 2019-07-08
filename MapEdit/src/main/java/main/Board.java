@@ -6,12 +6,10 @@ import UI.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Board extends JPanel implements ActionListener {
 
@@ -31,11 +29,13 @@ public class Board extends JPanel implements ActionListener {
     static boolean dragging = false;
     static boolean remove = false;
     static Point mouse1, mouse2;
+    private HashMap<Integer, Boolean> pressedKeys = new HashMap<>();
 
     static Menu menu;
     public static DataHandler dataHandler;
     public static GameRender gameRenderer;
     static MapHandler mapHandler;
+    static ArrayList<Point> selectedTiles;
 
     static ArrayList<Message> messages = new ArrayList<>();
     static ArrayList<UIFrame> frames = new ArrayList<>();
@@ -51,7 +51,10 @@ public class Board extends JPanel implements ActionListener {
         mapHandler = new MapHandler(this);
         gameRenderer = new GameRender();
 
-        addMouseListener(new CD());
+        selectedTiles = new ArrayList<>();
+
+        addMouseListener(new mouseListener());
+        addKeyListener(new keyListener());
         setFocusable(true);
         Timer time = new Timer(30, this);
         time.start();
@@ -125,9 +128,10 @@ public class Board extends JPanel implements ActionListener {
         messages.add(message);
     }
 
-    static void addInfoMessage(Message message) {
+    static void addInfoMessage(String text) {
+        Message msg = new Message(text, Message.Type.INFO);
         messages.removeIf(message1 -> message1.type != Message.Type.TOOLTIP);
-        messages.add(message);
+        messages.add(msg);
     }
 
     public void paint(Graphics g) {
@@ -150,7 +154,7 @@ public class Board extends JPanel implements ActionListener {
         frames.add(f);
     }
 
-    private class CD extends MouseAdapter {
+    private class mouseListener extends MouseAdapter {
 
         boolean menu_clicked = false;
 
@@ -189,17 +193,17 @@ public class Board extends JPanel implements ActionListener {
                         mya1 = e.getY();
                         dragging = true;
                     }
-                }else if(editorState == EditorState.IMAGEPICKER){
+                } else if (editorState == EditorState.IMAGEPICKER) {
                     imagePicker.onClick(e.getPoint());
                 }
             }
         }
 
-        public void mouseReleased(MouseEvent mouse){
-            if(editorState == EditorState.EDIT && !menu_clicked && mapHandler.mapOpen){
+        public void mouseReleased(MouseEvent mouse) {
+            if (editorState == EditorState.EDIT && !menu_clicked && mapHandler.mapOpen) {
                 int y2;
                 int x2;
-                if ((mouse.getButton() == MouseEvent.BUTTON1 ||mouse.getButton() == MouseEvent.BUTTON3) && mapHandler.mapOpen && !mapHandler.miniMap && menu.selectedTabIndex == 0) {
+                if ((mouse.getButton() == MouseEvent.BUTTON1 || mouse.getButton() == MouseEvent.BUTTON3) && mapHandler.mapOpen && !mapHandler.miniMap) {
                     x2 = Math.floorDiv(mapHandler.getOrigin().x + mouse.getX(), mapHandler.tileSpacing);
                     y2 = Math.floorDiv(mapHandler.getOrigin().y + mouse.getY(), mapHandler.tileSpacing);
                     if (x2 > x1)
@@ -213,54 +217,82 @@ public class Board extends JPanel implements ActionListener {
 
                     x_dif = x2 - x1;
                     y_dif = y2 - y1;
-                    ArrayList<Point> selectedTiles = new ArrayList<>();
-                    int x_step = (int)Math.signum(x_dif);
-                    int y_step = (int)Math.signum(y_dif);
+                    int x_step = (int) Math.signum(x_dif);
+                    int y_step = (int) Math.signum(y_dif);
+
 
                     int x = x1;
                     int y = y1;
-                    do{
-                        do{
+                    do {
+                        do {
+                            if (!selectedTiles.contains(new Point(x, y)))
                             selectedTiles.add(new Point(x, y));
                             y += (y_step);
-                        }while (y != y1 + y_dif);
+                        } while (y != y1 + y_dif);
                         y = y1;
                         x += (x_step);
-                    }while (x != x1 + x_dif);
+                    } while (x != x1 + x_dif);
 
-                    if(mouse.getButton() == MouseEvent.BUTTON1) {
+                    if (mouse.getButton() == MouseEvent.BUTTON1) {
                         if (menu.selectedTabIndex == 0) {
-                            for (Point tile : selectedTiles) {
-                                mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), tile);
+                            if ((pressedKeys.get(KeyEvent.VK_CONTROL) == null) || !pressedKeys.get(KeyEvent.VK_CONTROL)) {
+                                for (Point tile : selectedTiles) {
+                                    mapHandler.setGround(dataHandler.fields.get(menu.Tabs[0].selected), tile);
+                                }
+                                selectedTiles = new ArrayList<>();
                             }
                         } else if (menu.selectedTabIndex == 1) {
                             for (Point tile : selectedTiles) {
                                 mapHandler.setPlant(dataHandler.plants.get(menu.Tabs[1].selected), tile);
                             }
+                            selectedTiles = new ArrayList<>();
                         }
-                    }else {
+                    } else {
                         for (Point tile : selectedTiles) {
                             mapHandler.setPlant(null, tile);
                         }
+                        selectedTiles = new ArrayList<>();
                     }
 
 
+                    dragging = false;
 
+                }
 
-
-                dragging = false;
-                } else if (editorState == EditorState.MOVE && !menu_clicked) {
-                    if (mouse.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
-                        Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - mouse.getX(), mapHandler.getOrigin().y + mya1 - mouse.getY());
-                        mapHandler.setOrigin(newOrigin);
-                        dragging = false;
-                        mya1 = -1;
-                        mxa1 = -1;
-                        mapHandler.calcNeededChunks();
+            } else if (editorState == EditorState.MOVE && !menu_clicked) {
+                if (mouse.getButton() == MouseEvent.BUTTON1 && mapHandler.mapOpen && !mapHandler.miniMap) {
+                    Point newOrigin = new Point(mapHandler.getOrigin().x + mxa1 - mouse.getX(), mapHandler.getOrigin().y + mya1 - mouse.getY());
+                    mapHandler.setOrigin(newOrigin);
+                    dragging = false;
+                    mya1 = -1;
+                    mxa1 = -1;
+                    mapHandler.calcNeededChunks();
                 }
             }
-            }
+        }
+    }
+
+    class keyListener extends KeyAdapter {
+        private void setPressed(int key, boolean pressed) {
+            if (!pressedKeys.containsKey(key))
+                pressedKeys.put(key, pressed);
+            else
+                pressedKeys.replace(key, pressed);
         }
 
+        @Override
+        public void keyPressed(KeyEvent event) {
+
+            pressedKeys.put(event.getKeyCode(), true);
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent event) {
+
+            pressedKeys.put(event.getKeyCode(), false);
+
+        }
     }
+
 }
