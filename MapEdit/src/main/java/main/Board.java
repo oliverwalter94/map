@@ -18,7 +18,7 @@ public class Board extends JPanel implements ActionListener {
     public static StructureEditor structureEditor;
 
     public enum EditorState {
-        EDIT, MOVE, IMAGEPICKER, TILEMENU, TILE_EDITOR
+        EDIT, MOVE, IMAGEPICKER, TILEMENU, TILE_EDITOR, INFOBAR
     }
 
     private static final long serialVersionUID = 1L;

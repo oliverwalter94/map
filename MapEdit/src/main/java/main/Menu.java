@@ -23,6 +23,7 @@ public class Menu {
 
     ArrayList<MenuItem> toolbarItems;
     boolean sidebarVisible;
+    boolean infobarVisible;
 
     //Render Variables
     boolean calcRender;
@@ -30,6 +31,7 @@ public class Menu {
     int tabSize;
     int tabsPerRow;
     int sideBarWidth;
+    int infoBarWidth;
 
     DataHandler data;
 
@@ -56,9 +58,11 @@ public class Menu {
         tabSize = 40;
         tabsPerRow = 5;
         sideBarWidth = tabSize * tabsPerRow;
+        infoBarWidth = 200;
         lineThickness = 1;
 
         sidebarVisible = true;
+        infobarVisible = true;
 
         fillToolbar();
         addTabs();
@@ -81,7 +85,7 @@ public class Menu {
         toolbarItems.add(new MenuItem("ZoomIn", data.getImageByName("ZoomIn")));
         toolbarItems.add(new MenuItem("ZoomOut", data.getImageByName("ZoomOut")));
         toolbarItems.add(new MenuItem("Imagepicker", data.getImageByName("Imagepicker")));
-        toolbarItems.add(new MenuItem("Sidebar", data.getImageByName("Sidebar")));
+        toolbarItems.add(new MenuItem("InfoBar", data.getImageByName("Sidebar")));
     }
 
     private void addTabs() {
@@ -137,16 +141,18 @@ public class Menu {
                     Board.editorState = Board.EditorState.EDIT;
                     toolbarItems.get(0).active = true;
                     toolbarItems.get(1).active = false;
+                    toolbarItems.get(12).active = false;
                     sidebarVisible = true;
-                    Board.addInfoMessage("Edit - Mode");
+                    Board.addInfoMessage("Mode: Edit");
                     break;
                 }
                 case "Move Mode": {
                     Board.editorState = Board.EditorState.MOVE;
                     toolbarItems.get(0).active = false;
                     toolbarItems.get(1).active = true;
+                    toolbarItems.get(12).active = false;
                     sidebarVisible = false;
-                    Board.addInfoMessage("Move - Mode");
+                    Board.addInfoMessage("Mode: Move");
                     break;
                 }
                 case "New Map": {
@@ -229,6 +235,24 @@ public class Menu {
                             sidebarVisible = true;
                         } else
                             Board.editorState = Board.EditorState.MOVE;
+                    }
+                    break;
+                }
+                case "InfoBar": {
+                    infobarVisible = !infobarVisible;
+
+                    if (infobarVisible) {
+                        toolbarItems.get(12).active = true;
+                        toolbarItems.get(0).active = false;
+                        toolbarItems.get(1).active = false;
+                        Board.editorState = Board.EditorState.INFOBAR;
+                        Board.addInfoMessage("Mode: Info");
+                    } else {
+                        toolbarItems.get(12).active = false;
+                        toolbarItems.get(0).active = true;
+                        Board.addInfoMessage("Mode: Edit");
+                        Board.editorState = Board.EditorState.EDIT;
+                        sidebarVisible = true;
                     }
                     break;
                 }

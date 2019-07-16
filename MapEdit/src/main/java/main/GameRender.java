@@ -59,36 +59,36 @@ class GameRender {
 
 
     private void renderSelection(Graphics2D g2d) {
-//        Point mouse1actual = new Point(Board.mouse1.x, Board.mouse1.y);
-//        if (Board.mouse1.x > Board.mouse2.x)
-//            mouse1actual.x += Board.mapHandler.tileSpacing;
-//        if (Board.mouse1.y > Board.mouse2.y)
-//            mouse1actual.y += Board.mapHandler.tileSpacing;
-//
-//        Rectangle r = new Rectangle(mouse1actual);
-//        r.add(Board.mouse2);
-//        if (!Board.remove) {
-//            g2d.setColor(new Color(47, 205, 0, 120));
-//            g2d.fill(r);
-//            g2d.setColor(new Color(13, 205, 36, 255));
-////            g2d.draw(r);
-//        } else {
-//            g2d.setColor(new Color(255, 39, 7, 120));
-//            g2d.fill(r);
-//            g2d.setColor(new Color(255, 0, 25, 255));
-////            g2d.draw(r);
-//
-//        }
+        Point mouse1actual = new Point(Board.mouse1.x, Board.mouse1.y);
+        if (Board.mouse1.x > Board.mouse2.x)
+            mouse1actual.x += Board.mapHandler.tileSpacing;
+        if (Board.mouse1.y > Board.mouse2.y)
+            mouse1actual.y += Board.mapHandler.tileSpacing;
+
+        Rectangle r = new Rectangle(mouse1actual);
+        r.add(Board.mouse2);
+        if (!Board.remove) {
+            g2d.setColor(new Color(47, 205, 0, 120));
+            g2d.fill(r);
+            g2d.setColor(new Color(13, 205, 36, 255));
+//            g2d.draw(r);
+        } else {
+            g2d.setColor(new Color(255, 39, 7, 120));
+            g2d.fill(r);
+            g2d.setColor(new Color(255, 0, 25, 255));
+//            g2d.draw(r);
+
+        }
     }
 
     private void renderMenu(Graphics2D g2d) {
 
-        int renderHeightMenu = 0;
+        int renderHeightMenu;
         g2d.setFont(menu.font);
         int renderWidthToolbar = menu.sideBarWidth;
         g2d.setColor(menu.backgroundColor);
         menu.size = new Dimension(200, boardSize.height);
-        //Draw Toolbar
+// TOOLBAR
         for (MenuItem item : menu.toolbarItems) {
             if (item.active)
                 g2d.setColor(menu.backgroundSelected);
@@ -103,7 +103,7 @@ class GameRender {
         g2d.setColor(menu.backgroundColor);
         g2d.fill(new Rectangle2D.Double(renderWidthToolbar, 0, boardSize.width - renderWidthToolbar, menu.tabSize));
 
-        //Draw Tabs
+//TABS
         if (menu.calcRender) {
             menu.tabsHeight = (((menu.activeTabs - menu.activeTabs % menu.tabsPerRow) / menu.tabsPerRow) + 1) * menu.tabSize;
             menu.calcRender = false;
@@ -129,7 +129,7 @@ class GameRender {
             g2d.fill(new Rectangle2D.Double((i % menu.tabsPerRow) * menu.tabSize, renderHeightMenu, menu.tabSize * (menu.tabsPerRow - menu.activeTabs % menu.tabsPerRow), menu.tabSize));
             renderHeightMenu += menu.tabSize;
         }
-
+//SIDEBAR LEFT
         if (menu.sidebarVisible) {
             //Draw separator Line
             g2d.setColor(menu.line);
@@ -158,7 +158,57 @@ class GameRender {
             g2d.setColor(menu.backgroundColor);
             g2d.fill(new Rectangle2D.Double(0, renderHeightMenu, menu.sideBarWidth, boardSize.height - renderHeightMenu));
         }
+        if (menu.infobarVisible) {
+// INFOBAR RIGHT
+            //Draw separator Line
+            int infoBarTop = menu.tabSize;
+            int infoBarBottom = boardSize.height;
+            int infoBarLeft = boardSize.width - menu.infoBarWidth;
+            g2d.setColor(menu.line);
+            g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, menu.lineThickness));
+            infoBarTop += menu.lineThickness;
 
+
+            if (Board.selectedTiles.size() > 0) {
+
+                //TODO: RENDER TILE INFO
+                g2d.setColor(menu.backgroundColor);
+                g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 50));
+                g2d.setColor(menu.text);
+                g2d.drawString(Board.selectedTiles.size() + " Tiles selected", infoBarLeft + 32, infoBarTop + 32);
+                infoBarTop += 50;
+
+                infoBarTop = renderInfoBarLine(g2d, infoBarLeft, infoBarTop);
+
+                // TODO: Count different tile types
+
+
+                //TODO: RENDER BIOME INFO
+
+                //TODO: RENDER PLANT / OBJECT INFO
+
+                //TODO: RENDER TECHNICAL INFO
+
+                //TODO: RENDER ITEM INFO
+
+                //TODO: RENDER ADDITIONAL INFO
+            }
+
+
+//RENDER FILLER
+            g2d.setColor(menu.backgroundColor);
+            g2d.fillRect(infoBarLeft, infoBarTop, menu.infoBarWidth, infoBarBottom - infoBarTop);
+
+
+        }
+
+
+    }
+
+    private int renderInfoBarLine(Graphics2D g2d, int infoBarLeft, int infoBarTop) {
+        g2d.setColor(menu.line);
+        g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, menu.lineThickness));
+        return infoBarTop + menu.lineThickness;
     }
 
     private void renderMessages(Graphics2D g2d) {
