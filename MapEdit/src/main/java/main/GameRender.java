@@ -2,6 +2,7 @@ package main;
 
 import MapGen.Chunk;
 import MapGen.MapTile;
+import MapGen.Tile;
 import UI.BiomeBuilder;
 import UI.ImagePicker;
 import UI.Message;
@@ -10,6 +11,11 @@ import main.Menu.MenuItem;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toMap;
 
 
 class GameRender {
@@ -170,6 +176,8 @@ class GameRender {
 
 
             if (Board.selectedTiles.size() > 0) {
+                if (Board.selectionChanged)
+                    updateInfoBar();
 
                 //TODO: RENDER TILE INFO
                 g2d.setColor(menu.backgroundColor);
@@ -181,7 +189,16 @@ class GameRender {
                 infoBarTop = renderInfoBarLine(g2d, infoBarLeft, infoBarTop);
 
                 // TODO: Count different tile types
+                for (Map.Entry<Tile, Integer> m : menu.ground.entrySet()) {
+                    //System.out.println(m.getKey().name + " " +  m.getValue());
 
+                    g2d.setColor(menu.backgroundColor);
+                    g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 50));
+                    g2d.setColor(menu.text);
+                    g2d.drawString(m.getKey().name + ": " + m.getValue(), infoBarLeft + 32, infoBarTop + 32);
+                    infoBarTop += 50;
+                }
+                //System.out.println("------------------------");
 
                 //TODO: RENDER BIOME INFO
 
@@ -199,6 +216,30 @@ class GameRender {
             g2d.setColor(menu.backgroundColor);
             g2d.fillRect(infoBarLeft, infoBarTop, menu.infoBarWidth, infoBarBottom - infoBarTop);
 
+
+        }
+
+
+    }
+
+    private void updateInfoBar() {
+        Board.selectionChanged = false;
+        menu.ground.clear();
+        int i;
+        for (Point point : Board.selectedTiles) {
+            MapTile mapTile = Board.mapHandler.getMapTile(point);
+
+            i = menu.ground.get(mapTile.ground) != null ? menu.ground.get(mapTile.ground) : 0;
+
+            menu.ground.put(Board.mapHandler.getMapTile(point).ground, i + 1);
+
+            menu.ground = menu.ground
+                    .entrySet()
+                    .stream()
+                    .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                    .collect(
+                            toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+                                    LinkedHashMap::new));
 
         }
 

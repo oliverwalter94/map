@@ -2,6 +2,7 @@ package main;
 
 import MapGen.Chunk;
 import MapGen.MapGenerator;
+import MapGen.MapTile;
 import MapGen.Tile;
 
 import java.awt.*;
@@ -138,6 +139,16 @@ public class MapHandler {
             chunk.chunkTiles[position.x % 16][position.y % 16].ground = ground;
         } else
             System.out.println("Chunk is not loaded!!!");
+    }
+
+    MapTile getMapTile(Point position) {
+        MapTile tile = null;
+        Chunk chunk = getActiveChunkByCoords(new Point(position.x / 16, position.y / 16));
+        if (chunk != null) {
+            tile = chunk.chunkTiles[position.x % 16][position.y % 16];
+            MapTile t;
+        }
+        return tile;
     }
 
     void setPlant(Tile plant, Point position) {

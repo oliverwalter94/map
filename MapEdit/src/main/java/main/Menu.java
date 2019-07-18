@@ -5,6 +5,7 @@ import MapGen.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Menu {
     public int lineThickness;
@@ -32,6 +33,11 @@ public class Menu {
     int tabsPerRow;
     int sideBarWidth;
     int infoBarWidth;
+
+    //InfoBar Stuff
+
+    int distinctTiles;
+    HashMap<Tile, Integer> ground;
 
     DataHandler data;
 
@@ -63,6 +69,10 @@ public class Menu {
 
         sidebarVisible = true;
         infobarVisible = true;
+
+        //InfoBar
+        distinctTiles = 3;
+        ground = new HashMap<>();
 
         fillToolbar();
         addTabs();

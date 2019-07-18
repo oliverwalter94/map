@@ -36,6 +36,7 @@ public class Board extends JPanel implements ActionListener {
     public static GameRender gameRenderer;
     static MapHandler mapHandler;
     static ArrayList<Point> selectedTiles;
+    static boolean selectionChanged = false;
 
     static ArrayList<Message> messages = new ArrayList<>();
     static ArrayList<UIFrame> frames = new ArrayList<>();
@@ -256,6 +257,7 @@ public class Board extends JPanel implements ActionListener {
 
 
                     dragging = false;
+                    selectionChanged = true;
 
                 }
 
