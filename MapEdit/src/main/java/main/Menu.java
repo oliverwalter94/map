@@ -1,6 +1,7 @@
 package main;
 
 import Data.DataHandler;
+import MapGen.Biome;
 import MapGen.Tile;
 
 import java.awt.*;
@@ -36,8 +37,12 @@ public class Menu {
 
     //InfoBar Stuff
 
+    Font infoBarFont;
+
     int distinctTiles;
     HashMap<Tile, Integer> ground;
+    HashMap<Tile, Integer> plants;
+    HashMap<Biome, Integer> biomes;
 
     DataHandler data;
 
@@ -51,6 +56,7 @@ public class Menu {
         line = new Color(147, 147, 147, 200);
         text = new Color(255, 255, 255, 190);
         font = new Font("Arial", Font.PLAIN, 15);
+        infoBarFont = new Font("Arial", Font.PLAIN, 12);
 
         Tabs = new Tab[10];
         toolbarItems = new ArrayList<>();
@@ -73,6 +79,8 @@ public class Menu {
         //InfoBar
         distinctTiles = 3;
         ground = new HashMap<>();
+        plants = new HashMap<>();
+        biomes = new HashMap<>();
 
         fillToolbar();
         addTabs();

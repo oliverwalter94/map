@@ -1,5 +1,6 @@
 package main;
 
+import MapGen.Biome;
 import MapGen.Chunk;
 import MapGen.MapTile;
 import MapGen.Tile;
@@ -24,7 +25,7 @@ class GameRender {
     private final StructureEditor structureEditor;
 
     enum RenderMode {
-        NONE, MAPEDIT, MINIMAP, IMAGEPICKER, BIOMEBUILDER, STRUCTEDITOR
+        NONE, MAPEDIT, MINIMAP, IMAGEPICKER, BIOMEBUILDER, STRUCTEDITOR, SIMULATION
     }
 
     private static Dimension boardSize;
@@ -179,7 +180,7 @@ class GameRender {
                 if (Board.selectionChanged)
                     updateInfoBar();
 
-                //TODO: RENDER TILE INFO
+                //RENDER TILE INFO
                 g2d.setColor(menu.backgroundColor);
                 g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 50));
                 g2d.setColor(menu.text);
@@ -188,21 +189,47 @@ class GameRender {
 
                 infoBarTop = renderInfoBarLine(g2d, infoBarLeft, infoBarTop);
 
-                // TODO: Count different tile types
+                g2d.setFont(menu.infoBarFont);
+
+                //Count different tile types
                 for (Map.Entry<Tile, Integer> m : menu.ground.entrySet()) {
-                    //System.out.println(m.getKey().name + " " +  m.getValue());
 
                     g2d.setColor(menu.backgroundColor);
-                    g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 50));
+                    g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 24));
                     g2d.setColor(menu.text);
-                    g2d.drawString(m.getKey().name + ": " + m.getValue(), infoBarLeft + 32, infoBarTop + 32);
-                    infoBarTop += 50;
+                    g2d.drawImage(m.getKey().imageObject.img, infoBarLeft + 8, infoBarTop + 4, 16, 16, null);
+                    g2d.drawString(m.getKey().name + ": " + m.getValue(), infoBarLeft + 32, infoBarTop + 16);
+                    infoBarTop += 24;
                 }
-                //System.out.println("------------------------");
 
-                //TODO: RENDER BIOME INFO
+                infoBarTop = renderInfoBarLine(g2d, infoBarLeft, infoBarTop);
 
-                //TODO: RENDER PLANT / OBJECT INFO
+                //RENDER BIOME INFO
+                for (Map.Entry<Biome, Integer> m : menu.biomes.entrySet()) {
+
+                    g2d.setColor(menu.backgroundColor);
+                    g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 24));
+                    g2d.setColor(menu.text);
+                    //g2d.drawImage(m.getKey().imageObject.img, infoBarLeft + 8, infoBarTop + 4 , 16, 16, null);
+                    g2d.drawString(m.getKey().name + ": " + m.getValue(), infoBarLeft + 32, infoBarTop + 16);
+                    infoBarTop += 24;
+                }
+
+                infoBarTop = renderInfoBarLine(g2d, infoBarLeft, infoBarTop);
+
+                //RENDER PLANT / OBJECT INFO
+                for (Map.Entry<Tile, Integer> m : menu.plants.entrySet()) {
+
+                    g2d.setColor(menu.backgroundColor);
+                    g2d.fill(new Rectangle2D.Double(infoBarLeft, infoBarTop, menu.infoBarWidth, 24));
+                    g2d.setColor(menu.text);
+                    g2d.drawImage(m.getKey().imageObject.img, infoBarLeft + 8, infoBarTop + 4, 16, 16, null);
+                    g2d.drawString(m.getKey().name + ": " + m.getValue(), infoBarLeft + 32, infoBarTop + 16);
+                    infoBarTop += 24;
+                }
+
+                infoBarTop = renderInfoBarLine(g2d, infoBarLeft, infoBarTop);
+
 
                 //TODO: RENDER TECHNICAL INFO
 
@@ -225,6 +252,7 @@ class GameRender {
     private void updateInfoBar() {
         Board.selectionChanged = false;
         menu.ground.clear();
+        menu.plants.clear();
         int i;
         for (Point point : Board.selectedTiles) {
             MapTile mapTile = Board.mapHandler.getMapTile(point);
@@ -234,6 +262,34 @@ class GameRender {
             menu.ground.put(Board.mapHandler.getMapTile(point).ground, i + 1);
 
             menu.ground = menu.ground
+                    .entrySet()
+                    .stream()
+                    .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                    .collect(
+                            toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+                                    LinkedHashMap::new));
+
+            i = menu.plants.get(mapTile.plant) != null ? menu.plants.get(mapTile.plant) : 0;
+
+            if (Board.mapHandler.getMapTile(point).plant != null) {
+                menu.plants.put(Board.mapHandler.getMapTile(point).plant, i + 1);
+
+                menu.plants = menu.plants
+                        .entrySet()
+                        .stream()
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                        .collect(
+                                toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2,
+                                        LinkedHashMap::new));
+
+
+            }
+
+            i = menu.biomes.get(mapTile.biome) != null ? menu.biomes.get(mapTile.biome) : 0;
+
+            menu.biomes.put(Board.mapHandler.getMapTile(point).biome, i + 1);
+
+            menu.biomes = menu.biomes
                     .entrySet()
                     .stream()
                     .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))

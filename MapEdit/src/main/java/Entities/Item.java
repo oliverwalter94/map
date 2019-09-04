@@ -4,7 +4,7 @@ import Data.ImageObject;
 
 public class Item {
     String name;
-    ImageObject imgObj;
+    ImageObject imageObject;
     boolean breakable;
     boolean hasDurability;
     ItemClass itemClass;
